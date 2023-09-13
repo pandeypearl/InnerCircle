@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %} Sign Up {% endblock %}
+
+{% block auth_content %}
+
+    {% for message in messages %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{ message }}</strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card text-bg-dark mb-3">
+            <div class="card-header text-center bg-dark text-white">Sign Up</div>
+            <div class="card-body">
+                <form class="container-sm" action="" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="username" placeholder="Username">
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" name="email" placeholder="Email">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" name="password" placeholder="Password">
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
+                    </div>
+            
+                    <button type="submit" class="btn btn-outline-dark">Sign Up</button>
+            
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

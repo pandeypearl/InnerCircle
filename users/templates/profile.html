@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} Profile | {{ user.username }} {% endblock %}
+{% block content %}
+    {% if user_object.username == user.username %}
+    <a href="/settings">Account Settings</a>
+    {% endif %}
+
+    {{user_profile.image}}
+    {{user_profile.dob}}
+{% endblock %}

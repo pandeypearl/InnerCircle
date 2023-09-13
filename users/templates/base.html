@@ -1,0 +1,59 @@
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% load bootstrap_icons %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'bootstrap_icons/css/bootstrap_icons.css' %}">
+    <!--<link rel="stylesheet" href="{% static 'css/main.css' %}?{% cache_bust %}">-->
+    <link rel="stylesheet" href="{% static 'scss/main.scss' %}?{% cache_bust %}">
+    <link rel="stylesheet" href="{% static 'scss/nav.scss' %}?{% cache_bust %}">
+    <link rel="stylesheet" href="{% static 'scss/page-nav.scss' %}?{% cache_bust %}">
+    {% block css %}{% endblock %}
+
+    <!-- JS -->
+    <script>
+        $(".alert").alert('close')
+    </script>
+    {% block js %}{% endblock %}
+</head>
+<body class="bg-light">
+    <div class="wrapper">
+        {% with request.resolver_match.url_name as url_name %}
+            {% if not url_name == 'signUp' and not url_name == 'signIn' %}
+            <div class="container">
+                <div class="row">
+                    <div class="col bg-dark text-white main-nav">
+                        {% include 'components/nav.html' %}
+                    </div>
+                    <div class="col bg-secondary text-white">
+                        {% include 'components/page-nav.html' %}
+                    </div>
+                    <div class="col-8 bg-white page">
+                        {% include 'components/page-footer.html' %}
+                        <div page="page-content">
+                            {% block content %}
+                            {% endblock %}
+                        </div>
+                        {% include 'components/search-bar.html' %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            {% block auth_content %}
+                {% endblock %}
+            {% endif %}
+        {% endwith %}
+    </div>
+    {% include 'components/footer.html' %}
+</body>
+</html>
