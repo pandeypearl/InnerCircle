@@ -136,3 +136,17 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #Email backend
+EMAIL_HOST = 'your-smtp-server.com'
+EMAIL_PORT = 587 #Use SMTP port
+EMAIL_USE_TLS = True #Use TLS for secure email communication
+EMAIL_HOST_USER = 'your-email@example.com' #email address for sending password
+EMAIL_HOST_PASSWORD = 'your-email-password' #Email password or app-specific password
+
+# Authentication
+LOGIN_URL = 'signIn'
+LOGOUT_URL = 'logout'
+PASSWORD_CHANGE_REDIRECT_URL = 'password_change_done'

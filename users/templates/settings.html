@@ -5,8 +5,8 @@
 {% block content %}
 <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <img src="{{user_profile.prifile_picture.url}}" alt="">
+    <img src="{{user_profile.image.url}}" alt="">
     <input type="file" name="image">
-    <input type="date" name="dob" value="{{user_profile.date_of_birth}}">
+    <input type="date" name="dob" value="{{user_profile.dob}}">
 </form>
 {% endblock %}

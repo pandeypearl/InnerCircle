@@ -1,11 +1,69 @@
 {% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
 
 {% block title %} Profile | {{ user.username }} {% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'scss/profile.scss' %}?{% cache_bust %}">
+{% endblock %}
+
 {% block content %}
     {% if user_object.username == user.username %}
     <a href="/settings">Account Settings</a>
     {% endif %}
 
-    {{user_profile.image}}
-    {{user_profile.dob}}
+    <section id="profileInfo" class="d-flex justify-content-around align-items-center">
+        <div class="d-flex flex-column justify-content-between">
+            <div>
+                <img src="{{user_profile.profile_picture.url}}" alt="Profile Picture" width="100">
+                <h5>{{user_object.first_name}} {{ user_object.last_name}}</h5>
+                <p>@{{user_object.username}}</p>
+            </div>
+
+            <div>
+                <p>{% bs_icon 'envelope-at' %} {{user_object.email}}</p>
+                <p>{% bs_icon 'balloon' %} {{user_profile.date_of_birth}}</p>
+            </div>
+                
+            <div>
+                <p>{% bs_icon 'hourglass-split' %} Joined {{user_object.date_joined|date:"d F Y"}}</p>
+                <p>{% bs_icon 'clock-history' %} Last Login {{user_object.last_login}}</p>
+            </div>
+        </div>
+        <ul class="list-group" style="width: 150px;">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{% bs_icon 'people' %}</span>
+                <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{% bs_icon 'megaphone' %}</span>
+                <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{% bs_icon 'calendar-event' %}</span>
+                <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{% bs_icon 'card-list' %}</span>
+                <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{% bs_icon 'airplane' %}</span>
+                <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{% bs_icon 'collection' %}</span>
+                <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+        </ul>
+
+    </section>
+
+    <section id="aiChat">
+
+    </section>
+
+   
 {% endblock %}
