@@ -34,15 +34,11 @@ body{
     height: 100%;
 }
 
-
-
 .page{
     border-radius: 0 30px 30px 0;
     position: relative;
 }
 
 .page-content{
-    overflow:hidden;
-    overflow-x: scroll;
-    padding: 30px;
+    height: 500px;
 }

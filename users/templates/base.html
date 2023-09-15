@@ -14,7 +14,6 @@
     
     <!-- CSS -->
     <link rel="stylesheet" href="{% static 'bootstrap_icons/css/bootstrap_icons.css' %}">
-    <!--<link rel="stylesheet" href="{% static 'css/main.css' %}?{% cache_bust %}">-->
     <link rel="stylesheet" href="{% static 'scss/main.scss' %}?{% cache_bust %}">
     <link rel="stylesheet" href="{% static 'scss/nav.scss' %}?{% cache_bust %}">
     <link rel="stylesheet" href="{% static 'scss/page-nav.scss' %}?{% cache_bust %}">
@@ -40,7 +39,7 @@
                     </div>
                     <div class="col-8 bg-white page">
                         {% include 'components/page-footer.html' %}
-                        <div page="page-content">
+                        <div class="page-content overflow-scroll">
                             {% block content %}
                             {% endblock %}
                         </div>
