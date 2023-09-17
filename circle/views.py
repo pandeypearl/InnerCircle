@@ -17,7 +17,7 @@ def group_list(request):
         users_groups: 'all_groups',
     }
 
-    return render(request, context, template)
+    return render(request, template, context)
 
 @login_required(login_url='signIn')
 def group_detail(request, group_id):
@@ -31,7 +31,7 @@ def group_detail(request, group_id):
         'members': members, 
     }
 
-    return render(request, context, template)
+    return render(request, template, context)
 
 @login_required(login_url='signIn')
 def create_group(request):
@@ -90,7 +90,7 @@ def member_list(request):
         'members': members,
     }
 
-    return render(request, context, template)
+    return render(request, template, context)
 
 @login_required(login_url='signIn')
 def member_detail(request, member_id):

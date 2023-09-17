@@ -1,0 +1,68 @@
+{% load static %}
+{% load bootstrap_icons %}
+<div class="d-flex flex-column justify-content-between">
+    <ul class="p-2 nav flex-column text-center">
+        <li class="nav-item navbar-brand">
+            <a href="{% url 'home' %}" class="nav-link">InnerCircle</a>
+        </li>
+        <li class="nav-item"><img src="{% static 'img/pic_female.png' %}" alt="Profile Picture"></li>
+        <!-- <li class="nav-item text-center"><small>@{{user.username}}</small></li> -->
+        <li class="nav-item"><small>{% bs_icon 'people-fill' %} 0</small></li>
+        
+    </ul>
+    {% with request.resolver_match.url_name as url_name %}
+    <ul class="p-2 nav flex-column">
+        <li class="nav-item">
+            <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'person' %} Profile
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'gear' %} Settings
+            </a>
+        </li>
+    </ul>
+    
+    <ul class="p-2 nav flex-column">
+        <li class="nav-item">
+            <a href="{% url 'home' %}" 
+            class="nav-link {% if url_name == 'home' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'layout-wtf' %} Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'member_list' %}" 
+            class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' %}
+            text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'people' %} Circle
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'megaphone' %} Broadcasts
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'calendar-event' %} Events
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'card-list' %} Registries
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'airplane' %} Trips
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'collection' %} Albums
+            </a>
+        </li>
+    </ul>
+    {% endwith %}
+</div>

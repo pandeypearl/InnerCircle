@@ -6,9 +6,11 @@ from .models import Profile
 
 # Create your views here.
 def home(request):
-    return render(request, 'home.html')
+    template = 'users/home.html'
+    return render(request, template)
 
 def signUp(request):
+    template = 'users/signUp.html'
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -41,9 +43,10 @@ def signUp(request):
             messages.info(request, 'Passwords do not match')
             return redirect('signUp')
     else:
-        return render(request, 'signUp.html')
+        return render(request, template)
 
 def signIn(request):
+    template = 'users/signIn.html'
 
     if request.method == 'POST':
         username = request.POST['username']
@@ -56,7 +59,7 @@ def signIn(request):
             return redirect('home')
 
     else:
-        return render(request, 'signIn.html')
+        return render(request, template)
 
 @login_required(login_url='singIn')
 def logOut(request):
@@ -66,6 +69,7 @@ def logOut(request):
 
 @login_required(login_url='signIn')
 def profile(request, pk):
+    template = 'users/profile.html'
     user_object = User.objects.get(username=pk)
     user_profile = Profile.objects.get(user=user_object)
 
@@ -76,10 +80,11 @@ def profile(request, pk):
         'user_profile': user_profile,
     }   
 
-    return render(request, 'profile.html', context)
+    return render(request, template, context)
 
 @login_required(login_url='signIn')
 def settings(request):
+    template = 'users/settings.html'
     user_profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
@@ -100,5 +105,10 @@ def settings(request):
             user_profile.save()
 
         return redirect('settings')
-    return render(request, 'settings.html', {'user_profile': user_profile})
+
+    context = {
+        'user_profile': user_profile
+    }
+
+    return render(request, template, context)
             

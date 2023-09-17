@@ -1,0 +1,110 @@
+{% load bootstrap_icons %}
+<div class="d-flex flex-column page-nav">
+{% with request.resolver_match.url_name as url_name %}
+    {% if url_name == 'profile' %}
+        <h5 class="p-2 text-center">Profile</h5>
+        <hr>
+        <ul class="p-2 nav">
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-white">{% bs_icon 'person-circle' %} Profile Info</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'settings' %}" class="nav-link text-white">{% bs_icon 'chat-dots' %} AI Chat</a>
+            </li>
+        </ul>
+    {% elif url_name == 'home' %}
+        <h5 class="p-2 text-center">Dashboard</h5>
+        <hr>
+        <ul class="p-2 nav">
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-white">{% bs_icon 'bell' %} Notifications</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'settings' %}" class="nav-link text-white">{% bs_icon 'clock' %} Reminders</a>
+            </li>
+        </ul>
+    {% elif url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' %}
+        <h3 class="p-2">Your Circle</h3>
+        <hr>
+        <ul class="p-2 nav">
+            <li class="nav-item">
+                <a href="{% url 'member_list' %}" 
+                class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' %}text-dark{% else %} text-white{% endif %}">
+                {% bs_icon 'people' %} Circle</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'group_list' %}" 
+                class="nav-link {% if url_name == 'group_list' %}text-dark{% else %} text-white{% endif %}">{% bs_icon 'person-gear' %} Groups</a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-white">{% bs_icon 'person-heart' %} Recent</a>
+            </li>
+        </ul>
+    {% elif url_name == 'broadcasts' %}
+        <h3 class="p-2">Broadcasts</h3>
+        <ul class="p-2 nav">
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon 'send-check' %} Sent</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'settings' %}" class="nav-link text-dark">{% bs_icon 'send-slash' %} Drafts</a>
+            </li>
+        </ul>
+    {% elif url_name == 'events' %}
+        <h3 class="p-2">Events</h3>
+        <ul class="p-2 nav">
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon 'calendar-plus' %} New Event</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon 'calendar2-event' %} Currents Events</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'settings' %}" class="nav-link text-dark">{% bs_icon 'calendar4-week' %} All Events</a>
+            </li>
+        </ul>
+    {% elif url_name == 'registries' %}
+        <h3 class="p-2">Registries</h3>
+        <ul class="p-2 nav">
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon 'person-lines-fill' %} New Registry</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon 'card-list' %} Active Registries</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'settings' %}" class="nav-link text-dark">{% bs_icon 'card-checklist' %} All Registries</a>
+            </li>
+        </ul>
+    {% elif url_name == 'trips' %}
+        <h3 class="p-2">Trips</h3>
+        <ul class="p-2 nav">
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Plan Trip</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Current Trip</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Upcoming Trips</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'settings' %}" class="nav-link text-dark">{% bs_icon '' %} Past Trips</a>
+            </li>
+        </ul>
+    {% elif url_name == 'albums' %}
+        <h3 class="p-2">Albums</h3>
+        <ul class="p-2 nav">
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} New Album</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Shared Albums</a>
+            </li>
+            <li class="nav-item">
+                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Private Albums</a>
+            </li>
+        </ul>
+    {% endif %}
+{% endwith %}
+</div>
