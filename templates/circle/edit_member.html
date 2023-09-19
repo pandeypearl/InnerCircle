@@ -1,8 +1,58 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
 
 {% block title %}InnerCircle | Edit {{ member.name }}{% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-between align-items-center" >
+        <a href="{% url 'member_list' %}" class="text-primary">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <h4 class="text-secondary text-end"> Edit {{ member.name }}</h4>
+    </div>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    
+    
+    <form action="{% url 'edit_member' pk=instance.pk %}" class="form-floating" method="POST">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="{{form.name.name}}" value="{{instance.name}}">
+            <label for="name">Name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" name="{{ form.email.name }}" value="{{instance.email}}">
+            <label for="email">Email</label>
+        </div>
+        <div class="form-floating mb-3">
+            
+            <input type="date" class="form-control" name="{{ form.date_of_birth.name }}" value="{{instance.date_of_birth|date:'Y-m-d'}}">
+            <label for="date_of_birth">Date of Birth</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="{{form.relationship.name}}" value="{{instance.relationship}}">
+            <label for="relationship">Relationship</label>
+        </div>
+        <div class="mb-3 d-flex align-items-center">
+            <img src="{{instance.image.url}}" alt="">
+            <input type="file" class="form-control" name="{{form.image.name}}" value="{{instance.image}}">
+        </div>
+    
+        <button class="btn btn-dark" type="submit">{% bs_icon 'pen-fill' %} &nbsp;Update</button>
+    </form>
+
+</section>
+
 {% endblock %}

@@ -1,13 +1,88 @@
 {% extends 'base.html' %}
 {% load cache_bust %}
 {% load static %}
+{% load bootstrap_icons %}
 
 {% block title %}InnerCircle | {{member.name}}{% endblock %}
 
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section>
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-between align-items-center" >
+        <a href="{% url 'member_list' %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <h4 class="text-dark text-end"> {{member.name}} Info</h4>
+    </div>
+
+    <div class="d-flex justify-content-end" style="gap: 20px;">
+        <a class="btn btn-dark" href="{% url 'edit_member' member.id %}">{% bs_icon 'pen-fill' %} Edit</a>
+        <a class="btn btn-dark" href="{% url 'delete_member' member.id %}">{% bs_icon 'trash3-fill' %} Delete</a>
+    </div>
+
+    <div class="d-flex align-items-center" style="gap: 10px">
+        <img src="{{ member.image.url }}" alt="Member Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+        <div>
+            <span style="font-size:1.5em;">{{ member.name }}</span><br>
+            <span><small>{{ member.relationship }}</small></span>
+        </div>
+    </div>
     
+    <div>
+        <p>{% bs_icon 'balloon' %} {{ member.date_of_birth|date:"d F Y" }}</p>
+        <p>{% bs_icon 'envelope-at' %} {{ member.email }}</p>
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <a href="" class="btn btn-dark">Add Note</a>
+    </div>
+    
+
+    <div>
+        <span class="badge bg-dark rounded-pill">{{ member.member_notes.count }} Notes</span>
+
+        
+
+        {% if member.member_notes.all %}
+        <div class="accordion accordion-flush">
+            {% for note in member.member_notes.all %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ note.id }}" aria-expanded="false" aria-controls="flush-collapseOne">
+                    {{ note.subject }}&nbsp;&nbsp;<small>{{ note.created|date:"d M Y"}}  {{note.created|time:"h:i A"}}</small>
+                  </button>
+                </h2>
+                <div id="flush-collapse{{ note.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                  <div class="accordion-body">{{ note.content }}</div>
+                </div>
+              </div>
+            {% endfor %} 
+        </div>
+        {% else %}
+        <p>You current have no notes about {{ member.name }}</p>
+        {% endif %}
+    </div>
+
+    <hr class="text-primary">
+    
+    <div id="addNote">
+        
+        <form class="form" action="{% url 'member_detail' member.id %}" method="POST" enctype="multipart/form-data">
+            <h4 class="text-secondary text-end"> New Note</h4>
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+                {{ form.subject }}
+                <label for="subject">Subject</label>
+            </div>
+                
+            <div class="form-floating mb-3">
+                {{ form.content }}
+                <label for="content">Note</label>
+            </div>
+
+            <button type="submit" class="btn btn-dark">Add Note</button>
+        </form>
+
+    </div>
 </section>
+
 {% endblock %}

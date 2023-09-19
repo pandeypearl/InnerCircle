@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Group, Member, Note
-from .forms import MemberForm, GroupForm, NoteForm
+from .forms import MemberForm, GroupForm, NoteForm, EditMemberForm
 
 # Create your views here.
 @login_required(login_url='signIn')
@@ -14,7 +14,7 @@ def group_list(request):
     users_groups = Group.objects.filter(user=request.user)
 
     context = {
-        users_groups: 'all_groups',
+        'users_groups': users_groups,
     }
 
     return render(request, template, context)
@@ -47,7 +47,11 @@ def create_group(request):
             group.group_name = request.POST['group_name']
             group.description = request.POST['description']
             group.save()
-            return redirect('circle/groups')
+            messages.info(request, 'New group {{group.group_name}} created.')
+            return redirect('group_list')
+        else:
+             messages.info(request, 'Something when wrong, please try again.')
+             return render(request, template, {'form': GroupForm})
     else:
         form: GroupForm()
 
@@ -107,7 +111,7 @@ def member_detail(request, member_id):
             note.subject = request.POST['subject']
             note.content = request.POST['content']
             note.save()
-            return redirect('circle/member_detail')
+            return redirect('member_detail', member.id)
     else:
         form: NoteForm()
     
@@ -117,7 +121,7 @@ def member_detail(request, member_id):
         'form': form,
     }
 
-    return render(request, context, template)
+    return render(request, template, context)
 
 
 @login_required(login_url='signIn')
@@ -134,17 +138,20 @@ def create_member(request):
             member.created = timezone.now()
             member.name = request.POST['name']
             member.email = request.POST['email']
-            member.phone_number = request.POST['phone_number']
             member.image = request.FILES['image']
             member.relationship = request.POST['relationship']
             member.date_of_birth = request.POST['date_of_birth']
             member.save()
-            return redirect('')
+            messages.info(request, '{{member.name}} added to your circle.')
+            return redirect('member_list')
+        else:
+             messages.info(request, 'Something when wrong, please try again.')
+             return render(request, template, {'form': MemberForm})
     else:
         form: MemberForm()
 
     context = {
-        'form': MemberForm,
+        'form': form,
     }
 
     return render(request, template, context)
@@ -152,22 +159,38 @@ def create_member(request):
 login_required(login_url='signIn')
 def edit_member(request, pk):
     template = 'circle/edit_member.html'
-    member = get_object_or_404(Member, pk=pk)
-    form = MemberForm()
+    instance = get_object_or_404(Member, pk=pk)
+    form = EditMemberForm(request.POST, instance=instance)
 
     if request.method == 'POST':
-        form = MemberForm(request.POST, request.FILES, instance=member)
-        if form.is_valid():
-            member = form.save(commit=False)
-            member.user = request.user
-            member.updated = timezone.now()
-            member.save()
-            return redirect('circle/member_list', pk=member.pk)
+        form = EditMemberForm(request.POST, instance=instance)
+        try:
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'You changes have been saved')
+                return redirect('member_list', pk=pk)
+        except Exception as e:
+            messages.warning(request, 'Something went wrong. Your changes have not been saved')
     else:
-        form: MemberForm()
+        form: EditMemberForm(instance=instance)
 
     context = {
-        'form': MemberForm,
+        'form': form,
+        'instance': instance,
     }
 
+    return render(request, template, context)
+
+login_required(login_url='signIn')
+def delete_member(request, pk):
+    template = 'circle/delete_member.html'
+    member = get_object_or_404(Member, pk=pk)
+
+    if request.method == 'POST':
+        member.delete()
+        return redirect('member_list')
+
+    context = {
+        'member': member,
+    }
     return render(request, template, context)

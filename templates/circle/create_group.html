@@ -1,8 +1,49 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
 
 {% block title %}InnerCircle | New Group{% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-between align-items-center" >
+        <a href="{% url 'group_list' %}" class="text-primary">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <h4 class="text-secondary text-end">New Group</h4>
+    </div>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'create_group' %}" class="form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            {{ form.group_name }}
+            <label for="name">Group Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.description }}
+            <label for="email">Group Description</label>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.members.id_for_label }}">Group Members</label>
+            <select class="form-select" id="{{ form.members.id_for_label }}" name="{{ form.members.name }}" multiple>   
+                {% for choice in form.members %}
+                <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <button class="btn btn-primary" type="submit">Create Group</button>
+    </form>
+</section>
 {% endblock %}

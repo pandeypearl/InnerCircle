@@ -14,10 +14,40 @@
         <a href="{% url 'member_list' %}" class="text-primary">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
         <h4 class="text-secondary text-end"> New Circle Member</h4>
     </div>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
     
-    <form action="">
+    
+    <form action="{% url 'create_member' %}" class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p}}
+        <div class="form-floating mb-3">
+            {{ form.name }}
+            <label for="name">Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.email }}
+            <label for="email">Email</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.date_of_birth }}
+            <label for="date_of_birth">Date of Birth</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.relationship }}
+            <label for="relationship">Relationship</label>
+        </div>
+        <div class="mb-3">
+            <label for="image">Image</label>
+            {{ form.image }}    
+        </div>
     
         <button class="btn btn-primary" type="submit">add to circle</button>
     </form>

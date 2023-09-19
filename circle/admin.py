@@ -8,7 +8,7 @@ class GroupAdmin(admin.ModelAdmin):
 admin.site.register(Group, GroupAdmin)
 
 class MemberAdmin(admin.ModelAdmin):
-    list_display = ('name', 'relationship', 'created')
+    list_display = ('name', 'relationship', 'user', 'created')
 
 admin.site.register(Member, MemberAdmin)
 

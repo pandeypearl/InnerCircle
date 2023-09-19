@@ -1,8 +1,53 @@
 {% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
 
 {% block title %}InnerCircle | Groups{% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <h4 class="text-end text-secondary">Groups</h4>
+
+    <div class="d-flex justify-content-end">
+        <a href="{% url 'create_group' %}" class="btn btn-dark text-end">{% bs_icon 'person-add' %}Add New Group</a>
+    </div>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div>
+        <div class="d-flex align-items-center" style="gap: 20px;">
+            <h5 class="text-secondary">Your Groups</h5>
+            <span class="badge bg-secondary rounded-pill">{% bs_icon 'person-gear' %}{{ users_groups.count }}</span>
+        </div>
+        
+        
+
+        {% if users_groups %}
+        <div class="list-group list-group-flush">
+            {% for group in users_groups %}
+            <a  href="{% url 'group_detail' group.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-primary">
+                <div class="d-flex" style="gap: 20px">
+                    <span>{{ group.group_name }}</span>
+                </div>
+                <span class="badge bg-dark rounded-pill">{% bs_icon 'people' %} {{group.members.count}}</span>
+            </a>
+            {% endfor %}
+        </div>
+
+        {% else %}
+        <p class="text-secodary text-center">You currently have no groups. <a href="{% url 'create_group' %}">Add a new group</a>.</p>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}

@@ -34,7 +34,7 @@
             </li>
             <li class="nav-item">
                 <a href="{% url 'group_list' %}" 
-                class="nav-link {% if url_name == 'group_list' %}text-dark{% else %} text-white{% endif %}">{% bs_icon 'person-gear' %} Groups</a>
+                class="nav-link {% if url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' %}text-dark{% else %} text-white{% endif %}">{% bs_icon 'person-gear' %} Groups</a>
             </li>
             <li class="nav-item">
                 <a href="" class="nav-link text-white">{% bs_icon 'person-heart' %} Recent</a>
