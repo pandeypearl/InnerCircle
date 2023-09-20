@@ -4,7 +4,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import Group, Member, Note
-from .forms import MemberForm, GroupForm, NoteForm, EditMemberForm
+from .forms import (
+    MemberForm, 
+    GroupForm, 
+    NoteForm, 
+    EditMemberForm, 
+    EditGroupForm)
 
 # Create your views here.
 @login_required(login_url='signIn')
@@ -64,24 +69,40 @@ def create_group(request):
 @login_required(login_url='signIn')
 def edit_group(request, pk):
     template = 'circle/edit_group.html'
-    group = get_object_or_404(Group, pk=pk)
-    form = GroupForm()
+    instance = get_object_or_404(Group, pk=pk)
+    form = EditGroupForm(request.POST, instance=instance)
 
     if request.method == 'POST':
-        form = GroupForm(request.POST, request.FILES, instance=group)
-        if form.is_valid():
-            group = form.save(commit=False)
-            group.user = request.user
-            group.updated = timezone.now()
-            group.save()
-            return redirect('circle/groups', pk=group.pk)
+        form = EditGroupForm(request.POST, instance=instance)
+        try:
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'Your changes to the group have been saved')
+                return redirect('group_list', pk=pk)
+        except Exception as e:
+            messages.warning(request, 'Something went wrong. Your changes have not been saved')
     else:
-        form: GroupForm()
+        form: EditGroupForm(instance=instance)
 
     context = {
-        'form': GroupForm,
+        'form': form,
+        'instance': instance,
     }
 
+    return render(request, template, context)
+
+login_required(login_url='signIn')
+def delete_group(request, pk):
+    template = 'circle/delete_group.html'
+    group = get_object_or_404(Group, pk=pk)
+
+    if request.method == 'POST':
+        group.delete()
+        return redirect('group_list')
+
+    context = {
+        'group': group,
+    }
     return render(request, template, context)
 
 @login_required(login_url='signIn')
@@ -167,7 +188,7 @@ def edit_member(request, pk):
         try:
             if form.is_valid():
                 form.save()
-                messages.success(request, 'You changes have been saved')
+                messages.success(request, 'Your changes have been saved')
                 return redirect('member_list', pk=pk)
         except Exception as e:
             messages.warning(request, 'Something went wrong. Your changes have not been saved')

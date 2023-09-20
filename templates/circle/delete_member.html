@@ -3,7 +3,7 @@
 {% load cache_bust %}
 {% load bootstrap_icons %}
 
-{% block title %}InnerCircle{% endblock %}
+{% block title %}InnerCircle | Delete Member{% endblock %}
 
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
@@ -14,8 +14,9 @@
         <a href="{% url 'member_detail' member.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
         <h4 class="text-dark text-end"> Delete {{ member.name }}</h4>
     </div>
-    <form action="{% url 'delete_member' pk=member.pk %}">
-        <div class="d-flex align-items-center" style="gap: 10px">
+    <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_member' pk=member.pk %}" method="POST">
+        <div>
+          <div class="d-flex align-items-center" style="gap: 10px">
             <img src="{{ member.image.url }}" alt="Member Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
             <div>
                 <span style="font-size:1.5em;">{{ member.name }}</span><br>
@@ -27,6 +28,7 @@
             <p>{% bs_icon 'balloon' %} {{ member.date_of_birth|date:"d F Y" }}</p>
             <p>{% bs_icon 'envelope-at' %} {{ member.email }}</p>
         </div>
+        
 
         <p>You have written {{ member.member_notes.count }} notes about this person. </p>
 
@@ -48,10 +50,13 @@
         {% else %}
         <p>You current have no notes about {{ member.name }}</p>
         {% endif %}
+        </div>
+        
+        <div>
+          <p>Are you sure sure you would like to remove this person from your inner circle? Once you delete them, it can not be undone.</p>
 
-        <p>Are you sure sure you would like to remove this person from your inner circle? Once you delete them, it can not be undone.</p>
-
-        <button class="btn btn-dark" type="submit">{% bs_icon 'trash3-fill' %} Delete</button>
+          <button class="btn btn-dark" type="submit">{% bs_icon 'trash3-fill' %} Delete</button>
+        </div>
     </form>
 </section>
 

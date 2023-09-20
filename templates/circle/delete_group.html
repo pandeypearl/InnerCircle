@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Delete Group{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-between align-items-center" >
+        <a href="{% url 'group_detail' group.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <h4 class="text-dark text-end"> Delete {{ group.group_name }}</h4>
+    </div>
+
+    <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_group' pk=group.pk %}" method="POST">
+        <div>
+            <div>
+                <h4>{{ group.group_name }}</h4>
+                <p>{{ group.description }}</p>
+            </div>
+        
+            {% if group.members %}
+            <div class="list-group list-group-flush">
+                <div class="d-flex align-items-center" style="gap:20px">
+                    <h5 class="text-secondary">Group Members</h5>
+                    <span class="badge bg-secondary rounded-pill">{% bs_icon 'person' %}{{ group.members.count }}</span>
+                </div>
+               
+                    {% for member in group.members.all %}
+                    <a  href="{% url 'member_detail' member.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-primary">
+                        <div class="d-flex" style="gap: 20px">
+                            <img class="member-img-sm" src="{{ member.image.url }}" alt="Member Image">
+                            <span>{{ member.name }}</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+               
+            </div>
+            {% else %}
+                <p class="text-secodary text-center">You have no circle members. <a href="{% url 'create_member' %}">Add people to your circle</a></p>
+            {% endif %}
+        </div>
+        
+        <div>
+            <p>Are you sure sure you would like to delete this group? Once you delete it, it can not be undone.</p>
+            <button class="btn btn-dark" type="submit">{% bs_icon 'trash3-fill' %} Delete Group</button>
+        </div>
+        
+    </form>
+</section>
+{% endblock %}

@@ -33,7 +33,7 @@
         </li>
         <li class="nav-item">
             <a href="{% url 'member_list' %}" 
-            class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' %}
+            class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_group' or url_name == 'delete_group' %}
             text-secondary{% else %}text-white{% endif %}">
                 {% bs_icon 'people' %} Circle
             </a>

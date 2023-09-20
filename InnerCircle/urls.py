@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('', include('circle.urls')),
+    path('', include('events.urls')),
 ]
 
 # Serve static files during development

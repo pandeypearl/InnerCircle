@@ -23,18 +23,18 @@
                 <a href="{% url 'settings' %}" class="nav-link text-white">{% bs_icon 'clock' %} Reminders</a>
             </li>
         </ul>
-    {% elif url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' %}
+    {% elif url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'edit_group' or url_name == 'delete_group' %}
         <h3 class="p-2">Your Circle</h3>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
                 <a href="{% url 'member_list' %}" 
-                class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' %}text-dark{% else %} text-white{% endif %}">
+                class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'edit_member' or url_name == 'delete_member' %}text-dark{% else %} text-white{% endif %}">
                 {% bs_icon 'people' %} Circle</a>
             </li>
             <li class="nav-item">
                 <a href="{% url 'group_list' %}" 
-                class="nav-link {% if url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' %}text-dark{% else %} text-white{% endif %}">{% bs_icon 'person-gear' %} Groups</a>
+                class="nav-link {% if url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_group' or url_name == 'delete_group' %}text-dark{% else %} text-white{% endif %}">{% bs_icon 'person-gear' %} Groups</a>
             </li>
             <li class="nav-item">
                 <a href="" class="nav-link text-white">{% bs_icon 'person-heart' %} Recent</a>

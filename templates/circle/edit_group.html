@@ -1,8 +1,49 @@
 {% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
 
-{% block title %}InnerCircle | Edit {{ group.group_name }}{% endblock %}
+{% block title %}InnerCircle | Edit {{ instance.group_name }}{% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
+<section lass="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-between align-items-center" >
+        <a href="{% url 'group_detail' instance.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <h4 class="text-secondary text-end"> Edit {{ instance.group_name }}</h4>
+    </div>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'edit_group' pk=instance.pk %}" class="form-floating" method="POST">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="{{form.group_name.name}}" value="{{instance.group_name}}">
+            <label for="name">Group Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" name="{{form.description.name}}" id="" cols="30" rows="10" value="">{{instance.description}}</textarea>
+            <label for="email">Group Description</label>
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.members.id_for_label }}">Group Members</label>
+            <select class="form-select" id="{{ form.members.id_for_label }}" name="{{ form.members.name }}" multiple>   
+                {% for choice in form.members.field.queryset %}
+                <option value="{{ choice.pk }}" {% if choice in instance.members.all %}selected{% endif %}>{{ choice }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    
+        <button class="btn btn-dark" type="submit">{% bs_icon 'pen-fill' %} &nbsp;Update Group</button>
+    </form>
+</section>
 {% endblock %}

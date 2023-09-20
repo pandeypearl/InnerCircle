@@ -72,6 +72,26 @@ class GroupForm(forms.ModelForm):
             'members': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Group Members'}),
         }
 
+class EditGroupForm(forms.ModelForm):
+    template_name = 'circle/edit_group.html'
+    class Meta:
+        model = Group
+        fields = [
+            'group_name',
+            'description',
+            'members',
+        ]
+
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance')
+        super(EditGroupForm, self).__init__(*args, **kwargs)
+
+        if instance:
+            self.fields['group_name'].initial = instance.group_name
+            self.fields['description'].initial = instance.description
+            self.fields['members'].initial = instance.members
+
+
 class NoteForm(forms.ModelForm):
     subject = forms.TextInput()
     members = forms.Textarea()
