@@ -30,7 +30,7 @@ def event_detail(request, event_id):
 
 login_required(login_url='signIn')
 def create_event(request):
-    template = 'events/create_event'
+    template = 'events/create_event.html'
     form = EventForm(request.POST)
 
     if request.method == 'POST':
@@ -41,10 +41,14 @@ def create_event(request):
             event.event_name = request.POST['event_name']
             event.description = request.POST['description']
             event.date = request.POST['date']
-            event.guests = request.POST['guests']
+            event.location = request.POST['location']
             event.dress_code = request.POST['dress_code']
             event.note = request.POST['note']
             event.event_status = request.POST['event_status']
+            event.save()
+            
+            guest_ids = request.POST.getlist('guests')
+            event.guests.set(guest_ids)
             event.save()
             messages.success(request, 'New event created.')
             return redirect('event_list')

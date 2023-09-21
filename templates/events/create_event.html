@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | New Event{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-end">
+        <h4 class="text-secondary text-end">New Event</h4>
+    </div>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'create_event' %}" class="form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            {{ form.event_name }}
+            <label for="name">Event Name</label>
+        </div>
+        <div class="mb-3">
+            <label for="email">Description</label>
+            {{ form.description }}
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.date }}
+            <label for="date_of_birth">Date and Time</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.location }}
+            <label for="name">Location</label>
+        </div>
+        <div class="form-floating mb-3">
+            {{ form.dress_code }}
+            <label for="dress_code">Dress Code</label>
+        </div>
+        <div class="mb-3">
+            <label for="note">Event Notes</label> 
+            {{ form.note }}
+            
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.guests.id_for_label }}">Guests</label>
+            <select class="form-select" id="{{ form.guests.id_for_label }}" name="{{ form.guests.name }}" multiple>   
+                {% for choice in form.guests %}
+                <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="event_status">Event Status</label>
+            {% for radio in form.event_status %}
+            <div class="form-check d-flex" style="gap: 10px;">
+                {{ radio.tag }}
+                <label class="form-check-label" for="{{radio.id_for_label}}">{{ radio.choice_label }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        
+    
+    
+        <button class="btn btn-dark" type="submit">Create Event</button>
+    </form>
+</section>
+{% endblock %}

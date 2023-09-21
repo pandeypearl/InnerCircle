@@ -1,5 +1,5 @@
-from django.forms import forms
-from django.forms import DateInput
+from django import forms
+from django.forms import DateTimeInput
 from .models import Event, RSVP
 
 class EventForm(forms.ModelForm):
@@ -9,11 +9,23 @@ class EventForm(forms.ModelForm):
             'event_name',
             'description',
             'date',
+            'location',
             'guests',
             'dress_code',
             'note',
             'event_status'
         )
+        widgets = {
+            'event_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Name'}),
+            'description': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Description'}),
+            'date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control', 'placeholder': 'Date of Birth'}),
+            'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Location'}),
+            'guests': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Guests'}),
+            'dress_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dress Code'}),
+            'note': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Event Notes'}),
+            'event_status': forms.RadioSelect(attrs={'type': 'radio', 'class': 'form-check'}),
+        }
+
 
 class UpdateEventForm(forms.ModelForm):
     template_name = 'events/update_event.html'
@@ -23,6 +35,7 @@ class UpdateEventForm(forms.ModelForm):
             'event_name',
             'description',
             'date',
+            'location',
             'guests',
             'dress_code',
             'note',
@@ -37,13 +50,14 @@ class UpdateEventForm(forms.ModelForm):
                 self.fields['event_name'].initial = instance.event_name
                 self.fields['description'].initial = instance.description
                 self.fields['date'].initial = instance.date
+                self.fields['location'].initial = instance.location
                 self.fields['guests'].initial = instance.guests
                 self.fields['dress_code'].initial = instance.dress_code
                 self.fields['note'].initial = instance.note
                 self.fields['event_status'].initial = instance.event_status
 
 
-class RSVPForm(forms.ModelForms):
+class RSVPForm(forms.ModelForm):
     class Meta:
         model = RSVP
         fields = [

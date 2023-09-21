@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Update {{ instance.event_name }}{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block content %}
+<section lass="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-between align-items-center" >
+        <a href="{% url 'event_detail' instance.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <h4 class="text-secondary text-end"> Update {{ instance.event_name }}</h4>
+    </div>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'update_event' pk=instance.pk %}" class="form-floating" method="POST">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="{{form.event_name.name}}" value="{{instance.event_name}}">
+            <label for="name">Event Name</label>
+        </div>
+        <div class="mb-3">
+            <label for="description">Description</label>
+            <textarea class="form-control" name="{{form.description.name}}" id="" cols="30" rows="10" value="">{{instance.description}}</textarea>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="datetime-local" class="form-control" name="{{form.date.name}}" value="{{instance.date|date:'Y-m-d'}}">
+            <label for="date_of_birth">Date and Time</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="{{form.location.name}}" value="{{instance.location}}">
+            <label for="name">Location</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" name="{{form.dress_code.name}}" value="{{instance.dress_code}}">
+            <label for="dress_code">Dress Code</label>
+        </div>
+        <div class="mb-3">
+            <label for="note">Event Notes</label> 
+            <textarea class="form-control" name="{{form.note.name}}" id="" cols="30" rows="10" value="">{{instance.note}}</textarea>
+
+            
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.guests.id_for_label }}">Guests</label>
+            <select class="form-select" id="{{ form.guests.id_for_label }}" name="{{ form.guests.name }}" multiple>   
+                {% for choice in form.guests %}
+                <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="event_status">Event Status</label>
+            {% for radio in form.event_status %}
+            <div class="form-check d-flex" style="gap: 10px;">
+                {{ radio.tag }}
+                <label class="form-check-label" for="{{radio.id_for_label}}">{{ radio.choice_label }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="btn btn-dark" type="submit">Update Event</button>
+    </form>
+
+</section>
+{% endblock %}

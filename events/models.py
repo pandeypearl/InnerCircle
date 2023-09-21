@@ -8,15 +8,17 @@ class Event(models.Model):
     event_name = models.CharField(max_length=255)
     description = models.TextField()
     date = models.DateTimeField()
+    location = models.CharField(max_length=255, blank=True, null=True)
     guests = models.ManyToManyField(Member, related_name='events_attending')
     dress_code = models.CharField(max_length=255)
-    note = models.TextField
+    note = models.TextField(blank=True, null=True)
     event_status = models.CharField(max_length=10, choices=[('Happening', 'Happening'),
         ('Postponed', 'Postponed'), ('Cancelled', 'Cancelled')],
         default='Happening')
    
     def __str__(self):
         return self.event_name
+        
 
 
 class RSVP(models.Model):

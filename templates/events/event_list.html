@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Events{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <h4 class="text-end text-secondary">Events</h4>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    
+    <div>
+        <h6 class="text-secondary">{% bs_icon 'calendar-event' %}{{ user_events.count }}</h6>
+
+        {% if user_events %}
+        <div class="list-group list-group-flush">
+            {% for user_event in user_events %}
+            <a  href="{% url 'event_detail' user_event.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-success">
+                <div class="d-flex" style="gap: 20px">
+                    <span>{{ user_event.event_name }}</span>
+                    <span>{{ user_event.date|date:"d F Y" }}</span>
+                    <span>{{ user_event.event_status }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-secodary text-center">You currently have no events. <a href="{% url 'create_event' %}" class="link-dark">Create an event</a>.</p>
+        {% endif %}
+    </div>
+    
+
+</section>
+{% endblock %}
