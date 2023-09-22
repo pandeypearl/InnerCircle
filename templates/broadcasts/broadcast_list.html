@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Broadcasts{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <h4 class="text-end text-secondary">Broadcasts</h4>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div>
+        <h6 class="text-secondary">{% bs_icon 'megaphone' %}{{ broadcasts.count }}</h6>
+
+        {% if broadcasts %}
+        <div class="list-group list-group-flush">
+            {% for broadcast in broadcasts %}
+            <a  href="{% url 'broadcast_detail' broadcast.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-warning">
+                    <span class="d-block"><strong>{{ broadcast.title }}</strong></span>
+                    <span class="d-block"><small>{{ broadcast.created|date:"d F Y" }} {{ broadcast.created|time:"h:i A" }}</small></span>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-secodary text-center">You currently have no events. <a href="{% url 'create_event' %}" class="link-dark">Create an event</a>.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

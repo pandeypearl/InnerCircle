@@ -4,19 +4,19 @@ from .models import Broadcast
 class BroadcastForm(forms.ModelForm):
     class Meta:
         model = Broadcast
-        fields = (
+        fields = [
             'title',
             'content',
             'receivers',
-        )
+        ]
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Name'}),
-            'content': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Description'}),
-            'receivers': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Guests'}),
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Broadcast Title'}),
+            'content': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Broadcast Content'}),
+            'receivers': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Receivers'}),
         }
 
 
-class EditBroadcastForm(forms.Form):
+class EditBroadcastForm(forms.ModelForm):
     template_name = 'broadcasts/edit_broadcast.html'
     class Meta:
         model = Broadcast
@@ -25,6 +25,11 @@ class EditBroadcastForm(forms.Form):
             'content',
             'receivers',
         ]
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Broadcast Title'}),
+            'content': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Broadcast Content'}),
+            'receivers': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Receivers'}),
+        }
 
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance')

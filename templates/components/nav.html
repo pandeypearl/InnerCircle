@@ -39,7 +39,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
+            <a href="{% url 'broadcast_list' %}" class="nav-link {% if url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}text-secondary{% else %}text-white{% endif %}">
                 {% bs_icon 'megaphone' %} Broadcasts
             </a>
         </li>

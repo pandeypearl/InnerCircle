@@ -54,7 +54,7 @@ def create_broadcast(request):
         form: BroadcastForm()
 
     context = {
-        form: form,
+        'form': form,
     }
 
     return render(request, template, context)
@@ -89,7 +89,7 @@ def edit_broadcast(request, broadcast_id):
 
 login_required(login_url='signIn')
 def delete_broadcast(request, pk):
-    template = 'broadcasts/delete_broadcast'
+    template = 'broadcasts/delete_broadcast.html'
     broadcast = get_object_or_404(Broadcast, pk=pk)
 
     if request.method == 'POST':

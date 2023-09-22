@@ -5,6 +5,6 @@ urlpatterns = [
     path('broadcast_list', views.broadcast_list, name='broadcast_list'),
     path('broadcast_detail/<str:broadcast_id>', views.broadcast_detail, name='broadcast_detail'),
     path('create_broadcast', views.create_broadcast, name='create_broadcast'),
-    path('update_broadcast/<str:broadcast_id>/edit', views.edit_broadcast, name='update_broadcast'),
+    path('edit_broadcast/<str:broadcast_id>/edit', views.edit_broadcast, name='edit_broadcast'),
     path('delete_broadcast/<str:pk>/delete', views.delete_broadcast, name='delete_broadcast'),
 ]

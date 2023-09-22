@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Update {{ instance.event_name }}{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block content %}
+<section lass="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-between align-items-center" >
+        <a href="{% url 'broadcast_detail' instance.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <h4 class="text-secondary text-end"> Edit {{ instance.title }}</h4>
+    </div>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'edit_broadcast' broadcast_id=instance.id %}" class="form-floating" method="POST">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            {{ form.title }}
+            <label for="title">Broadcast Title</label>
+        </div>
+        <div class="mb-3">
+            <label for="content">Broadcast Content</label>
+            {{ form.content }}
+        </div>
+        <div class="mb-3">
+            <label for="{{ form.receivers.id_for_label }}">Recipients</label>
+            <!-- <select class="form-select" id="{{ form.receivers.id_for_label }}" name="{{ form.receivers.name }}" multiple>   
+                {% for choice in form.receivers %}
+                <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
+                {% endfor %}
+            </select> -->
+            {{ form.receivers }}
+        </div>
+
+        <button class="btn btn-dark" type="submit">Edit Broadcast</button>
+    </form>
+</section>
+{% endblock %}
