@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'users',
     'circle',
     'events',
+    'broadcasts',
 ]
 
 MIDDLEWARE = [
