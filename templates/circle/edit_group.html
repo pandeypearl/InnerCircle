@@ -24,15 +24,15 @@
     </div>
     {% endif %}
 
-    <form action="{% url 'edit_group' pk=instance.pk %}" class="form-floating" method="POST">
+    <form action="{% url 'edit_group' group_id=instance.id %}" class="form-floating" method="POST">
         {% csrf_token %}
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="{{form.group_name.name}}" value="{{instance.group_name}}">
             <label for="name">Group Name</label>
         </div>
-        <div class="form-floating mb-3">
-            <textarea class="form-control" name="{{form.description.name}}" id="" cols="30" rows="10" value="">{{instance.description}}</textarea>
+        <div class="mb-3">
             <label for="email">Group Description</label>
+            <textarea class="form-control" name="{{form.description.name}}" id="" cols="30" rows="10" value="">{{instance.description}}</textarea>
         </div>
         <div class="mb-3">
             <label for="{{ form.members.id_for_label }}">Group Members</label>

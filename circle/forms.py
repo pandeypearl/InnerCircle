@@ -81,6 +81,11 @@ class EditGroupForm(forms.ModelForm):
             'description',
             'members',
         ]
+        widgets = {
+            'group_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Group Name'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Group Description'}),
+            'members': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Group Members'}),
+        }
 
     def __init__(self, *args, **kwargs):
         instance = kwargs.get('instance')

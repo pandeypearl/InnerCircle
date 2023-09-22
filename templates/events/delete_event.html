@@ -15,6 +15,7 @@
     </div>
 
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_event' pk=event.pk %}" method="POST">
+        {% csrf_token %}
         <div class="bg-light p-5">
             <p><strong>{{event.event_name}}</strong><br>{{event.description}}</p>
             <p><strong>Date</strong><br>{{event.date|date:"d F Y"}}</p>

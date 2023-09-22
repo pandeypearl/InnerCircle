@@ -16,6 +16,7 @@
     </div>
 
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_group' pk=group.pk %}" method="POST">
+        {% csrf_token %}
         <div>
             <div>
                 <h4>{{ group.group_name }}</h4>

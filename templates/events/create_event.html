@@ -61,12 +61,13 @@
 
         <div class="mb-3">
             <label for="event_status">Event Status</label>
-            {% for radio in form.event_status %}
+            {{form.event_status}}
+            <!-- {% for radio in form.event_status %}
             <div class="form-check d-flex" style="gap: 10px;">
                 {{ radio.tag }}
                 <label class="form-check-label" for="{{radio.id_for_label}}">{{ radio.choice_label }}</label>
             </div>
-            {% endfor %}
+            {% endfor %} -->
         </div>
         
     

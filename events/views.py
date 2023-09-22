@@ -65,19 +65,23 @@ def create_event(request):
     return render(request, template, context)
 
 login_required(login_url='signIn')
-def update_event(request, pk):
+def update_event(request, event_id):
     template = 'events/update_event.html'
-    instance = get_object_or_404(Event)
+    instance = get_object_or_404(Event, id=event_id)
+    form = UpdateEventForm(request.POST, instance=instance)
 
     if request.method == 'POST':
         form = UpdateEventForm(request.POST, instance=instance)
-        try:
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Your event has been updated')
-                return redirect('event_detail', pk=pk)
-        except Exception as e:
-            messages.warning(request, 'Something went wrong. Please try again.')
+        if form.is_valid():
+            form.save()
+
+            guest_ids = request.POST.getlist('guests')
+            instance.guests.set(guest_ids)
+            messages.success(request, 'Your event has been updated')
+            return redirect('event_list')
+        else:
+            messages.warning(request, 'Something went wrong. Event was not updated due to an error.')
+            form = UpdateEventForm(instance=instance)   
     else:
         form = UpdateEventForm(instance=instance)
 
@@ -95,7 +99,8 @@ def delete_event(request, pk):
 
     if request.method == 'POST':
         event.delete()
-        return redirect('even_list')
+        messages.success(request, 'Your event has been deleted.')
+        return redirect('event_list')
 
     context = {
         'event': event,

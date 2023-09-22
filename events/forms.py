@@ -23,7 +23,7 @@ class EventForm(forms.ModelForm):
             'guests': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Guests'}),
             'dress_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dress Code'}),
             'note': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Event Notes'}),
-            'event_status': forms.RadioSelect(attrs={'type': 'radio', 'class': 'form-check'}),
+            'event_status': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Event Status'}),
         }
 
 
@@ -41,20 +41,30 @@ class UpdateEventForm(forms.ModelForm):
             'note',
             'event_status'
         ]
+        widgets = {
+            'event_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Name'}),
+            'description': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Description'}),
+            'date': forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control', 'placeholder': 'Date of Birth'}),
+            'location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Location'}),
+            'guests': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Guests'}),
+            'dress_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Dress Code'}),
+            'note': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Event Notes'}),
+            'event_status': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Event Status'}),
+        }
 
-        def __init__(self, *args, **kwargs):
-            instance = kwargs.get('instance')
-            super(UpdateEventForm, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        instance = kwargs.get('instance')
+        super(UpdateEventForm, self).__init__(*args, **kwargs)
 
-            if instance:
-                self.fields['event_name'].initial = instance.event_name
-                self.fields['description'].initial = instance.description
-                self.fields['date'].initial = instance.date
-                self.fields['location'].initial = instance.location
-                self.fields['guests'].initial = instance.guests
-                self.fields['dress_code'].initial = instance.dress_code
-                self.fields['note'].initial = instance.note
-                self.fields['event_status'].initial = instance.event_status
+        if instance:
+            self.fields['event_name'].initial = instance.event_name
+            self.fields['description'].initial = instance.description
+            self.fields['date'].initial = instance.date
+            self.fields['location'].initial = instance.location
+            self.fields['guests'].initial = instance.guests
+            self.fields['dress_code'].initial = instance.dress_code
+            self.fields['note'].initial = instance.note
+            self.fields['event_status'].initial = instance.event_status
 
 
 class RSVPForm(forms.ModelForm):

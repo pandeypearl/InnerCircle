@@ -52,34 +52,40 @@ def create_group(request):
             group.group_name = request.POST['group_name']
             group.description = request.POST['description']
             group.save()
-            messages.info(request, 'New group {{group.group_name}} created.')
+
+            member_ids = request.POST.getlist('members')
+            group.members.set(member_ids)
+            group.save()
+            messages.info(request, 'New group created.')
             return redirect('group_list')
         else:
-             messages.info(request, 'Something when wrong, please try again.')
-             return render(request, template, {'form': GroupForm})
+            messages.info(request, 'Something when wrong, please try again.')
+            return render(request, template, {'form': GroupForm})
     else:
         form: GroupForm()
 
     context = {
-        'form': GroupForm,
+        'form': form,
     }
 
     return render(request, template, context)
 
 @login_required(login_url='signIn')
-def edit_group(request, pk):
+def edit_group(request, group_id):
     template = 'circle/edit_group.html'
-    instance = get_object_or_404(Group, pk=pk)
+    instance = get_object_or_404(Group, id=group_id)
     form = EditGroupForm(request.POST, instance=instance)
 
     if request.method == 'POST':
         form = EditGroupForm(request.POST, instance=instance)
-        try:
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Your changes to the group have been saved')
-                return redirect('group_list', pk=pk)
-        except Exception as e:
+        if form.is_valid():
+            form.save()
+
+            members_ids = request.POST.getlist('members')
+            instance.members.set(members_ids)
+            messages.success(request, 'Your changes to the group have been saved')
+            return redirect('group_list')
+        else:
             messages.warning(request, 'Something went wrong. Your changes have not been saved')
     else:
         form: EditGroupForm(instance=instance)
@@ -98,6 +104,7 @@ def delete_group(request, pk):
 
     if request.method == 'POST':
         group.delete()
+        messages.success(request, 'Your event has been deleted.')
         return redirect('group_list')
 
     context = {
@@ -178,20 +185,20 @@ def create_member(request):
     return render(request, template, context)
 
 login_required(login_url='signIn')
-def edit_member(request, pk):
+def edit_member(request, member_id):
     template = 'circle/edit_member.html'
-    instance = get_object_or_404(Member, pk=pk)
+    instance = get_object_or_404(Member, id=member_id)
     form = EditMemberForm(request.POST, instance=instance)
 
     if request.method == 'POST':
         form = EditMemberForm(request.POST, instance=instance)
-        try:
-            if form.is_valid():
-                form.save()
-                messages.success(request, 'Your changes have been saved')
-                return redirect('member_list', pk=pk)
-        except Exception as e:
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your changes have been saved')
+            return redirect('member_list')
+        else:
             messages.warning(request, 'Something went wrong. Your changes have not been saved')
+            form: EditMemberForm(instance=instance)
     else:
         form: EditMemberForm(instance=instance)
 
@@ -209,6 +216,7 @@ def delete_member(request, pk):
 
     if request.method == 'POST':
         member.delete()
+        messages.success(request, 'Circle member has been deleted.')
         return redirect('member_list')
 
     context = {
