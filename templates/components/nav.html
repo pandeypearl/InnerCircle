@@ -49,8 +49,8 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
-                {% bs_icon 'card-list' %} Registries
+            <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or urla_name == 'edit_list' or url_name == 'delete_list' %}text-secondary{% else %}text-white{% endif %}">
+                {% bs_icon 'card-list' %} Lists
             </a>
         </li>
         <li class="nav-item">

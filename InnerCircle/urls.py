@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('circle.urls')),
     path('', include('events.urls')),
     path('', include('broadcasts.urls')),
+    path('', include('lists.urls')),
 ]
 
 # Serve static files during development

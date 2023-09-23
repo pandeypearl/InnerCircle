@@ -54,7 +54,7 @@ def create_event(request):
             return redirect('event_list')
         else:
             messages.warning(request, 'Something went wrong. Please try again.')
-            return render (request, template, {'form': EventForm})
+            return render(request, template, {'form': EventForm})
     else:
         form: EventForm()
 

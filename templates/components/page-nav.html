@@ -62,17 +62,15 @@
                 <a href="{% url 'create_event' %}" class="nav-link {% if url_name == 'create_event' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'calendar-plus' %} New Event</a>
             </li>
         </ul>
-    {% elif url_name == 'registries' %}
-        <h3 class="p-2">Registries</h3>
+    {% elif url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or url_name == 'edit_list' or url_name == 'delete_list' %}
+        <h3 class="p-2">Your Lists</h3>
+        <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon 'person-lines-fill' %} New Registry</a>
+                <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'edit_list' or url_name == 'delete_lits' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'card-list' %} <small>All Lists</small></a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon 'card-list' %} Active Registries</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'settings' %}" class="nav-link text-dark">{% bs_icon 'card-checklist' %} All Registries</a>
+                <a href="{% url 'create_list' %}" class="nav-link {% if url_name == 'create_lits' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'person-lines-fill' %} <small>New List</small> </a>
             </li>
         </ul>
     {% elif url_name == 'trips' %}

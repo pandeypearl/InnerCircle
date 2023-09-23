@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Lists{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <h4 class="text-end text-secondary">Lists</h4>
+
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <div>
+        <h6 class="text-secondary">{% bs_icon 'card-list' %}{{ user_lists.count }}</h6>
+
+        {% if user_lists %}
+        <div class="list-group list-group-flush">
+            {% for user_list in user_lists %}
+            <a  href="{% url 'list_detail' user_list.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-danger">
+                    <span class="d-block"><strong>{{ user_list.list_name }}</strong><!-- &nbsp;&nbsp;{% bs_icon 'list-ul' %}<small>{{ user_lists.ListItem.count }}</small>--></span>
+                    <span class="d-block"><small>{{ user_list.created|date:"d F Y" }}</small></span>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-secodary text-center">You currently have no lists. <a href="{% url 'create_list' %}" class="link-dark">Create a list</a>.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

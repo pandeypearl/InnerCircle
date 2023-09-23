@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'circle',
     'events',
     'broadcasts',
+    'lists',
 ]
 
 MIDDLEWARE = [
