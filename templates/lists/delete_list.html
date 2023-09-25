@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Delete List{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <div class="d-flex justify-content-between align-items-center" >
+        <a href="{% url 'list_detail' list.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <h4 class="text-dark text-end"> Delete {{ list.list_name }}</h4>
+    </div>
+    <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_list' pk=list.pk %}" method="POST">
+        {% csrf_token %}
+        <div class="bg-light p-5">
+            <h4>{{ list.list_name }}</h4>
+            <div class="d-flex" style="gap: 50px;">
+                <p><small><strong>Created</strong><br>{{ list.created }}</small></p>
+                <p><small><strong>Updated</strong><br>{{ list.updated }}</small></p>
+            </div>
+            <p>{{ list.description }}</p>
+    
+            {% if list_items %}
+            <div class="list-group list-group-flush">
+                {% for list_item in list_items %}
+                <li class="list-group-item d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center" style="gap: 20px;">
+                        <span>{% bs_icon 'dash-square' %}</span>
+                        <img class="object-fit-cover border rounded" src="{{list_item.item_image.url}}" alt="{{list_item.item_name}}" style="width: 30px; height: 30px">
+                        <span>{{list_item.item_name}}</span>
+                        <a href="{{ list_item.item_url }}" target="_blank" class="btn btn-dark btn-sm">view item</a>
+                    </div>
+                </li>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p><strong>There are no items in this list.</strong></p>
+            {% endif %}
+        </div>
+
+        {% if list.receivers %}
+        <div class="list-group list-group-flush">
+            <div class="d-flex align-items-center" style="gap:20px">
+                <h5 class="text-secondary">List Recipients</h5>
+                <span class="badge bg-secondary rounded-pill">{% bs_icon 'person' %}{{ event.guests.count }}</span>
+            </div>
+        
+            {% for receiver in list.receivers.all %}
+            <a  href="{% url 'member_detail' receiver.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-danger">
+                <div class="d-flex" style="gap: 20px">
+                    <img class="member-img-sm" src="{{ receiver.image.url }}" alt="Member Image">
+                    <span>{{ receiver.name }}</span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+            <p class="text-secodary text-center">There are no recipients for this list</p>
+        {% endif %}
+
+        <div>
+            <p>Are you sure sure you would like to delete this list? Once you delete it, it can not be undone.</p>
+
+            <button class="btn btn-dark" type="submit">{% bs_icon 'trash3-fill' %} Delete</button>
+        </div>
+        
+    </form>
+
+    
+</section>
+{% endblock %}

@@ -32,6 +32,14 @@ class ListItemForm(forms.ModelForm):
         }
 
 
+class DeleteItemForm(forms.ModelForm):
+    class Meta:
+        model = ListItem
+        fields = []
+        
+    item_id = forms.IntegerField(widget=forms.HiddenInput())
+
+
 class EditListForm(forms.ModelForm):
     class Meta:
         model = List

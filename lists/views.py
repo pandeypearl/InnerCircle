@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import List, ListItem, CheckedItem
-from .forms import ListForm, ListItemForm, EditListForm
+from .forms import ListForm, ListItemForm, EditListForm, DeleteItemForm
 
 
 # Create your views here.
@@ -25,31 +25,47 @@ def list_detail(request, list_id):
     form = ListItemForm(request.POST, request.FILES)
 
     if request.method == 'POST':
-        form = ListItemForm(request.POST, request.FILES)
-        if form.is_valid():
-            item = form.save(commit=False)
-            item.item_name = request.POST['item_name']
-            item.item_image = request.FILES['item_image']
-            item.item_url = request.POST['item_url']
-            item = ListItem.objects.create(
-                list=list, 
-                item_name=item.item_name, 
-                item_image=item.item_image, 
-                item_url=item.item_url
-            )
-            item.save()
-            messages.success(request, 'List item added.')
-            return redirect('list_detail',  list_id)
+        if 'delete_item' in request.POST:
+            delete_form = DeleteItemForm(request.POST, request.FILES)
+            if delete_form.is_valid():
+                item_id_to_delete = delete_form.cleaned_data['item_id']
+                item_to_delete = get_object_or_404(ListItem, pk=item_id_to_delete)
+                item_to_delete.delete()
+                messages.success(request, 'List item deleted')
+                return redirect('list_detail', list_id=list_id)
+            else:
+                for field, errors in delete_form.errors.items():
+                    for error in errors:
+                        messages.warning(request, f"Error in {field}: {error}")
+                    return redirect('list_detail', list_id=list_id)
         else:
-            messages.warning(request, 'Something went wrong. Please try again.')
-            return render(request, template, {'form': ListItemForm})
+            form = ListItemForm(request.POST, request.FILES)
+            if form.is_valid():
+                item = form.save(commit=False)
+                item.item_name = request.POST['item_name']
+                item.item_image = request.FILES['item_image']
+                item.item_url = request.POST['item_url']
+                item = ListItem.objects.create(
+                    list=list, 
+                    item_name=item.item_name, 
+                    item_image=item.item_image, 
+                    item_url=item.item_url
+                )
+                item.save()
+                messages.success(request, 'List item added.')
+                return redirect('list_detail',  list_id)
+            else:
+                messages.warning(request, 'Something went wrong. Please try again.')
+                return render(request, template, {'form': ListItemForm})
     else:
         form: ListItemForm()
+        delete_form = DeleteItemForm()
 
     context = {
         'list': list,
         'list_items': list_items,
         'form': form,
+        'delete_form': delete_form,
     }
 
     return render(request, template, context)
