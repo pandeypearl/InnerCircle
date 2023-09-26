@@ -64,3 +64,12 @@ class EditListForm(forms.ModelForm):
             self.fields['receivers'].initial = instance.receivers
 
 
+class CheckListForm(forms.ModelForm):
+    class Meta:
+        model = CheckedItem
+        fields = [
+            'checked_status',
+        ]
+        widgets = {
+            'checked_status': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Checked Status'}),
+        }

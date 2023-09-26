@@ -72,6 +72,9 @@ class RSVPForm(forms.ModelForm):
         model = RSVP
         fields = [
             'response_status',
-            'guest_count',
             'dietary_preferences',
         ]
+        widgets = {
+            'response_status': forms.Select(attrs={'class': 'form-select', 'placeholder': 'RSVP Response'}),
+            'dietary_preferences': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Dietary Preferences'}),
+        }

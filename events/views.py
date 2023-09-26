@@ -110,20 +110,39 @@ def delete_event(request, pk):
 
 def rsvp_view(request, event_id, member_id):
     # Get Event and Member objects
-    template = 'rsvp.html'
+    template = 'events/rsvp.html'
     event = get_object_or_404(Event, pk=event_id)
     member = get_object_or_404(Member, pk=member_id)
     form = RSVPForm(request.POST)
+
+    try:
+        rsvp = RSVP.objects.get(event=event, guest=member)
+        response_status = rsvp.response_status
+    except RSVP.DoesNotExist:
+        rsvp = None
+        response_status = None
     
     if request.method == 'POST':
-        form = RSVPForm(request.POST)
+        form = RSVPForm(request.POST, instance=rsvp)
         if form.is_valid():
+            new_response_status = form.cleaned_data['response_status']
+
+            if response_status == 'Not Attending' and new_response_status == 'Attending':
+                event.guest_count += 1
+            elif response_status == 'Attending' and new_response_status == 'Not Attending':
+                event.guest_count -= 1
+        
             rsvp = form.save(commit=False)
             rsvp.event = event
             rsvp.guest = member
+            rsvp.response_status = new_response_status
+            rsvp.response_status = request.POST['response_status']
+            rsvp.dietary_preferences = request.POST['dietary_preferences']
             rsvp.save()
-            return redirect('rsvp_done', event_id=event_id)
+            messages.success(request, 'You RSVP Response has been submitted.')
+            return redirect('rsvp_done', event_id=event_id, member_id=member_id)
         else:
+            messages.warning(request, 'Something went wrong , please try again.')
             form = RSVPForm()
 
     context = {
@@ -134,12 +153,20 @@ def rsvp_view(request, event_id, member_id):
 
     return render(request, template, context)
 
-def rsvp_done(request, event_id):
-    template = 'event/rsvp_done.html'
-    event = Event.objects.get(pk=event_id)
+def rsvp_done(request, event_id, member_id):
+    template = 'events/rsvp_done.html'
+    event = get_object_or_404(Event, pk=event_id)
+    member = get_object_or_404(Member, pk=member_id)
+
+    try:
+        rsvp = RSVP.objects.get(event=event, guest=member)
+    except RSVP.DoesNotExist:
+        rsvp = None
 
     context = {
         'event': event,
+        'member': member,
+        'rsvp': rsvp,
     }
 
     return render(request, template, context)

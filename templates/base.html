@@ -28,7 +28,18 @@
 <body class="bg-light">
     <div class="wrapper">
         {% with request.resolver_match.url_name as url_name %}
-            {% if not url_name == 'signUp' and not url_name == 'signIn' %}
+            {% if url_name == 'signUp' or url_name == 'signIn' %}
+                {% block auth_content %}
+                {% endblock %}
+            {% elif  url_name == 'rsvp' or url_name == 'rsvp_done' or url_name == 'check_list' or url_name == 'check_list_done' %}
+                <div class="d-flex justify-content-center align-self-center" style="height: 90vh;">
+                    <div class="bg-white p-5 rounded overflow-auto" >
+                        {% block member_content %}
+                        {% endblock %}
+                    </div>
+                </div>
+               
+            {% else %}
             <div class="container">
                 <div class="row">
                     <div class="col bg-dark text-white main-nav">
@@ -47,9 +58,6 @@
                     </div>
                 </div>
             </div>
-            {% else %}
-            {% block auth_content %}
-                {% endblock %}
             {% endif %}
         {% endwith %}
     </div>

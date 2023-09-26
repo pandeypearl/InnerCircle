@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | RSVP Done {% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block member_content %}
+<div>
+    <h4 class="text-white text-center bg-dark mb-5">Rsvp Status for {{ member.name }} at {{ event.event_name }}</h4>
+    {% if rsvp %}
+    <h3>Your RSVP response has been sent!</h3>
+    <p><strong>RSVP Status</strong><br>{{ rsvp.response_status }}</p>
+    <p><strong>Dietary Preferences</strong><br>{{ rsvp.dietary_preferences }}</p>
+    {% else %}
+    <h3>No RSVP submitted for this event.</h3>
+    {% endif %}
+    <hr>
+    <div class="d-flex justify-content-around">
+        <div style="width: 30%;">
+            
+            <p><strong>Event</strong><br>{{ event.event_name }}</p>
+            <p><strong>Host</strong><br>{{ event.user.first_name }} {{ event.user.last_name }}</p>
+            <p><strong>Date</strong><br>{{event.date|date:"d F Y"}}</p>
+            <p><strong>Time</strong><br>{{event.date|time:"h:i A"}}</p>
+            <p><strong>Location</strong><br>{{event.location}}</p>
+        </div>
+
+        <div style="width: 60%;">
+            <p><strong>Dress Code</strong><br>{{event.dress_code}}</p>
+            <p><strong>Notes</strong><br>{{event.note}}</p>
+            <p><strong>Event Status</strong> <br>{{event.event_status}}</p>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cache_bust %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | RSVP{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block member_content %}
+<div>
+    <h4 class="text-white text-center bg-dark mb-5">Invitation for {{ member.name }}</h4>
+    <h3>You're invited to <strong>{{ event.event_name }}</strong></h3>
+    <hr>
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+        <div class="alert alert-primary" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="d-flex justify-content-around">
+        <div style="width: 30%;">
+            <p><strong>Host</strong><br>{{ event.user.first_name }} {{ event.user.last_name }}</p>
+            <p><strong>Date</strong><br>{{event.date|date:"d F Y"}}</p>
+            <p><strong>Time</strong><br>{{event.date|time:"h:i A"}}</p>
+            <p><strong>Location</strong><br>{{event.location}}</p>
+        </div>
+
+        <div style="width: 60%;">
+            <p><strong>Dress Code</strong><br>{{event.dress_code}}</p>
+            <p><strong>Notes</strong><br>{{event.note}}</p>
+            <p><strong>Event Status</strong> <br>{{event.event_status}}</p>
+        </div>
+
+    </div>
+    
+    <hr>
+    
+    <form class="form form-floating" action="{% url 'rsvp' event.id member.id %}" method="POST">
+        {% csrf_token %}
+        <div class="form-floating mb-3">
+            {{ form.response_status }}
+            <label for="floatingInput">RSVP Response</label>
+        </div>
+
+        <div class="mb-3">
+            <label for="floatingInput">Dietary Preferences</label>
+            {{ form.dietary_preferences }}
+        </div>
+        <button  class="btn btn-dark" type="submit">Submit</button>
+    </form>
+</div>
+    
+{% endblock %}

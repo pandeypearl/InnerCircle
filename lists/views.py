@@ -2,7 +2,14 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import List, ListItem, CheckedItem
-from .forms import ListForm, ListItemForm, EditListForm, DeleteItemForm
+from circle.models import Member
+from .forms import (
+    ListForm,
+    ListItemForm,
+    EditListForm, 
+    DeleteItemForm,
+    CheckListForm,
+)
 
 
 # Create your views here.
@@ -138,6 +145,42 @@ def delete_list(request, pk):
         list.delete()
         messages.success(request, 'Your list has been deleted.')
         return redirect('lists')
+
+    context = {
+        'list': list,
+    }
+
+    return render(request, template, context)
+
+def check_list_item(request, list_id, member_id):
+    template = 'check_list.html'
+    list = get_object_or_404(List, pk=list_id)
+    member = get_object_or_404(Member, pk=member_id)
+    form = CheckListForm(request.POST)
+
+    if request.method == 'POST':
+        form = CheckListForm(request.POST)
+        if form.is_valid():
+            checked_item = form.save(commit=False)
+            checked_item.list = list
+            checked_item.receiver = member
+            checked_item.checked_status = request.POST['checked_status']
+            checked_item.save()
+            return redirect('check_list_done', list_id=list_id)
+        else:
+            form = CheckListForm()
+
+    context = {
+        'list': list,
+        'member': member,
+        'form': form,
+    }
+
+    return render(request, template, context)
+
+def check_list_done(request, list_id):
+    template = 'lists/check_list_done.html'
+    list = List.objects.get(pk=list_id)
 
     context = {
         'list': list,
