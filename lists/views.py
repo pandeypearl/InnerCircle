@@ -1,14 +1,14 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import List, ListItem, CheckedItem
+from .models import List, ListItem, CheckItem
 from circle.models import Member
 from .forms import (
     ListForm,
     ListItemForm,
     EditListForm, 
     DeleteItemForm,
-    CheckListForm,
+    CheckItemForm
 )
 
 
@@ -152,38 +152,42 @@ def delete_list(request, pk):
 
     return render(request, template, context)
 
-def check_list_item(request, list_id, member_id):
-    template = 'check_list.html'
-    list = get_object_or_404(List, pk=list_id)
-    member = get_object_or_404(Member, pk=member_id)
-    form = CheckListForm(request.POST)
+def check_list_item(request, list_id, recipient_id):
+    template = 'lists/check_list.html'
+    recipient = Member.objects.get(id=recipient_id)
+    list = List.objects.get(id=list_id)
+    form = CheckItemForm(request.POST, recipient=recipient)
+    
+    if recipient not in list.receivers.all():
+        return HttpResponse("You are not authorized to access this list")
+    
+    items = ListItem.objects.filter(list=list)
+    checked_items = CheckItem.objects.filter(recipient=recipient, item__list=list)
 
     if request.method == 'POST':
-        form = CheckListForm(request.POST)
+        form = CheckItemForm(request.POST, recipient=recipient)
         if form.is_valid():
-            checked_item = form.save(commit=False)
-            checked_item.list = list
-            checked_item.receiver = member
-            checked_item.checked_status = request.POST['checked_status']
-            checked_item.save()
-            return redirect('check_list_done', list_id=list_id)
+            selected_item_ids = form.cleaned_data.get('checked_items')
+
+            CheckItem.objects.filter(recipient=recipient, item__list=list).exclude(item_id__in=selected_item_ids).delete()
+            
+            for item_id in selected_item_ids:
+                CheckItem.objects.get_or_create(recipient=recipient, item_id=item_id)
+            messages.success(request, 'List updated')
+            return redirect('check_list', list_id=list_id, recipient_id=recipient_id)
         else:
-            form = CheckListForm()
+            messages.warning(request, 'Something went wrong. Please try again')
+            return redirect('check_list', list_id=list_id, recipient_id=recipient_id)
+
+    else:
+        form = CheckItemForm(recipient=recipient,
+         initial={'checked_items': checked_items.values_list('item_id', flat=True)})
 
     context = {
+        'items': items,
         'list': list,
-        'member': member,
+        'recipient': recipient,
         'form': form,
-    }
-
-    return render(request, template, context)
-
-def check_list_done(request, list_id):
-    template = 'lists/check_list_done.html'
-    list = List.objects.get(pk=list_id)
-
-    context = {
-        'list': list,
     }
 
     return render(request, template, context)

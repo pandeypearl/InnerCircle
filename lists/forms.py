@@ -1,5 +1,6 @@
 from django import forms
-from .models import List, ListItem, CheckedItem
+from .models import List, ListItem
+from circle.models import Member
 
 
 class ListForm(forms.ModelForm):
@@ -64,12 +65,20 @@ class EditListForm(forms.ModelForm):
             self.fields['receivers'].initial = instance.receivers
 
 
-class CheckListForm(forms.ModelForm):
-    class Meta:
-        model = CheckedItem
-        fields = [
-            'checked_status',
-        ]
-        widgets = {
-            'checked_status': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Checked Status'}),
-        }
+class CheckItemForm(forms.Form):
+
+    def __init__(self, *args, recipient=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Filtering the queryset to display only unchecked items for the contact
+        self.fields['checked_items'].queryset = ListItem.objects.filter(list__receivers=recipient, checked=False)
+            
+    checked_items = forms.ModelMultipleChoiceField(
+        queryset=ListItem.objects.none(),
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+    )
+
+    item_ids = forms.MultipleChoiceField(
+        widget=forms.MultipleHiddenInput,
+        required=False,
+    )

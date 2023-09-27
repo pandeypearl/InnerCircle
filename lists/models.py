@@ -21,17 +21,17 @@ class ListItem(models.Model):
     item_name = models.CharField(max_length=255)
     item_image = models.ImageField(upload_to='list_items/', default='')
     item_url = models.URLField()
+    checked = models.BooleanField(default=False)
 
     def __str__(self):
         return self.item_name
 
 
-class CheckedItem(models.Model):
-    list_item = models.ForeignKey(ListItem, on_delete=models.CASCADE)
+class CheckItem(models.Model):
+    item = models.ForeignKey(ListItem, on_delete=models.CASCADE)
     recipient = models.ForeignKey(Member, on_delete=models.CASCADE)
-    checked_status = models.CharField(max_length=15, choices=[('Unchecked', 'Unchecked'),
-        ('Checked', 'Checked')], default='Unchecked')
+    checked_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.recipient.name} checked for  {self.list_item.item_name}"
+        return f"{self.recipient.name} checked {self.item}  at {self.checked_at}"
 

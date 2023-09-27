@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Event, RSVP
 from circle.models import Member
 from .forms import EventForm, UpdateEventForm, RSVPForm
+from .utils import send_rsvp_email, generate_rsvp_url
 
 
 # Create your views here.
@@ -50,7 +51,14 @@ def create_event(request):
             guest_ids = request.POST.getlist('guests')
             event.guests.set(guest_ids)
             event.save()
-            messages.success(request, 'New event created.')
+
+            # Sending Invitation to Guests
+            for guest_id in guest_ids:
+                member = Member.objects.get(id=guest_id)
+                rsvp_url = generate_rsvp_url(event, member)
+                send_rsvp_email(request, event, member, rsvp_url)
+
+            messages.success(request, 'New event created.Invitations sent.')
             return redirect('event_list')
         else:
             messages.warning(request, 'Something went wrong. Please try again.')
@@ -107,6 +115,7 @@ def delete_event(request, pk):
     }
 
     return render(request, template, context)
+
 
 def rsvp_view(request, event_id, member_id):
     # Get Event and Member objects

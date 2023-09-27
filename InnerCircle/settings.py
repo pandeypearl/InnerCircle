@@ -146,6 +146,7 @@ EMAIL_PORT = 587 #Use SMTP port
 EMAIL_USE_TLS = True #Use TLS for secure email communication
 EMAIL_HOST_USER = 'your-email@example.com' #email address for sending password
 EMAIL_HOST_PASSWORD = 'your-email-password' #Email password or app-specific password
+DEFAULT_FROM_EMAIL = 'your-email@example.com'
 
 # Authentication
 LOGIN_URL = 'signIn'
