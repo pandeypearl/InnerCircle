@@ -7,4 +7,5 @@ urlpatterns = [
     path('create_broadcast', views.create_broadcast, name='create_broadcast'),
     path('edit_broadcast/<str:broadcast_id>/edit', views.edit_broadcast, name='edit_broadcast'),
     path('delete_broadcast/<str:pk>/delete', views.delete_broadcast, name='delete_broadcast'),
+    path('read_broadcast/<int:broadcast_id>/<int:member_id>/', views.read_broadcast, name='read_broadcast'),
 ]

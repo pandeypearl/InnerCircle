@@ -5,9 +5,12 @@
         <li class="nav-item navbar-brand">
             <a href="{% url 'home' %}" class="nav-link">InnerCircle</a>
         </li>
-        <li class="nav-item"><img src="{% static 'img/pic_female.png' %}" alt="Profile Picture"></li>
-        <!-- <li class="nav-item text-center"><small>@{{user.username}}</small></li> -->
-        <li class="nav-item"><small>{% bs_icon 'people-fill' %} 0</small></li>
+        <li class="nav-item">
+            <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture">
+            <!-- <img src="{% static 'img/pic_female.png' %}" alt="Profile Picture"> -->
+        </li>
+            <li class="nav-item text-center"><small>@{{user.username}}</small></li>
+        <li class="nav-item"><small>{% bs_icon 'people-fill' %} {{member_count}}</small></li>
         
     </ul>
     {% with request.resolver_match.url_name as url_name %}
@@ -34,33 +37,23 @@
         <li class="nav-item">
             <a href="{% url 'member_list' %}" 
             class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_group' or url_name == 'delete_group' %}
-            text-secondary{% else %}text-white{% endif %}">
+            text-secondary{% else %}text-info{% endif %}">
                 {% bs_icon 'people' %} Circle
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'broadcast_list' %}" class="nav-link {% if url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}text-secondary{% else %}text-white{% endif %}">
+            <a href="{% url 'broadcast_list' %}" class="nav-link {% if url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}text-secondary{% else %}text-warning{% endif %}">
                 {% bs_icon 'megaphone' %} Broadcasts
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}text-secondary{% else %}text-white{% endif %}">
+            <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}text-secondary{% else %}text-success{% endif %}">
                 {% bs_icon 'calendar-event' %} Events
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or urla_name == 'edit_list' or url_name == 'delete_list' %}text-secondary{% else %}text-white{% endif %}">
+            <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or urla_name == 'edit_list' or url_name == 'delete_list' %}text-secondary{% else %}text-danger{% endif %}">
                 {% bs_icon 'card-list' %} Lists
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
-                {% bs_icon 'airplane' %} Trips
-            </a>
-        </li>
-        <li class="nav-item">
-            <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
-                {% bs_icon 'collection' %} Albums
             </a>
         </li>
     </ul>

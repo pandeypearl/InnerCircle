@@ -65,20 +65,29 @@ class EditListForm(forms.ModelForm):
             self.fields['receivers'].initial = instance.receivers
 
 
-class CheckItemForm(forms.Form):
+class CheckItemForm(forms.ModelForm):
+    class Meta:
+        model = ListItem
+        fields = ['checked']
+        checked = forms.BooleanField(required=False, initial=False)
+        widgets = {
+            'checked': forms.CheckboxInput(attrs={'class': 'checkbox'})
+        }
 
-    def __init__(self, *args, recipient=None, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Filtering the queryset to display only unchecked items for the contact
-        self.fields['checked_items'].queryset = ListItem.objects.filter(list__receivers=recipient, checked=False)
+# class CheckItemForm(forms.Form):
+
+#     def __init__(self, *args, recipient=None, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         # Filtering the queryset to display only unchecked items for the contact
+#         self.fields['checked_items'].queryset = ListItem.objects.filter(list__receivers=recipient, checked=False)
             
-    checked_items = forms.ModelMultipleChoiceField(
-        queryset=ListItem.objects.none(),
-        widget=forms.CheckboxSelectMultiple,
-        required=False,
-    )
+#     checked_items = forms.ModelMultipleChoiceField(
+#         queryset=ListItem.objects.none(),
+#         widget=forms.CheckboxSelectMultiple,
+#         required=False,
+#     )
 
-    item_ids = forms.MultipleChoiceField(
-        widget=forms.MultipleHiddenInput,
-        required=False,
-    )
+#     item_ids = forms.MultipleChoiceField(
+#         widget=forms.MultipleHiddenInput,
+#         required=False,
+#     )

@@ -32,29 +32,21 @@
             </div>
 
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-primary">
+                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
                     <span>{% bs_icon 'people' %}&nbsp;&nbsp;&nbsp;Circle</span>
-                    <span class="badge bg-dark rounded-pill">0</span>
+                    <span class="badge bg-dark rounded-pill">{{ member_count }}</span>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-secondary">
+                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-warning">
                     <span>{% bs_icon 'megaphone' %}&nbsp;&nbsp;&nbsp;Broadcasts</span>
-                    <span class="badge bg-dark rounded-pill">0</span>
+                    <span class="badge bg-dark rounded-pill">{{ broadcast_count }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-success">
                     <span>{% bs_icon 'calendar-event' %}&nbsp;&nbsp;&nbsp;Events</span>
-                    <span class="badge bg-dark rounded-pill">0</span>
+                    <span class="badge bg-dark rounded-pill">{{ event_count }}</span>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-danger">
-                    <span>{% bs_icon 'card-list' %}&nbsp;&nbsp;&nbsp;Registries</span>
-                    <span class="badge bg-dark rounded-pill">0</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-warning">
-                    <span>{% bs_icon 'airplane' %}&nbsp;&nbsp;&nbsp;Trips</span>
-                    <span class="badge bg-dark rounded-pill">0</span>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
-                    <span>{% bs_icon 'collection' %}&nbsp;&nbsp;&nbsp;Albums</span>
-                    <span class="badge bg-dark rounded-pill">0</span>
+                    <span>{% bs_icon 'card-list' %}&nbsp;&nbsp;&nbsp;Lists</span>
+                    <span class="badge bg-dark rounded-pill">{{ list_count }}</span>
                 </li>
             </ul>
         </div>

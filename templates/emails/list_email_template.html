@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>List Email</title>
+</head>
+<body>
+    <p>Hi {{ member.name }}</p>
+    <p>You are invited view and check of items in the list <strong>{{ list.list_name }}</strong> by {{ list.user.first_name }} {{ list.user.last_name }}</p>
+    <p><a href="{{ list_check_url }}">Click here</a> to view the list and check off items.</p>
+</body>
+</html>

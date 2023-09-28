@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 from .models import List, ListItem, CheckItem
 from circle.models import Member
 from .forms import (
@@ -10,6 +11,7 @@ from .forms import (
     DeleteItemForm,
     CheckItemForm
 )
+from .utils import send_list_email, generate_list_check_url
 
 
 # Create your views here.
@@ -94,6 +96,13 @@ def create_list(request):
             receiver_ids = request.POST.getlist('receivers')
             list.receivers.set(receiver_ids)
             list.save()
+
+            # Sending List to receivers
+            for receiver_id in receiver_ids:
+                member = Member.objects.get(id=receiver_id)
+                list_check_url = generate_list_check_url(list, member)
+                send_list_email(request, list, member, list_check_url)
+                
             messages.success(request, 'New list created.')
             return redirect('lists')
         else:
@@ -152,42 +161,40 @@ def delete_list(request, pk):
 
     return render(request, template, context)
 
+
 def check_list_item(request, list_id, recipient_id):
     template = 'lists/check_list.html'
-    recipient = Member.objects.get(id=recipient_id)
-    list = List.objects.get(id=list_id)
-    form = CheckItemForm(request.POST, recipient=recipient)
-    
-    if recipient not in list.receivers.all():
-        return HttpResponse("You are not authorized to access this list")
-    
-    items = ListItem.objects.filter(list=list)
-    checked_items = CheckItem.objects.filter(recipient=recipient, item__list=list)
+    list_obj = get_object_or_404(List, id=list_id)
+    recipient = get_object_or_404(Member, id=recipient_id)
+    list_items = ListItem.objects.filter(list=list_obj)
 
     if request.method == 'POST':
-        form = CheckItemForm(request.POST, recipient=recipient)
-        if form.is_valid():
-            selected_item_ids = form.cleaned_data.get('checked_items')
-
-            CheckItem.objects.filter(recipient=recipient, item__list=list).exclude(item_id__in=selected_item_ids).delete()
-            
-            for item_id in selected_item_ids:
-                CheckItem.objects.get_or_create(recipient=recipient, item_id=item_id)
+        forms = [CheckItemForm(request.POST, instance=item) for item in list_items]
+        if all(form.is_valid() for form in forms):
+            for form in forms:
+                form.save()
+                item = form.instance
+                if item.checked:
+                    CheckItem.objects.get_or_create(item=item, recipient=recipient)
+                else:
+                    CheckItem.objects.filter(item=item, recipient=recipient).delete()
             messages.success(request, 'List updated')
-            return redirect('check_list', list_id=list_id, recipient_id=recipient_id)
+            return redirect('check_list', list_id, recipient_id)
         else:
             messages.warning(request, 'Something went wrong. Please try again')
             return redirect('check_list', list_id=list_id, recipient_id=recipient_id)
 
-    else:
-        form = CheckItemForm(recipient=recipient,
-         initial={'checked_items': checked_items.values_list('item_id', flat=True)})
-
+    forms = [CheckItemForm(instance=item) for item in list_items]
+    items_and_forms = zip(list_items, forms)
+        
     context = {
-        'items': items,
-        'list': list,
+        'list_obj': list_obj,
         'recipient': recipient,
-        'form': form,
+        'list_items': list_items,
+        'forms': forms,
+        'items_and_forms': items_and_forms,
     }
 
     return render(request, template, context)
+
+

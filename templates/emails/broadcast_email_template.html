@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Email</title>
+    <title>Broadcast Email</title>
 </head>
 <body>
     <p>Hi {{ member.name }}</p>
-    <p>You are invited to RSVP for the event <strong>{{ event.event_name }}</strong> by {{ event.user.first_name }} {{ event.user.last_name }}</p>
-    <p><a href="{{ rsvp_url }}">Click here</a> to view the event and RSVP.</p>
+    <p>You are invited to read <strong>{{ broadcast.title }}</strong> by {{ broadcast.user.first_name}} {{ broadcast.user.last_name}}</p>
+    <p><a href="{{ broadcast_url }}">Click here</a> to view.</p>
 </body>
 </html>

@@ -31,7 +31,7 @@
             {% if url_name == 'signUp' or url_name == 'signIn' %}
                 {% block auth_content %}
                 {% endblock %}
-            {% elif  url_name == 'rsvp' or url_name == 'rsvp_done' or url_name == 'check_list' or url_name == 'check_list_done' %}
+            {% elif  url_name == 'rsvp' or url_name == 'rsvp_done' or url_name == 'check_list' or url_name == 'read_broadcast' %}
                 <div class="d-flex justify-content-center align-self-center" style="height: 90vh;">
                     <div class="bg-white p-5 rounded overflow-auto" >
                         {% block member_content %}

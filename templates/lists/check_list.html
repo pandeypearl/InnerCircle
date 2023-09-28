@@ -10,10 +10,10 @@
 {% block member_content %}
 <div>
     <p class="text-secondary">{% bs_icon 'person' %} {{ recipient.name }}</p>
-    <h2 class="text-white text-center bg-dark mb-5"> {{ list.list_name }}</h2>
+    <h2 class="text-white text-center bg-dark mb-5 p-3"> {{ list_obj.list_name }}</h2>
     <div class="d-flex justify-content-between">
-        <p style="width: 40%"><strong>List By</strong><br>{{ list.user.first_name }} {{ list.user.last_name }}</p>
-        <p style="width: 40%"><strong>Created</strong><br>{{ list.created|date:"d F Y" }}</p>
+        <p style="width: 40%"><strong>List By</strong><br>{{ list_obj.user.first_name }} {{ list_obj.user.last_name }}</p>
+        <p style="width: 40%"><strong>Created</strong><br>{{ list_obj.created|date:"d F Y" }}</p>
     </div>
     <p>{{ list.description }}</p>  
 
@@ -26,28 +26,25 @@
         {% endfor %}
     </div>
     {% endif %}
-
-    <form class="form mt-5" action="{% url 'check_list' list_id=list.id recipient_id=recipient.id %}" method="POST">
+    <form action="{% url 'check_list' list_id=list_obj.id recipient_id=recipient.id %}" method="POST">
         {% csrf_token %}
-        <h5>Check item(s) for {{list.list_name}}</h5>
+        <h5>Check item(s) for {{list_obj.list_name}}</h5>
         <ul class="list-group list-group-flush">
-            {% for item in items %}
-                <li class="list-group-item list-group-item-danger d-flex align-items-center justify-content-around">
-                    <input type="hidden" name="item_ids" value="{{ item.id }}">
-                    <input type="checkbox" name="checked_items" value="{{ item.id }}" {% if item.id in checked_items %}checked{% endif %}>
+            {% for item, form in items_and_forms %}
+            <li class="list-group-item list-group-item-danger d-flex align-items-center justify-content-around">
+                    <input type="checkbox" name="checked" {% if item.checked %}checked{% endif %}>
+                    <input type="hidden" name="item_id" value="{{ item.id }}">
                     <img class="object-fit-cover border rounded" src="{{ item.item_image.url }}" alt="{{ item.item_name }}" style="width: 30px; height: 30px">
                     <strong>{{ item.item_name }}</strong>
-                    <a href="{{ item.item_url }}" target="_blank" class="badge bg-dark rounded-pill" style="text-decoration: none;">view item</a>
-                </li>
+                    <a href="{{ item.item_url }}" target="_blank" class="badge bg-dark rounded-pill" style="text-decoration: none;">view item</a> 
+            </li>
             {% endfor %}
         </ul>
-       
+
         <div class="mt-5 d-flex justify-content-center">
             <button class="btn btn-dark" type="submit">Update List</button>
         </div>
-        
     </form>
 
-    
 </div>
 {% endblock %}

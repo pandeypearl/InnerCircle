@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Broadcast
+from circle.models import Member
 from .forms import BroadcastForm, EditBroadcastForm
+from .utils import send_broadcast_email, generate_broadcast_url
 
 
 # Create your views here.
@@ -45,6 +47,13 @@ def create_broadcast(request):
             receiver_ids = request.POST.getlist('receivers')
             broadcast.receivers.set(receiver_ids)
             broadcast.save()
+
+            # Sending Invitations to Recipients
+            for receiver_id in receiver_ids:
+                member = Member.objects.get(id=receiver_id)
+                broadcast_url = generate_broadcast_url(broadcast, member)
+                send_broadcast_email(request, broadcast, member, broadcast_url)
+
             messages.success(request, 'New broadcast created successfully')
             return redirect('broadcast_list')
         else:
@@ -99,6 +108,18 @@ def delete_broadcast(request, pk):
     
     context = {
         'broadcast': broadcast,
+    }
+
+    return render(request, template, context)
+
+def read_broadcast(request, broadcast_id, member_id):
+    template = 'broadcasts/read_broadcast.html'
+    broadcast = get_object_or_404(Broadcast, pk=broadcast_id)
+    member = get_object_or_404(Member, pk=member_id)
+
+    context = {
+        'broadcast': broadcast,
+        'member': member,
     }
 
     return render(request, template, context)
