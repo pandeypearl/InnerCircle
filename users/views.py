@@ -2,12 +2,37 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .models import Profile
+from .models import Profile, UserActivity
+from circle.models import Member
+from events.models import Event
+from broadcasts.models import Broadcast
+from lists.models import List
 
 # Create your views here.
 def home(request):
     template = 'users/home.html'
+
     return render(request, template)
+
+@login_required(login_url='singIn')
+def dashboard(request):
+    template = 'users/dashboard.html'
+    members = Member.objects.filter(user=request.user)
+    broadcasts = Broadcast.objects.filter(user=request.user)
+    events = Event.objects.filter(user=request.user)
+    lists = List.objects.filter(user=request.user)
+    user_activities = UserActivity.objects.filter(user=request.user).order_by('-timestamp')
+
+    context = {
+        'user_activities': user_activities,
+        'members': members,
+        'events': events,
+        'lists': lists,
+        'broadcasts': broadcasts,
+    }
+
+    return render(request, template, context)
+
 
 def signUp(request):
     template = 'users/signUp.html'

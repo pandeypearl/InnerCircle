@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Dashboard{% endblock %}
+
+{% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
+
+{% block content %}
+<section class="d-flex flex-row flex-wrap justify-content-between" style="gap: 50px">
+    <div class="card" style="width: 18rem;">
+        <div class="card-header d-flex justify-content-between">
+          <span>Circle </span>
+          <span>{{ member_count }}</span>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                {% for member in members %}
+                <li class="list-group-item">{{ member.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+          Broadcasts {{ broadcast_count }}
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                {% for broadcast in broadcasts %}
+                <li class="list-group-item">{{ broadcast.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+          Events {{ event_count }}
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                {% for event in events %}
+                <li class="list-group-item">{{ event.event_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+          Lists {{ list_count }}
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                {% for list in lists %}
+                <li class="list-group-item">{{ list.list_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+            
+</section>
+{% endblock %}

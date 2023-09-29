@@ -9,10 +9,10 @@
 
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
-<h4 class="text-end text-secondary">Circle</h4>
+<h4 class="text-end text-secondary">Circle Members</h4>
 
 <div class="d-flex justify-content-end">
-    <a href="{% url 'create_member' %}" class="btn btn-primary text-end">{% bs_icon 'person-add' %}Add New Member</a>
+    <a href="{% url 'create_member' %}" class="btn btn-dark text-end">{% bs_icon 'person-add' %}Add New Member</a>
 </div>
 
 {% if messages %}
@@ -31,7 +31,7 @@
     {% if members %}
     <div class="list-group list-group-flush">
         {% for member in members %}
-        <a  href="{% url 'member_detail' member.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-primary">
+        <a  href="{% url 'member_detail' member.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-info">
             <div class="d-flex" style="gap: 20px">
                 <img class="member-img-sm" src="{{ member.image.url }}" alt="Member Image">
                 <span>{{ member.name }}</span>

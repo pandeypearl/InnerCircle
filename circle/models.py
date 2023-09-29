@@ -2,18 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Group(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='member_groups')
-    group_name = models.CharField(max_length=255)
-    description = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    members = models.ManyToManyField('Member')
-
-    class Meta: 
-        ordering = ['-group_name']
-
-    def __str__(self):
-        return self.group_name
 
 class Member(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='circle_members')
@@ -31,6 +19,21 @@ class Member(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Group(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='member_groups')
+    group_name = models.CharField(max_length=255)
+    description = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    members = models.ManyToManyField(Member, related_name='groups')
+
+    class Meta: 
+        ordering = ['-group_name']
+
+    def __str__(self):
+        return self.group_name
+
 
 class Note(models.Model):
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='member_notes')

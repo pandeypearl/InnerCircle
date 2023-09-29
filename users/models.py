@@ -15,12 +15,12 @@ class Profile(models.Model):
         return self.user.username
 
 
-# class UserActivity(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     activity_type = models.CharField(max_length=255)
-#     timestamp = models.DateTimeField(auto_now_add=True)
-#     object_id = models.IntegerField()
-#     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+class UserActivity(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    activity_type = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    object_id = models.IntegerField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
 
-#     def __str__(self):
-#         return self.activity_type
+    def __str__(self):
+        return self.activity_type

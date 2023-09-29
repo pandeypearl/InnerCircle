@@ -12,15 +12,18 @@
                 <a href="{% url 'settings' %}" class="nav-link text-white">{% bs_icon 'chat-dots' %} AI Chat</a>
             </li>
         </ul>
-    {% elif url_name == 'home' %}
+    {% elif url_name == 'dashboard' %}
         <h5 class="p-2 text-center">Dashboard</h5>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-white">{% bs_icon 'bell' %} Notifications</a>
+                <a href="" class="nav-link {% if url_name == 'dashboard' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'clock-history' %} Activity</a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'settings' %}" class="nav-link text-white">{% bs_icon 'clock' %} Reminders</a>
+                <a href="" class="nav-link text-white">{% bs_icon 'bell' %} Notifications</a>
+            </li>
+            <li class="nav-item">
+                <a href="" class="nav-link text-white">{% bs_icon 'alarm' %} Reminders</a>
             </li>
         </ul>
     {% elif url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'edit_group' or url_name == 'delete_group' %}
