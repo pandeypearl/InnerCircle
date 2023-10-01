@@ -5,7 +5,11 @@ from .models import Broadcast
 from circle.models import Member
 from .forms import BroadcastForm, EditBroadcastForm
 from .utils import send_broadcast_email, generate_broadcast_url
+from users.models import UserActivity
+from django.contrib.contenttypes.models import ContentType
 
+from rest_framework import generics
+from .serializers import BroadcastSerializer
 
 # Create your views here.
 login_required(login_url='signIn')
@@ -48,6 +52,12 @@ def create_broadcast(request):
             broadcast.receivers.set(receiver_ids)
             broadcast.save()
 
+            UserActivity.objects.create(
+                user=request.user,
+                activity_type='Broadcast Created',
+                object_id=broadcast.id,
+                content_type=ContentType.objects.get_for_model(Broadcast)
+            )
             # Sending Invitations to Recipients
             for receiver_id in receiver_ids:
                 member = Member.objects.get(id=receiver_id)
@@ -81,6 +91,13 @@ def edit_broadcast(request, broadcast_id):
 
             receiver_ids = request.POST.getlist('receivers')
             instance.receivers.set(receiver_ids)
+
+            UserActivity.objects.create(
+                user=request.user,
+                activity_type='Broadcast Edited',
+                object_id=broadcast_id,
+                content_type=ContentType.objects.get_for_model(Broadcast)
+            )
             messages.success(request, 'Your broadcast has been updated')
             return redirect('broadcast_list')
         else:
@@ -102,7 +119,15 @@ def delete_broadcast(request, pk):
     broadcast = get_object_or_404(Broadcast, pk=pk)
 
     if request.method == 'POST':
+        broadcast_id = broadcast.id
         broadcast.delete()
+
+        UserActivity.objects.create(
+            user=request.user,
+            activity_type='Broadcast Deleted',
+            object_id=broadcast_id,
+            content_type=ContentType.objects.get_for_model(Broadcast)
+        )
         messages.success(request, 'Your broadcast has been deleted')
         return redirect('broadcast_list')
     
@@ -123,3 +148,8 @@ def read_broadcast(request, broadcast_id, member_id):
     }
 
     return render(request, template, context)
+
+
+class BroadcastListCreateView(generics.LIstCreateAPIView):
+    queryset = Broadcast.objects.all()
+    serializer_class = BroadcastSerializer

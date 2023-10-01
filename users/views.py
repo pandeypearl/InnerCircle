@@ -8,6 +8,9 @@ from events.models import Event
 from broadcasts.models import Broadcast
 from lists.models import List
 
+from rest_framework import generics
+from .serializers import UserSerializer, ProfileSerializer
+
 # Create your views here.
 def home(request):
     template = 'users/home.html'
@@ -136,4 +139,14 @@ def settings(request):
     }
 
     return render(request, template, context)
+
+
+class UserListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class ProfileListCreateView(generics.ListCreateAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
             

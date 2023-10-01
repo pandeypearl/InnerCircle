@@ -1,5 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+
+from rest_framework import routers
+from.views import BroadcastListCreateView
+
+router.register(r'broadcast', BroadcastListCreateView)
 
 urlpatterns = [
     path('broadcast_list', views.broadcast_list, name='broadcast_list'),
@@ -8,4 +13,6 @@ urlpatterns = [
     path('edit_broadcast/<str:broadcast_id>/edit', views.edit_broadcast, name='edit_broadcast'),
     path('delete_broadcast/<str:pk>/delete', views.delete_broadcast, name='delete_broadcast'),
     path('read_broadcast/<int:broadcast_id>/<int:member_id>/', views.read_broadcast, name='read_broadcast'),
+    #API
+    path('api/', include(router.urls)),
 ]

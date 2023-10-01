@@ -5,7 +5,11 @@ from .models import Event, RSVP
 from circle.models import Member
 from .forms import EventForm, UpdateEventForm, RSVPForm
 from .utils import send_rsvp_email, generate_rsvp_url
+from users.models import UserActivity
+from django.contrib.contenttypes.models import ContentType
 
+from rest_framework import generics
+from .serializers import EventSerializer, RSVPSerializer 
 
 # Create your views here.
 login_required(login_url='signIn')
@@ -52,6 +56,12 @@ def create_event(request):
             event.guests.set(guest_ids)
             event.save()
 
+            UserActivity.objects.create(
+                user=request.user,
+                activity_type='Event Created',
+                object_id=event.id,
+                content_type=ContentType.objects.get_for_model(Event)
+            )
             # Sending Invitation to Guests
             for guest_id in guest_ids:
                 member = Member.objects.get(id=guest_id)
@@ -85,6 +95,13 @@ def update_event(request, event_id):
 
             guest_ids = request.POST.getlist('guests')
             instance.guests.set(guest_ids)
+
+            UserActivity.objects.create(
+                user=request.user,
+                activity_type='Event Updated',
+                object_id=event_id,
+                content_type=ContentType.objects.get_for_model(Event)
+            )
             messages.success(request, 'Your event has been updated')
             return redirect('event_list')
         else:
@@ -107,6 +124,13 @@ def delete_event(request, pk):
 
     if request.method == 'POST':
         event.delete()
+
+        UserActivity.objects.create(
+            user=request.user,
+            activity_type='Event Deleted',
+            object_id=event.id,
+            content_type=ContentType.objects.get_for_model(Event)
+        )
         messages.success(request, 'Your event has been deleted.')
         return redirect('event_list')
 
@@ -179,4 +203,14 @@ def rsvp_done(request, event_id, member_id):
     }
 
     return render(request, template, context)
+
+
+class EventListCreateView(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
+class RSVPListCreateView(generics.ListCreateAPIView):
+    queryset = RSVP.objects.all()
+    serializer_class = RSVPSerializer
 

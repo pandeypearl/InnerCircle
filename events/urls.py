@@ -1,5 +1,11 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+
+from rest_framework import routers
+from .views import EventListCreateView, RSVPListCreateView
+
+router.register(r'event', EventListCreateView)
+router.register(r'rsvp', RSVPListCreateView)
 
 urlpatterns = [
     path('event_list', views.event_list, name='event_list'),
@@ -9,4 +15,6 @@ urlpatterns = [
     path('delete_event/<str:pk>/delete', views.delete_event, name='delete_event'),
     path('rsvp/<int:event_id>/<int:member_id>/', views.rsvp_view, name='rsvp'),
     path('rsvp_done/<int:event_id>/<int:member_id>', views.rsvp_done, name='rsvp_done'),
+    # API
+    path('api/', include(router.urls)),
 ]

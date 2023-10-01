@@ -1,5 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
+
+from rest_framework import routers
+from .views import MemberListCreateView, GroupListCreateView, NoteListCreateView
+
+router.register(r'member', MemberListCreateView)
+router.register(r'group', GroupListCreateView)
+router.register(r'note', NoteListCreateView)
 
 urlpatterns = [
     path('group_list', views.group_list, name='group_list'),
@@ -12,4 +19,6 @@ urlpatterns = [
     path('create_member', views.create_member, name='create_member'),
     path('edit_member/<str:member_id>/edit', views.edit_member, name='edit_member'),
     path('delete_member/<str:pk>/delete', views.delete_member, name='delete_member'),
+    # APi
+    path('api/', include(router.urls)),
 ]

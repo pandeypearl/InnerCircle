@@ -7,13 +7,13 @@ def generate_list_check_url(list, member):
     return reverse('check_list', args=[list.id, member.id])
 
 
-def send_list_email(request, list, member):
+def send_list_email(request, list, member, list_check_url):
     list_check_url = request.build_absolute_uri(
         reverse('check_list', args=[list.id, member.id])
     )
 
     subject = 'List Check Invitation'
-    message = render_to_string('list_email_template.html',
+    message = render_to_string('emails/list_email_template.html',
         {'member': member, 'list': list, 'list_check_url': list_check_url })
     from_email = 'your-email@example.com'
 

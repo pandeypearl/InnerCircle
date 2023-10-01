@@ -1,6 +1,12 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
+
+from rest_framework import routers
+from .views import UserListCreateView, ProfileListCreateView
+
+router.register(r'user', UserListCreateView)
+router.register(r'profile', ProfileListCreateView)
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -18,4 +24,6 @@ urlpatterns = [
     # Change Password
     path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+    # API
+    path('api/', include(router.urls)),
 ]

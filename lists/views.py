@@ -12,7 +12,11 @@ from .forms import (
     CheckItemForm
 )
 from .utils import send_list_email, generate_list_check_url
+from users.models import UserActivity
+from django.contrib.contenttypes.models import ContentType
 
+from rest_framework import generics
+from .serializers import ListSerializer, ListItemSerializer, CheckItemSerializer
 
 # Create your views here.
 login_required(login_url='signIn')
@@ -97,6 +101,12 @@ def create_list(request):
             list.receivers.set(receiver_ids)
             list.save()
 
+            UserActivity.objects.create(
+                user=request.user,
+                activity_type='List Created',
+                object_id=list.id,
+                content_type=ContentType.objects.get_for_model(List)
+            )
             # Sending List to receivers
             for receiver_id in receiver_ids:
                 member = Member.objects.get(id=receiver_id)
@@ -130,6 +140,13 @@ def edit_list(request, list_id):
 
             receiver_ids = request.POST.getlist('receivers')
             instance.receivers.set(receiver_ids)
+
+            UserActivity.objects.create(
+                user=request.user,
+                activity_type='List Edited',
+                object_id=list_id,
+                content_type=ContentType.objects.get_for_model(List)
+            )
             messages.success(request, 'Your list has been edited.')
             return redirect('lists')
         else:
@@ -152,6 +169,13 @@ def delete_list(request, pk):
 
     if request.method == 'POST':
         list.delete()
+
+        UserActivity.objects.create(
+            user=request.user,
+            activity_type='List Deleted',
+            object_id=list.id,
+            content_type=ContentType.objects.get_for_model(List)
+        )
         messages.success(request, 'Your list has been deleted.')
         return redirect('lists')
 
@@ -197,4 +221,18 @@ def check_list_item(request, list_id, recipient_id):
 
     return render(request, template, context)
 
+
+class ListListCreateView(generics.ListCreateAPIView):
+    queryset = List.objects.all()
+    serializer_class = ListSerializer
+
+
+class ListItemListCreateView(generics.ListCreateAPIView):
+    queryset = ListItem.objects.all()
+    serializer_class = ListItemSerializer
+
+
+class CheckItemListCreateView(generics.ListCreateAPIView):
+    queryset = CheckItem.objects.all()
+    serializer_class = CheckItemSerializer
 

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'events',
     'broadcasts',
     'lists',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [

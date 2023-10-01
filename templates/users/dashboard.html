@@ -3,6 +3,8 @@
 {% load static %}
 {% load bootstrap_icons %}
 
+{% load in_list %}
+
 {% block title %}InnerCircle | Dashboard{% endblock %}
 
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
@@ -12,55 +14,60 @@
     <div class="card" style="width: 18rem;">
         <div class="card-header d-flex justify-content-between">
           <span>Circle </span>
-          <span>{{ member_count }}</span>
+          <span> {% bs_icon 'people' %} {{ member_count }}</span>
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 {% for member in members %}
-                <li class="list-group-item">{{ member.name }}</li>
+                <li class="list-group-item list-group-item-info">{{ member.name }}</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
 
     <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Broadcasts {{ broadcast_count }}
+        <div class="card-header d-flex justify-content-between">
+          <span>Broadcasts </span>
+          <span>{% bs_icon 'megaphone' %} {{ broadcast_count }}</span>
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 {% for broadcast in broadcasts %}
-                <li class="list-group-item">{{ broadcast.title }}</li>
+                <li class="list-group-item list-group-item-warning">{{ broadcast.title }}</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
 
     <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Events {{ event_count }}
+        <div class="card-header d-flex justify-content-between">
+          <span>Events</span>
+          <span>{% bs_icon 'calendar-event' %} {{ event_count }}</span> 
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 {% for event in events %}
-                <li class="list-group-item">{{ event.event_name }}</li>
+                <li class="list-group-item list-group-item-success">{{ event.event_name }}</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
 
     <div class="card" style="width: 18rem;">
-        <div class="card-header">
-          Lists {{ list_count }}
+        <div class="card-header d-flex justify-content-between">
+          <span>Lists</span>
+          <span>{% bs_icon 'card-list' %} {{ list_count }}</span> 
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
                 {% for list in lists %}
-                <li class="list-group-item">{{ list.list_name }}</li>
+                <li class="list-group-item list-group-item-danger">{{ list.list_name }}</li>
                 {% endfor %}
             </ul>
         </div>
     </div>
             
 </section>
+
+
 {% endblock %}
