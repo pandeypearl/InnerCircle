@@ -16,6 +16,7 @@ from users.models import UserActivity
 from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView 
 from .serializers import ListSerializer, ListItemSerializer, CheckItemSerializer
 
 # Create your views here.
@@ -222,17 +223,37 @@ def check_list_item(request, list_id, recipient_id):
     return render(request, template, context)
 
 
+login_required(login_url='signIn')
 class ListListCreateView(generics.ListCreateAPIView):
     queryset = List.objects.all()
     serializer_class = ListSerializer
 
 
+login_required(login_url='signIn')
+class ListDetailView(RetrieveAPIView):
+    queryset = List.objects.all()
+    serializer_class = ListSerializer
+
+
+login_required(login_url='signIn')
 class ListItemListCreateView(generics.ListCreateAPIView):
     queryset = ListItem.objects.all()
     serializer_class = ListItemSerializer
 
 
+login_required(login_url='signIn')
+class ListItemDetailView(RetrieveAPIView):
+    queryset = ListItem.objects.all()
+    serializer_class = ListItemSerializer
+
+
+login_required(login_url='signIn')
 class CheckItemListCreateView(generics.ListCreateAPIView):
     queryset = CheckItem.objects.all()
     serializer_class = CheckItemSerializer
 
+
+login_required(login_url='signIn')
+class CheckItemDetailView(RetrieveAPIView):
+    queryset = CheckItem.objects.all()
+    serializer_class = CheckItemSerializer

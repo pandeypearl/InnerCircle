@@ -2,7 +2,16 @@ from django.urls import path, include
 from . import views
 
 from rest_framework import routers
-from .views import ListListCreateView, ListItemListCreateView, CheckItemListCreateView
+from .views import (
+    ListListCreateView,
+    ListItemListCreateView,
+    CheckItemListCreateView,
+    ListDetailView,
+    ListItemDetailView,
+    CheckItemDetailView,
+) 
+
+router = routers.DefaultRouter()
 
 router.register(r'list', ListListCreateView)
 router.register(r'list_item', ListItemListCreateView)
@@ -16,5 +25,7 @@ urlpatterns = [
     path('delete_list/<str:pk>/delete', views.delete_list, name='delete_list'),
     path('check_list/<int:list_id>/<int:recipient_id>/', views.check_list_item, name='check_list'),
     # API
-    path('api/', include(router.urls)),
+    path('api/list/<int:pk>/', ListDetailView.as_view(), name='list-detail'),
+    path('api/list_item/<int:pk>/', ListItemDetailView.as_view(), name='list-item-detail'),
+    path('api/check_item/<int:pk>/', CheckItemDetailView.as_view(), name='check-item-detail')
 ]

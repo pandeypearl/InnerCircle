@@ -30,7 +30,7 @@
     <ul class="p-2 nav flex-column">
         <li class="nav-item">
             <a href="{% url 'dashboard' %}" 
-            class="nav-link {% if url_name == 'dashboard' %}text-secondary{% else %}text-white{% endif %}">
+            class="nav-link {% if url_name == 'dashboard' or url_name == 'reminders' or url_name == 'notifications' %}text-secondary{% else %}text-white{% endif %}">
                 {% bs_icon 'layout-wtf' %} Dashboard
             </a>
         </li>

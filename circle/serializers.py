@@ -14,7 +14,7 @@ class GroupSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class NoteSerializer(serializers.ModelSerializers):
+class NoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Note
         fields = '__all__'

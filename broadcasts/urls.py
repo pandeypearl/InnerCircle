@@ -2,7 +2,9 @@ from django.urls import path, include
 from . import views
 
 from rest_framework import routers
-from.views import BroadcastListCreateView
+from.views import BroadcastListCreateView, BroadcastDetailView
+
+router = routers.DefaultRouter()
 
 router.register(r'broadcast', BroadcastListCreateView)
 
@@ -14,5 +16,5 @@ urlpatterns = [
     path('delete_broadcast/<str:pk>/delete', views.delete_broadcast, name='delete_broadcast'),
     path('read_broadcast/<int:broadcast_id>/<int:member_id>/', views.read_broadcast, name='read_broadcast'),
     #API
-    path('api/', include(router.urls)),
+    path('api/broadcast/<int:pk>/', BroadcastDetailView.as_view(), name='broadcast-detail')
 ]

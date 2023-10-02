@@ -9,6 +9,7 @@ from users.models import UserActivity
 from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView 
 from .serializers import BroadcastSerializer
 
 # Create your views here.
@@ -150,6 +151,13 @@ def read_broadcast(request, broadcast_id, member_id):
     return render(request, template, context)
 
 
-class BroadcastListCreateView(generics.LIstCreateAPIView):
+login_required(login_url='signIn')
+class BroadcastListCreateView(generics.ListCreateAPIView):
+    queryset = Broadcast.objects.all()
+    serializer_class = BroadcastSerializer
+
+
+login_required(login_url='signIn')
+class BroadcastDetailView(RetrieveAPIView):
     queryset = Broadcast.objects.all()
     serializer_class = BroadcastSerializer

@@ -2,7 +2,14 @@ from django.urls import path, include
 from . import views
 
 from rest_framework import routers
-from .views import EventListCreateView, RSVPListCreateView
+from .views import (
+    EventListCreateView,
+    RSVPListCreateView,
+    EventDetailView,
+    RSVPDetailView,
+)
+
+router = routers.DefaultRouter()
 
 router.register(r'event', EventListCreateView)
 router.register(r'rsvp', RSVPListCreateView)
@@ -16,5 +23,6 @@ urlpatterns = [
     path('rsvp/<int:event_id>/<int:member_id>/', views.rsvp_view, name='rsvp'),
     path('rsvp_done/<int:event_id>/<int:member_id>', views.rsvp_done, name='rsvp_done'),
     # API
-    path('api/', include(router.urls)),
+    path('api/event/<int:pk>/', EventDetailView.as_view(), name='event-detail'),
+    path('api/rsvp/<int:pk>', RSVPDetailView.as_view(), name='rsvp-detail'),
 ]

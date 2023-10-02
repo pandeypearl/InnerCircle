@@ -2,20 +2,27 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from datetime import date
 from .models import Profile, UserActivity
 from circle.models import Member
-from events.models import Event
+from circle.models import Group
+from events.models import Event, RSVP
 from broadcasts.models import Broadcast
-from lists.models import List
+from lists.models import List, CheckItem
 
 from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import  IsAuthenticated
 from .serializers import UserSerializer, ProfileSerializer
 
 # Create your views here.
 def home(request):
     template = 'users/home.html'
 
-    return render(request, template)
+    context = {}
+
+    return render(request, template, context)
 
 @login_required(login_url='singIn')
 def dashboard(request):
@@ -76,18 +83,25 @@ def signUp(request):
 def signIn(request):
     template = 'users/signIn.html'
 
+    context = {}
+
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
         user = auth.authenticate(username=username, password=password)
 
         if user is not None:
             auth.login(request, user)
-            return redirect('home')
+            return redirect('dashboard')
+        else:
+            context['error_message'] = 'Invalid username or password'
+
+    if request.user.is_authenticated:
+        return redirect('dashboard')
 
     else:
-        return render(request, template)
+        return render(request, template, context)
 
 @login_required(login_url='singIn')
 def logOut(request):
@@ -141,12 +155,116 @@ def settings(request):
     return render(request, template, context)
 
 
+@login_required(login_url='signIn')
+def search(request):
+    template = 'users/search_results.html'
+    query = request.GET.get('q', '')
+
+    user = request.user
+
+    member_results = Member.objects.filter(user=user, name__icontains=query)
+    group_results = Group.objects.filter(user=user, group_name__icontains=query)
+    broadcast_results = Broadcast.objects.filter(user=user, title__icontains=query)
+    event_results = Event.objects.filter(user=user, event_name__icontains=query)
+    list_results = List.objects.filter(user=user, list_name__icontains=query)
+
+    results = []
+
+    for result in member_results:
+        result.model_name = "Member"
+        results.append(result)
+
+    for result in group_results:
+        result.model_name = "Group"
+        results.append(result)
+
+    for result in broadcast_results:
+        result.model_name = "Broadcast"
+        results.append(result)
+
+    for result in event_results:
+        result.model_name = "Event"
+        results.append(result)
+
+    for result in list_results:
+        result.model_name = "List"
+        results.append(result)
+
+    context = {
+        'results': results,
+        'query': query,
+    }
+
+    return render(request, template, context)
+
+@login_required(login_url='signIn')
+def notifications(request):
+    template = 'users/notifications.html'
+
+    user = request.user
+    event = Event.objects.filter(user=user)
+    list = List.objects.all()
+    responses = RSVP.objects.filter(event)
+    # checks = CheckItem.objects.filter(user=item.list.user)
+
+    context = {
+        'responses': responses,
+        # 'checks': checks
+    }
+
+    return render(request, template, context)
+
+@login_required(login_url='signIn')
+def reminders(request):
+    template = 'users/reminders.html'
+    user = request.user 
+    members = Member.objects.filter(user=user).order_by('date_of_birth')
+
+    for member in members:
+        today = date.today()
+        birthday = member.date_of_birth.replace(year=today.year)
+
+        if birthday < today:
+            birthday = birthday.replace(year=today.year + 1)
+
+        member.days_until_birthday = (birthday - today).days
+
+    context = {
+        'members': members,
+    }
+
+    return render(request, template, context)
+
+
+
+login_required(login_url='signIn')
 class UserListCreateView(generics.ListCreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
 
 
+login_required(login_url='signIn')
+class UserDetailView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+login_required(login_url='signIn')
 class ProfileListCreateView(generics.ListCreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+
+login_required(login_url='signIn')
+class ProfileDetailView(RetrieveAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
             

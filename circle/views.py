@@ -14,6 +14,7 @@ from .forms import (
     EditGroupForm)
 
 from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView
 from .serializers import MemberSerializer, GroupSerializer, NoteSerializer
 
 # Create your views here.
@@ -272,17 +273,37 @@ def delete_member(request, pk):
     return render(request, template, context)
 
 
+login_required(login_url='signIn')
 class MemberListCreateView(generics.ListCreateAPIView):
     queryset = Member.objects.all()
     serializer_class = MemberSerializer
 
 
+login_required(login_url='signIn')
+class MemberDetailView(RetrieveAPIView):
+    queryset = Member.objects.all()
+    serializer_class = MemberSerializer
+
+
+login_required(login_url='signIn')
 class GroupListCreateView(generics.ListCreateAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
 
+login_required(login_url='signIn')
+class GroupDetailView(RetrieveAPIView):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
+
+
+login_required(login_url='signIn')
 class NoteListCreateView(generics.ListCreateAPIView):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
 
+
+login_required(login_url='signIn')
+class NoteDetailView(RetrieveAPIView):
+    queryset = Note.objects.all()
+    serializer_class = NoteSerializer

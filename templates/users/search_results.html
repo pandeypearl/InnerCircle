@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
+
+
+{% block title %}InnerCircle | Search Results{% endblock %}
+
+<!-- {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %} -->
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+    <h4 class="text-secondary text-end">Search Results </h4>
+    <h5>Results for <strong>{{ query }}</strong></h5>
+
+    {% if results %}
+        <div class="list-group list-group-flush">
+        {% for result in results %}
+            {% if result.model_name == "Member" %}
+            <a href="{% url 'member_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-primary d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <img class="member-img-sm" src="{{ result.image.url }}" alt="Member Image">
+                    <strong>{{ result.name }}</strong>
+                    <small class="badge bg-primary rounded-pill">{{ result.date_of_birth|date:"d F Y"}}</small>
+                    <small class="badge bg-primary rounded-pill">{{ result.relationship }}</small>
+                </div>
+                <span class="badge bg-dark rounded-pill">{% bs_icon 'person' %}</span>
+            </a>
+            {% elif result.model_name == "Group" %}
+            <a href="{% url 'group_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-primary d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <strong>{{ result.group_name }}</strong>
+                    <span class="badge bg-primary rounded-pill">group members : {{ result.members.count }}</span>
+                </div>
+                <span class="badge bg-dark rounded-pill">{% bs_icon 'people' %}</span>
+            </a>
+            {% elif result.model_name == "Broadcast" %}
+            <a href="{% url 'broadcast_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <strong>{{ result.title }}</strong>
+                    <span class="badge bg-warning rounded-pill">recipients : {{ result.receivers.count }}</span>
+                </div>
+                
+                <span class="badge bg-dark rounded-pill">{% bs_icon 'megaphone' %}</span>
+            </a>
+            {% elif result.model_name == "Event" %}
+            <a href="{% url 'event_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-success d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <strong>{{ result.event_name }}</strong>
+                    <span class="badge bg-success rounded-pill"> guests : {{ result.guests.count }}</span>
+                </div>
+                <span class="badge bg-dark rounded-pill">{% bs_icon 'calendar-event' %}</span>
+            </a>
+            {% elif result.model_name == "List" %}
+            <a href="{% url 'list_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-danger d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <strong>{{ result.list_name }}</strong>
+                    <span class="badge bg-danger rounded-pill">recipients : {{ result.receivers.count }}</span>
+                </div>
+                <span class="badge bg-dark rounded-pill">{% bs_icon 'card-list' %}</span>
+            </a>
+            {% endif %}
+        {% endfor %}
+        </div>
+        
+    {% else %}
+    <p class="list-group-item-secondary p-3 text-center">No results for <strong>{{ query }}</strong></p>
+    {% endif %}
+</section>
+{% endblock %}

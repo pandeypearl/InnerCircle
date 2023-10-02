@@ -9,6 +9,7 @@ from users.models import UserActivity
 from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import generics
+from rest_framework.generics import RetrieveAPIView 
 from .serializers import EventSerializer, RSVPSerializer 
 
 # Create your views here.
@@ -205,12 +206,26 @@ def rsvp_done(request, event_id, member_id):
     return render(request, template, context)
 
 
+login_required(login_url='signIn')
 class EventListCreateView(generics.ListCreateAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
 
+login_required(login_url='signIn')
+class EventDetailView(RetrieveAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
+login_required(login_url='signIn')
 class RSVPListCreateView(generics.ListCreateAPIView):
+    queryset = RSVP.objects.all()
+    serializer_class = RSVPSerializer
+
+
+login_required(login_url='signIn')
+class RSVPDetailView(RetrieveAPIView):
     queryset = RSVP.objects.all()
     serializer_class = RSVPSerializer
 
