@@ -3,7 +3,7 @@
 <div class="d-flex flex-column justify-content-between">
     <ul class="p-2 nav flex-column text-center">
         <li class="nav-item navbar-brand">
-            <a href="{% url 'home' %}" class="nav-link">InnerCircle</a>
+            <a href="{% url 'home' %}" class="nav-link text-white">InnerCircle</a>
         </li>
         <li class="nav-item">
             <img src="{{ user.profile.profile_picture.url }}" alt="Profile Picture">
@@ -11,8 +11,8 @@
         </li>
             <li class="nav-item text-center"><small>@{{user.username}}</small></li>
         <li class="nav-item"><small>{% bs_icon 'people-fill' %} {{member_count}}</small></li>
-        
     </ul>
+    <hr>
     {% with request.resolver_match.url_name as url_name %}
     <ul class="p-2 nav flex-column">
         <li class="nav-item">

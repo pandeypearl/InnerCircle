@@ -1,6 +1,7 @@
 {% load bootstrap_icons %}
-<div class="d-flex flex-column page-nav">
 {% with request.resolver_match.url_name as url_name %}
+<div class="d-flex flex-column page-nav">
+
     {% if url_name == 'profile' %}
         <h5 class="p-2 text-center">Profile</h5>
         <hr>
@@ -27,7 +28,7 @@
             </li>
         </ul>
     {% elif url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'edit_group' or url_name == 'delete_group' %}
-        <h3 class="p-2">Your Circle</h3>
+        <h3 class="p-2 text-center">Your Circle</h3>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
@@ -44,7 +45,7 @@
             </li>
         </ul>
     {% elif url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}
-        <h3 class="p-2">Broadcasts</h3>
+        <h3 class="p-2 text-center">Broadcasts</h3>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
@@ -55,7 +56,7 @@
             </li>
         </ul>
     {% elif url_name == 'event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}
-        <h3 class="p-2">Your Events</h3>
+        <h3 class="p-2 text-center">Your Events</h3>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
@@ -66,7 +67,7 @@
             </li>
         </ul>
     {% elif url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or url_name == 'edit_list' or url_name == 'delete_list' %}
-        <h3 class="p-2">Your Lists</h3>
+        <h3 class="p-2 text-center">Your Lists</h3>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
@@ -76,39 +77,10 @@
                 <a href="{% url 'create_list' %}" class="nav-link {% if url_name == 'create_lits' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'person-lines-fill' %} <small>New List</small> </a>
             </li>
         </ul>
-    {% elif url_name == 'trips' %}
-        <h3 class="p-2">Trips</h3>
-        <ul class="p-2 nav">
-            <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Plan Trip</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Current Trip</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Upcoming Trips</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'settings' %}" class="nav-link text-dark">{% bs_icon '' %} Past Trips</a>
-            </li>
-        </ul>
-    {% elif url_name == 'albums' %}
-        <h3 class="p-2">Albums</h3>
-        <ul class="p-2 nav">
-            <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} New Album</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Shared Albums</a>
-            </li>
-            <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-dark">{% bs_icon '' %} Private Albums</a>
-            </li>
-        </ul>
     {% elif url_name == 'search_results' %}
         <h3 class="p-2 text-center"><small>Search</small></h3>
         <hr>
         <p class="text-center">{% bs_icon 'list-ol' %} <span class="badge bg-white text-secondary rounded-pill">{{ results|length }}</span></p>
     {% endif %}
-{% endwith %}
 </div>
+{% endwith %}

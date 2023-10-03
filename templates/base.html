@@ -40,27 +40,27 @@
                 </div>
                
             {% else %}
-            <div class="container">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col bg-dark text-white main-nav">
+                    <nav class="col bg-dark text-white sidebar postition-fixed main-nav">
                         {% include 'components/nav.html' %}
-                    </div>
-                    <div class="col bg-secondary text-white">
+                    </nav>
+                    <nav class="col bg-secondary text-white sidebar postition-fixed">
                         {% include 'components/page-nav.html' %}
-                    </div>
-                    <div class="col-8 bg-white page">
-                        {% include 'components/page-footer.html' %}
+                    </nav>
+                    <main class="col-8 bg-white page" role="main">
+                        {% include 'components/top-nav.html' %}
+                        {% include 'components/search-bar.html' %}
                         <div class="page-content overflow-scroll">
                             {% block content %}
                             {% endblock %}
                         </div>
-                        {% include 'components/search-bar.html' %}
-                    </div>
+                        
+                    </main>
                 </div>
             </div>
             {% endif %}
         {% endwith %}
     </div>
-    {% include 'components/footer.html' %}
 </body>
 </html>

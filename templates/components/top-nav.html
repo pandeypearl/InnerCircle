@@ -5,8 +5,8 @@
     }
 </style>
 
-<div class="page-footer">
-    <ul class="nav nav-underline justify-content-end">
+<div class="page-footer d-flex justify-content-between">
+    <ul class="nav nav-underline">
         <li class="nav-item ">
             <a href="" class="nav-link text-dark active">about</a>
         </li>
@@ -16,5 +16,11 @@
         <li class="nav-item">
             <a href="" class="nav-link text-dark">help</a>
         </li>
-    </ul>  
+    </ul>
+
+    <ul class="nav">
+        <li class="nav-item">
+            <a href="{% url 'logOut' %}" class="nav-link text-dark">log out</a>
+        </li>
+    </ul>
 </div>
