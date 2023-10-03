@@ -32,6 +32,27 @@ class CheckItem(models.Model):
     recipient = models.ForeignKey(Member, on_delete=models.CASCADE)
     checked_at = models.DateTimeField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        CheckItemNotification.objects.create(
+            user=self.item.list.user,
+            list_item=self.item,
+            list_reference=self.item.list,
+            check_item=self
+        )
+
     def __str__(self):
         return f"{self.recipient.name} checked {self.item}  at {self.checked_at}"
 
+
+class CheckItemNotification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    list_item = models.ForeignKey(ListItem, on_delete=models.CASCADE)
+    check_item = models.ForeignKey(CheckItem, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    list_reference = models.ForeignKey(List, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        self.list_reference = self.list_item.list
+        super().save(*args, **kwargs)

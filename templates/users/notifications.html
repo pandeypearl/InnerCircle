@@ -14,27 +14,32 @@
     <h4 class="text-secondary text-end">Notifications</h4>
 
     <ul class="list-group list-group-flush">
-        {% for response in responses %}
-            <li class="list-group-item list-group-item-light">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">response</h5>
-                    <small class="{% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{% bs_icon 'hourglass-split' %} {{ member.days_until_birthday }} days</small>
-                </div>
-                <p class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{{ member.date_of_birth }}</p>
-            </li>
-        {% endfor %}
+        {% if notifications %}
+            {% for notification in notifications %}
+                {% if notification.rsvp %}
+                <li class="list-group-item list-group-item-info">
+                    <span>{% bs_icon 'calendar-event' %}&nbsp;</span>
+                    <span>
+                        <strong>{{ notification.rsvp.guest.name}}</strong>
+                         RSVPed <strong>{{ notification.rsvp.response_status}}</strong> for event : <strong>{{ notification.event.event_name }}</strong>
+                    </span>
+                </li>
+                {% elif notification.check_item %}
+                <li class="list-group-item list-group-item-danger">
+                    <span>{% bs_icon 'card-list' %}&nbsp;</span>
+                    <span>
+                        <strong>{{ notification.check_item.recipient.name }}</strong> 
+                        checked <strong>{{ notification.check_item.item.item_name }}</strong> on the list 
+                        <strong>{{ notification.check_item.item.list.list_name }}</strong>
+                    </span>
+                </li>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+        <p class="text-center">You currently have no notifications</p>
+        {% endif %}
     </ul>
 
-    <ul class="list-group list-group-flush">
-        {% for check in checks %}
-            <li class="list-group-item list-group-item-light">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{% bs_icon 'balloon-fill' %} {{ member.name }}'s Birthday</h5>
-                    <small class="{% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{% bs_icon 'hourglass-split' %} {{ member.days_until_birthday }} days</small>
-                </div>
-                <p class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{{ member.date_of_birth }}</p>
-            </li>
-        {% endfor %}
-    </ul>
+    
 </section>
 {% endblock %}

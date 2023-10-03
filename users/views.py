@@ -6,9 +6,9 @@ from datetime import date
 from .models import Profile, UserActivity
 from circle.models import Member
 from circle.models import Group
-from events.models import Event, RSVP
+from events.models import Event, RSVPNotification
 from broadcasts.models import Broadcast
-from lists.models import List, CheckItem
+from lists.models import List, CheckItemNotification
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
@@ -202,14 +202,14 @@ def notifications(request):
     template = 'users/notifications.html'
 
     user = request.user
-    event = Event.objects.filter(user=user)
-    list = List.objects.all()
-    responses = RSVP.objects.filter(event)
-    # checks = CheckItem.objects.filter(user=item.list.user)
-
+    
+    rsvp_notifications = RSVPNotification.objects.filter(user=user).order_by('-created_at')
+    check_item_notifications = CheckItemNotification.objects.filter(user=user).order_by('-created_at')
+    all_notifications = list(rsvp_notifications) + list(check_item_notifications)
+    all_notifications.sort(key=lambda x: x.created_at, reverse=True)
+    
     context = {
-        'responses': responses,
-        # 'checks': checks
+        'notifications': all_notifications,
     }
 
     return render(request, template, context)

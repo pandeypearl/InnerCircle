@@ -18,9 +18,8 @@ class Event(models.Model):
    
     def __str__(self):
         return self.event_name
+
         
-
-
 class RSVP(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     guest = models.ForeignKey(Member, on_delete=models.CASCADE)
@@ -30,5 +29,21 @@ class RSVP(models.Model):
     guest_count = models.PositiveBigIntegerField(default=1)
     dietary_preferences = models.TextField(blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        RSVPNotification.objects.create(
+            user=self.event.user,
+            event=self.event,
+            rsvp=self
+        )
+
     def __str__(self):
         return f"{self.guest.name} RSVP for {self.event.event_name}"
+
+
+class RSVPNotification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    rsvp = models.ForeignKey(RSVP, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
