@@ -14,13 +14,33 @@
         <h4 class="text-secondary text-end"> {{event.event_name}} Info</h4>
     </div>
 
-    <div class="d-flex justify-content-end" style="gap: 20px;">
-        <a class="btn btn-dark" href="{% url 'update_event' event.id %}">{% bs_icon 'pen-fill' %} Update</a>
-        <a class="btn btn-dark" href="{% url 'delete_event' event.id %}">{% bs_icon 'trash3-fill' %} Delete</a>
+    <div class="d-flex justify-content-between align-items-center" style="gap: 20px;">
+        {% if event.is_draft %}
+        <form method="POST" action="{% url 'send_event_draft' draft_id=event.id %}" style="padding:0;">
+            {% csrf_token %}
+            <button class="btn btn-dark" type="submit">{% bs_icon 'envelope-arrow-up-fill' %} Send Event Invitations</button>
+        </form>
+        <div class="d-flex" style="gap: 20px;">
+            <a class="btn btn-dark" href="{% url 'update_event' event.id %}">{% bs_icon 'pen-fill' %} Update</a>
+            <a class="btn btn-dark" href="{% url 'delete_event' event.id %}">{% bs_icon 'trash3-fill' %} Delete</a>
+        </div >
+        {% else %}
+        <div class="d-flex justify-content-end" style="width: 100%;">
+            <a class="btn btn-dark" href="{% url 'delete_event' event.id %}">{% bs_icon 'trash3-fill' %} Delete</a>
+        </div>
+        {% endif %}
     </div>
 
     <div class="bg-light p-5">
+        <p class="text-secondary">
+            {% if event.is_draft == True %}
+            Draft
+            {% elif event.is_draft == False %}
+            Sent to Recipients
+            {% endif %} 
+        </p>
         <p><strong>{{event.event_name}}</strong><br>{{event.description}}</p>
+        
         <p><strong>Date</strong><br>{{event.date|date:"d F Y"}}</p>
         <p><strong>Time</strong><br>{{event.date|time:"h:i A"}}</p>
         <p><strong>Location</strong><br>{{event.location}}</p>

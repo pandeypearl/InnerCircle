@@ -10,6 +10,7 @@ class ListForm(forms.ModelForm):
             'list_name',
             'description',
             'receivers',
+            'is_draft',
         ]
         widgets = {
             'list_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'List Name'}),
@@ -48,6 +49,7 @@ class EditListForm(forms.ModelForm):
             'list_name',
             'description',
             'receivers',
+            'is_draft',
         ]
         widgets = {
             'list_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'List Name'}),
@@ -63,6 +65,7 @@ class EditListForm(forms.ModelForm):
             self.fields['list_name'].initial = instance.list_name
             self.fields['description'].initial = instance.description
             self.fields['receivers'].initial = instance.receivers
+            self.fields['is_draft'].initial = instance.is_draft
 
 
 class CheckItemForm(forms.ModelForm):

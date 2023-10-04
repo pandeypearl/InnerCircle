@@ -9,7 +9,8 @@
 
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
-    <h4 class="text-end text-secondary">Events</h4>
+    <h4 class="text-end text-secondary">Your Events</h4>
+
 
     {% if messages %}
     <div>
@@ -23,7 +24,7 @@
 
     
     <div>
-        <h6 class="text-secondary">{% bs_icon 'calendar-event' %}{{ user_events.count }}</h6>
+        <h6 class="text-dark"><strong>Events</strong> &nbsp;&nbsp;{{ user_events.count }}</h6>
 
         {% if user_events %}
         <div class="list-group list-group-flush">
@@ -35,7 +36,24 @@
             {% endfor %}
         </div>
         {% else %}
-        <p class="text-secodary text-center">You currently have no events. <a href="{% url 'create_event' %}" class="link-dark">Create an event</a>.</p>
+        <p class="text-secondary text-center">You currently have no sent events.</p>
+        {% endif %}
+    </div>
+
+    <div>
+        <h6 class="text-dark"><strong>Draft Events</strong> &nbsp;&nbsp;{{ drafts.count }}</h6>
+
+        {% if drafts %}
+        <div class="list-group list-group-flush">
+            {% for draft in drafts %}
+            <a  href="{% url 'event_detail' draft.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-light">
+                    <span class="d-block"><strong>{{ draft.event_name }}</strong> : <small>{{ draft.event_status }}</small></span>
+                    <span class="d-block">{{ draft.date|date:"d F Y" }}</span>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p class="text-secondary text-center">You currently have no draft events.</p>
         {% endif %}
     </div>
     

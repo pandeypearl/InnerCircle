@@ -12,8 +12,7 @@ from .forms import (
     CheckItemForm
 )
 from .utils import send_list_email, generate_list_check_url
-from users.models import UserActivity
-from django.contrib.contenttypes.models import ContentType
+
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView 
@@ -23,10 +22,12 @@ from .serializers import ListSerializer, ListItemSerializer, CheckItemSerializer
 login_required(login_url='signIn')
 def lists(request):
     template = 'lists/lists.html'
-    user_lists = List.objects.filter(user=request.user)
+    user_lists = List.objects.filter(user=request.user, is_draft=False)
+    drafts = List.objects.filter(user=request.user, is_draft=True)
 
     context = {
         'user_lists': user_lists,
+        'drafts': drafts,
     }
 
     return render(request, template, context)
@@ -97,23 +98,18 @@ def create_list(request):
             list.list_name = request.POST['list_name']
             list.description = request.POST['description']
             list.save()
-
             receiver_ids = request.POST.getlist('receivers')
             list.receivers.set(receiver_ids)
+            if 'save_draft' in request.POST:
+                list.is_draft = True
+            else:
+                list.is_draft = False
+                # Sending List to receivers
+                for receiver_id in receiver_ids:
+                    member = Member.objects.get(id=receiver_id)
+                    list_check_url = generate_list_check_url(list, member)
+                    send_list_email(request, list, member, list_check_url)
             list.save()
-
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='List Created',
-                object_id=list.id,
-                content_type=ContentType.objects.get_for_model(List)
-            )
-            # Sending List to receivers
-            for receiver_id in receiver_ids:
-                member = Member.objects.get(id=receiver_id)
-                list_check_url = generate_list_check_url(list, member)
-                send_list_email(request, list, member, list_check_url)
-                
             messages.success(request, 'New list created.')
             return redirect('lists')
         else:
@@ -127,6 +123,23 @@ def create_list(request):
     }
 
     return render(request, template, context)
+
+
+login_required(login_url='signIn')
+def send_list_draft(request, draft_id):
+    draft = get_object_or_404(List, id=draft_id, is_draft=True)
+    receivers = draft.receivers.all()
+    # Sending List to receivers
+    for receiver in receivers:
+        member = Member.objects.get(id=receiver.id)
+        list_check_url = generate_list_check_url(draft, member)
+        send_list_email(request, draft, member, list_check_url)
+
+    draft.is_draft = False
+    draft.save()
+    messages.success(request, 'List Sent!')
+    return redirect('list_detail', list_id=draft_id)
+
 
 login_required(login_url='signIn')
 def edit_list(request, list_id):
@@ -142,12 +155,6 @@ def edit_list(request, list_id):
             receiver_ids = request.POST.getlist('receivers')
             instance.receivers.set(receiver_ids)
 
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='List Edited',
-                object_id=list_id,
-                content_type=ContentType.objects.get_for_model(List)
-            )
             messages.success(request, 'Your list has been edited.')
             return redirect('lists')
         else:
@@ -171,12 +178,6 @@ def delete_list(request, pk):
     if request.method == 'POST':
         list.delete()
 
-        UserActivity.objects.create(
-            user=request.user,
-            activity_type='List Deleted',
-            object_id=list.id,
-            content_type=ContentType.objects.get_for_model(List)
-        )
         messages.success(request, 'Your list has been deleted.')
         return redirect('lists')
 

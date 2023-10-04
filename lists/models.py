@@ -11,6 +11,7 @@ class List(models.Model):
     list_name = models.CharField(max_length=255)
     description = models.TextField()
     receivers = models.ManyToManyField(Member, related_name='lists_received')
+    is_draft = models.BooleanField(default=True)
 
     def __str__(self):
         return self.list_name

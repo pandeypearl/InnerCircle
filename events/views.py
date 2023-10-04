@@ -5,8 +5,6 @@ from .models import Event, RSVP
 from circle.models import Member
 from .forms import EventForm, UpdateEventForm, RSVPForm
 from .utils import send_rsvp_email, generate_rsvp_url
-from users.models import UserActivity
-from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView 
@@ -16,10 +14,12 @@ from .serializers import EventSerializer, RSVPSerializer
 login_required(login_url='signIn')
 def event_list(request):
     template = 'events/event_list.html'
-    user_events = Event.objects.filter(user=request.user)
+    user_events = Event.objects.filter(user=request.user, is_draft=False)
+    drafts = Event.objects.filter(user=request.user, is_draft=True)
 
     context = {
         'user_events': user_events,
+        'drafts': drafts,
     }
 
     return render(request, template, context)
@@ -52,24 +52,19 @@ def create_event(request):
             event.note = request.POST['note']
             event.event_status = request.POST['event_status']
             event.save()
-            
             guest_ids = request.POST.getlist('guests')
             event.guests.set(guest_ids)
+            if 'save_draft' in request.POST:
+                event.is_draft = True
+            else:
+                event.is_draft = False
+                # Sending Invitation to Guests
+                for guest_id in guest_ids:
+                    member = Member.objects.get(id=guest_id)
+                    rsvp_url = generate_rsvp_url(event, member)
+                    send_rsvp_email(request, event, member, rsvp_url)
             event.save()
-
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='Event Created',
-                object_id=event.id,
-                content_type=ContentType.objects.get_for_model(Event)
-            )
-            # Sending Invitation to Guests
-            for guest_id in guest_ids:
-                member = Member.objects.get(id=guest_id)
-                rsvp_url = generate_rsvp_url(event, member)
-                send_rsvp_email(request, event, member, rsvp_url)
-
-            messages.success(request, 'New event created.Invitations sent.')
+            messages.success(request, 'New event created.')
             return redirect('event_list')
         else:
             messages.warning(request, 'Something went wrong. Please try again.')
@@ -82,6 +77,22 @@ def create_event(request):
     }
 
     return render(request, template, context)
+
+login_required(login_url='signIn')
+def send_event_draft(request, draft_id):
+    draft = get_object_or_404(Event, id=draft_id, is_draft=True)
+    guests = draft.guests.all()
+
+    # Sending Invitation to Guests
+    for guest in guests:
+        member = Member.objects.get(id=guest.id)
+        rsvp_url = generate_rsvp_url(draft, member)
+        send_rsvp_email(request, draft, member, rsvp_url)
+
+    draft.is_draft = False
+    draft.save()
+    messages.success(request, 'Event invitations sent')
+    return redirect('event_detail', event_id=draft_id)
 
 login_required(login_url='signIn')
 def update_event(request, event_id):
@@ -97,12 +108,6 @@ def update_event(request, event_id):
             guest_ids = request.POST.getlist('guests')
             instance.guests.set(guest_ids)
 
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='Event Updated',
-                object_id=event_id,
-                content_type=ContentType.objects.get_for_model(Event)
-            )
             messages.success(request, 'Your event has been updated')
             return redirect('event_list')
         else:
@@ -126,12 +131,6 @@ def delete_event(request, pk):
     if request.method == 'POST':
         event.delete()
 
-        UserActivity.objects.create(
-            user=request.user,
-            activity_type='Event Deleted',
-            object_id=event.id,
-            content_type=ContentType.objects.get_for_model(Event)
-        )
         messages.success(request, 'Your event has been deleted.')
         return redirect('event_list')
 

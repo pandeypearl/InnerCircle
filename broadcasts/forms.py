@@ -8,6 +8,7 @@ class BroadcastForm(forms.ModelForm):
             'title',
             'content',
             'receivers',
+            'is_draft',
         ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Broadcast Title'}),
@@ -24,6 +25,7 @@ class EditBroadcastForm(forms.ModelForm):
             'title',
             'content',
             'receivers',
+            'is_draft',
         ]
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Broadcast Title'}),
@@ -39,5 +41,6 @@ class EditBroadcastForm(forms.ModelForm):
             self.fields['title'].initial = instance.title
             self.fields['content'].initial = instance.content
             self.fields['receivers'].initial = instance.receivers
+            self.fields['is_draft'].initial = instance.is_draft
 
 

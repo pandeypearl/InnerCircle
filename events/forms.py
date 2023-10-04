@@ -13,7 +13,8 @@ class EventForm(forms.ModelForm):
             'guests',
             'dress_code',
             'note',
-            'event_status'
+            'event_status',
+            'is_draft',
         )
         widgets = {
             'event_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Name'}),
@@ -39,7 +40,8 @@ class UpdateEventForm(forms.ModelForm):
             'guests',
             'dress_code',
             'note',
-            'event_status'
+            'event_status',
+            'is_draft',
         ]
         widgets = {
             'event_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Event Name'}),
@@ -65,6 +67,7 @@ class UpdateEventForm(forms.ModelForm):
             self.fields['dress_code'].initial = instance.dress_code
             self.fields['note'].initial = instance.note
             self.fields['event_status'].initial = instance.event_status
+            self.fields['is_draft'].initial = instance.is_draft
 
 
 class RSVPForm(forms.ModelForm):

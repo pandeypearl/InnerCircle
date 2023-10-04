@@ -15,6 +15,7 @@ class Event(models.Model):
     event_status = models.CharField(max_length=10, choices=[('Happening', 'Happening'),
         ('Postponed', 'Postponed'), ('Cancelled', 'Cancelled')],
         default='Happening')
+    is_draft = models.BooleanField(default=True)
    
     def __str__(self):
         return self.event_name

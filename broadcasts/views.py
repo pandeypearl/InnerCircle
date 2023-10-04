@@ -5,8 +5,6 @@ from .models import Broadcast
 from circle.models import Member
 from .forms import BroadcastForm, EditBroadcastForm
 from .utils import send_broadcast_email, generate_broadcast_url
-from users.models import UserActivity
-from django.contrib.contenttypes.models import ContentType
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView 
@@ -16,10 +14,13 @@ from .serializers import BroadcastSerializer
 login_required(login_url='signIn')
 def broadcast_list(request):
     template = 'broadcasts/broadcast_list.html'
-    broadcasts = Broadcast.objects.filter(user=request.user)
+    broadcasts = Broadcast.objects.filter(user=request.user, is_draft=False)
+
+    drafts = Broadcast.objects.filter(user=request.user, is_draft=True)
 
     context = {
         'broadcasts': broadcasts,
+        'drafts': drafts,
     }
 
     return render(request, template, context)
@@ -48,23 +49,18 @@ def create_broadcast(request):
             broadcast.title = request.POST['title']
             broadcast.content = request.POST['content']
             broadcast.save()
-
             receiver_ids = request.POST.getlist('receivers')
             broadcast.receivers.set(receiver_ids)
+            if 'save_draft' in request.POST:
+                broadcast.is_draft = True
+            else:
+                broadcast.is_draft = False
+                # Sending Invitations to Recipients
+                for receiver_id in receiver_ids:
+                    member = Member.objects.get(id=receiver_id)
+                    broadcast_url = generate_broadcast_url(broadcast, member)
+                    send_broadcast_email(request, broadcast, member, broadcast_url)
             broadcast.save()
-
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='Broadcast Created',
-                object_id=broadcast.id,
-                content_type=ContentType.objects.get_for_model(Broadcast)
-            )
-            # Sending Invitations to Recipients
-            for receiver_id in receiver_ids:
-                member = Member.objects.get(id=receiver_id)
-                broadcast_url = generate_broadcast_url(broadcast, member)
-                send_broadcast_email(request, broadcast, member, broadcast_url)
-
             messages.success(request, 'New broadcast created successfully')
             return redirect('broadcast_list')
         else:
@@ -80,6 +76,22 @@ def create_broadcast(request):
     return render(request, template, context)
 
 login_required(login_url='signIn')
+def send_broadcast_draft(request, draft_id):
+    draft = get_object_or_404(Broadcast, id=draft_id, is_draft=True)
+    receivers = draft.receivers.all()
+
+    # Sending Invitations to Recipients
+    for receiver in receivers:
+        member = Member.objects.get(id=receiver.id)
+        broadcast_url = generate_broadcast_url(draft, member)
+        send_broadcast_email(request, draft, member, broadcast_url)
+
+    draft.is_draft = False
+    draft.save()
+    messages.success(request, 'Broadcast Sent!')
+    return redirect('broadcast_detail', broadcast_id=draft_id)
+
+login_required(login_url='signIn')
 def edit_broadcast(request, broadcast_id):
     template = 'broadcasts/edit_broadcast.html'
     instance = get_object_or_404(Broadcast, id=broadcast_id)
@@ -93,12 +105,6 @@ def edit_broadcast(request, broadcast_id):
             receiver_ids = request.POST.getlist('receivers')
             instance.receivers.set(receiver_ids)
 
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='Broadcast Edited',
-                object_id=broadcast_id,
-                content_type=ContentType.objects.get_for_model(Broadcast)
-            )
             messages.success(request, 'Your broadcast has been updated')
             return redirect('broadcast_list')
         else:
@@ -123,12 +129,6 @@ def delete_broadcast(request, pk):
         broadcast_id = broadcast.id
         broadcast.delete()
 
-        UserActivity.objects.create(
-            user=request.user,
-            activity_type='Broadcast Deleted',
-            object_id=broadcast_id,
-            content_type=ContentType.objects.get_for_model(Broadcast)
-        )
         messages.success(request, 'Your broadcast has been deleted')
         return redirect('broadcast_list')
     

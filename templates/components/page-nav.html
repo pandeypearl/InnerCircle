@@ -28,7 +28,7 @@
             </li>
         </ul>
     {% elif url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'edit_group' or url_name == 'delete_group' %}
-        <h3 class="p-2 text-center">Your Circle</h3>
+        <h5 class="p-2 text-center">Your Circle</h5>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
@@ -45,7 +45,7 @@
             </li>
         </ul>
     {% elif url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}
-        <h3 class="p-2 text-center">Broadcasts</h3>
+        <h5 class="p-2 text-center">Broadcasts</h5>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
@@ -56,7 +56,7 @@
             </li>
         </ul>
     {% elif url_name == 'event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}
-        <h3 class="p-2 text-center">Your Events</h3>
+        <h5 class="p-2 text-center">Your Events</h5>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
@@ -67,7 +67,7 @@
             </li>
         </ul>
     {% elif url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or url_name == 'edit_list' or url_name == 'delete_list' %}
-        <h3 class="p-2 text-center">Your Lists</h3>
+        <h5 class="p-2 text-center">Your Lists</h5>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
@@ -78,7 +78,7 @@
             </li>
         </ul>
     {% elif url_name == 'search_results' %}
-        <h3 class="p-2 text-center"><small>Search</small></h3>
+        <h5 class="p-2 text-center"><small>Search</small></h5>
         <hr>
         <p class="text-center">{% bs_icon 'list-ol' %} <span class="badge bg-white text-secondary rounded-pill">{{ results|length }}</span></p>
     {% endif %}
