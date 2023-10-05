@@ -81,6 +81,17 @@
         <h5 class="p-2 text-center"><small>Search</small></h5>
         <hr>
         <p class="text-center">{% bs_icon 'list-ol' %} <span class="badge bg-white text-secondary rounded-pill">{{ results|length }}</span></p>
+    {% elif url_name == 'assistant' or url_name == 'chat_history' %}
+    <h5 class="p-2 text-center">Assistant</h5>
+    <hr>
+    <ul class="p-2 nav">
+        <li class="nav-item">
+            <a href="{% url 'assistant' %}" class="nav-link {% if url_name == 'assiatnt' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'card-list' %} <small>Chat</small></a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'chat_history' %}" class="nav-link {% if url_name == 'chat_history' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'person-lines-fill' %} <small>Chat History</small> </a>
+        </li>
+    </ul>
     {% endif %}
 </div>
 {% endwith %}

@@ -11,15 +11,7 @@
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <h4 class="text-end text-secondary">Your Broadcasts</h4>
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb d-flex justify-content-end">
-          <li class="breadcrumb-item"><a href="#broadcasts" class="link-dark">Broadcasts</a></li>
-          <li class="breadcrumb-item active"><a href="#drafts" class="link-dark">Drafts</a></li>
-        </ol>
-    </nav>
-      
     
-
     {% if messages %}
     <div>
         {% for message in messages %}
@@ -30,7 +22,7 @@
     </div>
     {% endif %}
 
-    <div id="broadcasts">
+    <div>
         <h6 class="text-dark"><strong>Broadcasts</strong> &nbsp;&nbsp;{{ broadcasts.count }}</h6>
 
         {% if broadcasts %}
@@ -47,7 +39,7 @@
         {% endif %}
     </div>
 
-    <div class="mt-5" id="drafts">
+    <div class="mt-5">
         <h6 class="text-dark"><strong>Drafts</strong> &nbsp;&nbsp;{{ drafts.count }}</h6>
 
         {% if drafts %}

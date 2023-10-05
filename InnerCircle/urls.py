@@ -28,6 +28,7 @@ urlpatterns = [
     path('', include('events.urls')),
     path('', include('broadcasts.urls')),
     path('', include('lists.urls')),
+    path('', include('assistant.urls')),
     path('api/', include(router.urls)),
 ]
 

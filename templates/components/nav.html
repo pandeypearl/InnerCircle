@@ -60,11 +60,10 @@
 
     <ul class="p-2 nav flex-column">
         <li class="nav-item">
-            <a href="" class="nav-link text-white">
+            <a href="{% url 'assistant' %}" class="nav-link {% if url_name == 'assistant' or url_name == 'chat_history' %}text-secondary{% else %}text-white{% endif %}">
                 {% bs_icon 'chat-square-heart' %} Assistant
             </a>
         </li>
-        
     </ul>
     {% endwith %}
 </div>

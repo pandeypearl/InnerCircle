@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Groups{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">
+<link rel="stylesheet" href="{% static 'scss/assistant.scss' %}?{% cache_bust %}">
+{% endblock %}
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px; position: relative;">
+    <h4 class="text-end text-secondary">Your Chat History</h4>
+   
+    <div class="flex-grow-1">
+        <p>Chat history for <strong>@{{user.username}}</strong></p>
+        {% if chats %}
+        <ul class="list-unstyled messages-list">
+            {% for chat in chats %}
+                {% if chat.user == request.user %}
+                <li class="message received">
+                    <div class="message-text">
+                      <div class="message-sender d-felx justify-content-between">
+                        <b>AI Assistant</b>
+                      </div>
+                      <div class="message-content">
+                        {{ chat.response }}
+                      </div>
+                    </div>
+                  </li>
+    
+                  <li class="message sent alert-info">
+                    <div class="message-text">
+                      <div class="message-sender d-flex justify-content-between">
+                        <b>You</b>
+                        <small>{{chat.created_at|time:"H:iA"}} {{chat.created_at|date:"d F Y"}} </small>
+                      </div>
+                      <div class="message-content">
+                        {{ chat.message }}
+                      </div>
+                    </div>
+                  </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="text-center">You have no chat history</p>
+        {% endif %}
+    </div>
+    
+</section>
+{% endblock %}

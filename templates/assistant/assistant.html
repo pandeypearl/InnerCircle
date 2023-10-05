@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
+
+{% block title %}InnerCircle | Groups{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">
+<link rel="stylesheet" href="{% static 'scss/assistant.scss' %}?{% cache_bust %}">
+
+{% endblock %}
+
+
+{% block content %}
+<section class="d-flex flex-column justify-content-between" style="gap: 50px; position: relative;">
+    <h4 class="text-end text-secondary">AI Assistant</h4>
+    
+    <div class="chat-container">
+      <div class="chat-intro">
+        <hr>
+        <p>Hi <strong>{{ user.username }}</strong> ! I am your AI Assistant, you can ask me anything and I do my best to help you out</p>
+        <form class="message-form d-flex justify-content-center">
+          {%csrf_token%}
+          <div class="input-group">
+            <input type="text" class="form-control message-input" placeholder="Type your message here...">
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-dark btn-send">Send</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+
+        <div class="flex-grow-1">
+          {% if chats %}
+            <ul class="list-unstyled messages-list">
+              {% for chat in chats %}
+                {% if chat.user == request.user %}
+                <li class="message received">
+                  <div class="message-text">
+                    <div class="message-sender d-felx justify-content-between">
+                      <b>AI Assistant</b>
+                    </div>
+                    <div class="message-content">
+                      {{ chat.response }}
+                    </div>
+                  </div>
+                </li>
+
+                <li class="message sent">
+                  <div class="message-text">
+                    <div class="message-sender d-flex justify-content-between">
+                      <b>You</b>
+                      <small>{{chat.created_at|time:"H:iA"}} {{chat.created_at|date:"d F Y"}} </small>
+                    </div>
+                    <div class="message-content">
+                      {{ chat.message }}
+                    </div>
+                  </div>
+                </li>
+                
+                {% endif %}
+              {% endfor %}
+            </ul> 
+          {% else %}
+          <p class="text-center">There is no chat thread for today</p>
+          {% endif %}
+      </div>
+</section>
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const messagesList = document.querySelector('.messages-list');
+  const messageForm = document.querySelector('.message-form');
+  const messageInput = document.querySelector('.message-input');
+
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const message = messageInput.value.trim();
+    if (message.length === 0) {
+      return;
+    }
+
+    const messageItem = document.createElement('li');
+    messageItem.classList.add('message', 'sent');
+    messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+                <b>You</b>
+            </div>
+            <div class="message-content">
+                ${message}
+            </div>
+        </div>`;
+    messagesList.appendChild(messageItem);
+
+    messageInput.value = '';
+
+    fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        'message': message
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const response = data.response;
+        const messageItem = document.createElement('li');
+        messageItem.classList.add('message', 'received');
+        messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+              <b>AI Chatbot</b>
+            </div>
+            <div class="message-content">
+                ${response}
+            </div>
+        </div>
+          `;
+        messagesList.appendChild(messageItem);
+      });
+  });
+</script>
+{% endblock %}
