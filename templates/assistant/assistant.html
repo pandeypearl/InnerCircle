@@ -3,7 +3,7 @@
 {% load static %}
 {% load bootstrap_icons %}
 
-{% block title %}InnerCircle | Groups{% endblock %}
+{% block title %}InnerCircle | AI Assistant{% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">
@@ -18,7 +18,6 @@
     
     <div class="chat-container">
       <div class="chat-intro">
-        <hr>
         <p>Hi <strong>{{ user.username }}</strong> ! I am your AI Assistant, you can ask me anything and I do my best to help you out</p>
         <form class="message-form d-flex justify-content-center">
           {%csrf_token%}
