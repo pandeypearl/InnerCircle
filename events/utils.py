@@ -12,6 +12,6 @@ def send_rsvp_email(request, event, member, rsvp_url):
 
     subject = 'RSVP for Event Invitation'
     message = render_to_string('emails/event_email_template.html', {'member': member, 'event': event, 'rsvp_url': rsvp_url})
-    from_email = 'your-email@example.com'
+    from_email = 'prettypandeypearl@gmail.com'
 
     send_mail(subject, message, from_email, [member.email])

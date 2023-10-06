@@ -106,7 +106,7 @@ def signIn(request):
 @login_required(login_url='singIn')
 def logOut(request):
     auth.logout(request)
-    return redirect('signIn')
+    return redirect('home')
 
 
 @login_required(login_url='signIn')

@@ -18,7 +18,7 @@
             {% if user.is_authenticated %}
             <a href="{% url 'dashboard' %}" class="btn btn-outline-light">Dashboard</a>
             {% else %}
-            <a href="{% url 'singUp' %}" class="btn btn-light">Sign up</a>
+            <a href="{% url 'signUp' %}" class="btn btn-light">Sign up</a>
             <a href="{% url 'signIn' %}" class="btn btn-outline-light">Log in</a>
             {% endif %}
         </span>

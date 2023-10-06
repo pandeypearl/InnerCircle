@@ -15,6 +15,6 @@ def send_list_email(request, list, member, list_check_url):
     subject = 'List Check Invitation'
     message = render_to_string('emails/list_email_template.html',
         {'member': member, 'list': list, 'list_check_url': list_check_url })
-    from_email = 'your-email@example.com'
+    from_email = 'prettypandeypearl@gmail.com'
 
     send_mail(subject, message, from_email, [member.email])

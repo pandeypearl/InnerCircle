@@ -11,6 +11,6 @@ def send_broadcast_email(request, broadcast, member, broadcast_url):
     subject = 'Broadcast Invitation'
     message = render_to_string('emails/broadcast_email_template.html', 
         {'member': member, 'broadcast': broadcast, 'broadcast_url': broadcast_url})
-    from_email = 'your-email@example.com'
+    from_email = 'prettypandeypearl@gmail.com'
 
     send_mail(subject, message, from_email, [member.email])
