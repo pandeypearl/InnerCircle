@@ -32,7 +32,7 @@
       
 
         <div class="flex-grow-1">
-          {% if chats %}
+          
             <ul class="list-unstyled messages-list">
               {% for chat in chats %}
                 {% if chat.user == request.user %}
@@ -62,9 +62,9 @@
                 {% endif %}
               {% endfor %}
             </ul> 
-          {% else %}
-          <p class="text-center">There is no chat thread for today</p>
-          {% endif %}
+          
+          <!-- <p class="text-center">There is no chat thread for today</p> -->
+          
       </div>
 </section>
 
