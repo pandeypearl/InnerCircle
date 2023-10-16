@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 from datetime import date
 from .models import Profile, UserActivity
 from circle.models import Member
@@ -9,6 +10,8 @@ from circle.models import Group
 from events.models import Event, RSVPNotification
 from broadcasts.models import Broadcast
 from lists.models import List, CheckItemNotification
+
+from .forms import ProfileEditForm, AccountEditForm
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
@@ -125,31 +128,36 @@ def profile(request, pk):
     return render(request, template, context)
 
 @login_required(login_url='signIn')
-def settings(request):
+def settings(request, profile_id):
     template = 'users/settings.html'
-    user_profile = Profile.objects.get(user=request.user)
+    instance = get_object_or_404(Profile, id=profile_id)
+    profile_form = ProfileEditForm(request.POST, request.FILES, instance=instance)
+    account_form = AccountEditForm(request.POST, instance=request.user)
 
     if request.method == 'POST':
+        if 'account_form_submit' in request.POST:
+            account_form = AccountEditForm(request.POST, instance=request.user)
+            if account_form.is_valid():
+                account_form.save()
+                update_session_auth_hash(request, request.user)
+                messages.success(request, 'Your changes have been saved')
+                return redirect('settings', instance.id)
+            else:
+                messages.warning(request, 'Something went wrong.Please try again.')
 
-        if request.FILES.get('image') == None:
-            image = user_profile.profile_picture
-            dob = request.POST['date_of_birth']
-
-            user_profile.profile_picture = image
-            user_profile.date_of_birth = dob
-
-        if request.FILES.get('image') != None:
-            image = request.FILES.get('image')
-            dob = request.POST['date_of_birth']
-
-            user_profile.profile_picture = image
-            user_profile.date_of_birth = dob
-            user_profile.save()
-
-        return redirect('settings')
-
+        elif 'profile_form_submit' in request.POST:
+            profile_form = ProfileEditForm(request.POST, request.FILES, instance=instance)
+            if profile_form.is_valid():
+                profile_form.save()
+                messages.success(request, 'Your changes have been saved')
+                return redirect('settings', instance.id)
+            else:
+                messages.warning(request, 'Something went wrong.Please try again.')
+ 
     context = {
-        'user_profile': user_profile
+        'instance': instance,
+        'profile_form': profile_form,
+        'account_form': account_form,
     }
 
     return render(request, template, context)

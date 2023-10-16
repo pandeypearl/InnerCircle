@@ -2,15 +2,15 @@
 {% with request.resolver_match.url_name as url_name %}
 <div class="d-flex flex-column page-nav">
 
-    {% if url_name == 'profile' %}
+    {% if url_name == 'profile' or url_name == 'settings' %}
         <h5 class="p-2 text-center">Profile</h5>
         <hr>
         <ul class="p-2 nav">
             <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link text-white">{% bs_icon 'person-circle' %} Profile Info</a>
+                <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'person-circle' %} Profile Info</a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'settings' %}" class="nav-link text-white">{% bs_icon 'chat-dots' %} AI Chat</a>
+                <a href="{% url 'settings' user.id %}" class="nav-link {% if url_name == 'settings' %}text-dark{% else %}text-white{% endif %}">{% bs_icon 'gear' %} Settings</a>
             </li>
         </ul>
     {% elif url_name == 'dashboard' or url_name == 'reminders' or url_name == 'notifications' %}

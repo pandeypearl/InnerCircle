@@ -3,7 +3,7 @@
 {% load static %}
 {% load bootstrap_icons %}
 
-{% block title %} Profile | {{ user.username }} {% endblock %}
+{% block title %} Profile | @{{ user.username }} {% endblock %}
 
 {% block css %}
 <link rel="stylesheet" href="{% static 'scss/profile.scss' %}?{% cache_bust %}">
@@ -51,10 +51,6 @@
             </ul>
         </div>
         
-    </section>
-
-    <section id="aiChat">
-        <h4 class="text-secondary text-end">AI Chat History</h4>
     </section>
 
    

@@ -1,12 +1,92 @@
 {% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+{% load bootstrap_icons %}
 
-{% block title %}Settings{% endblock %}
+{% block title %}Settings | @{{ user.username }}{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'scss/profile.scss' %}?{% cache_bust %}">
+{% endblock %}
+
 
 {% block content %}
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <img src="{{user_profile.image.url}}" alt="">
-    <input type="file" name="image">
-    <input type="date" name="dob" value="{{user_profile.dob}}">
-</form>
+<section>
+    <h4 class="text-secondary text-end">Settings</h4>
+
+    
+    <form class="mt-5" action="{% url 'settings' profile_id=instance.id %}" method="POST">
+        {% csrf_token %}
+        <h5 class="text-secondary mb-5">Account Settings</h5>
+
+        <div class="d-flex justify-content-between mb-5">
+            <div>
+                <span>First Name</span>
+                <p><strong>{{ user.first_name}}</strong></p>
+            </div>
+            
+            <div>
+                <label for="first_name">Change First Name</label>
+                {{ account_form.first_name }}
+            </div>
+        </div>  
+
+        <div class="d-flex justify-content-between mb-5">
+            <div>
+                <span>Last Name</span>
+                <p><strong>{{ user.last_name}}</strong></p>
+            </div>
+            
+            <div>
+                <label for="last_name">Change Last Name</label>
+                {{ account_form.last_name }}
+            </div>
+            
+        </div>
+
+        <div class="d-flex justify-content-end mb-5">
+            <button class="btn btn-dark text-end" type="submit" name="account_form_submit">Update Account Details</button>
+        </div>
+    </form>
+
+    <hr>
+    
+    <form class="mt-5" action="{% url 'settings' profile_id=instance.id %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h5 class="text-secondary mb-5">Profile Settings</h5>
+
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <div>
+                <span>Profile Picture</span><br>
+                <img src="{{instance.profile_picture.url}}" alt="Profile Picture">
+            </div>
+            
+            <div>
+                <label for="profile_picture">Change Profile Picture</label>
+                {{ profile_form.profile_picture }}
+            </div>
+            
+        </div>
+
+        <div class="d-flex justify-content-between mb-5">
+            <div>
+                <span>Date of Birth</span>
+                <p><strong>{{ instance.date_of_birth }}</strong></p>
+            </div>
+            
+            <div>
+                <label for="date_of_birth">Change Date of Birth</label>
+                {{ profile_form.date_of_birth }}
+            </div>
+            
+        </div>
+
+        <div class="d-flex justify-content-end mb-5">
+            <button class="btn btn-dark text-end" type="submit" name="profile_form_submit">Update Profile Details</button>
+        </div>
+        
+    </form>
+    
+</section>
+
 {% endblock %}
