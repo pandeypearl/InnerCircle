@@ -22,7 +22,11 @@
         <div class="d-flex justify-content-between mb-5">
             <div>
                 <span>First Name</span>
+                {% if user.first_name %}
                 <p><strong>{{ user.first_name}}</strong></p>
+                {% else %}
+                <p><strong>-</strong></p>
+                {% endif %}
             </div>
             
             <div>
@@ -34,7 +38,11 @@
         <div class="d-flex justify-content-between mb-5">
             <div>
                 <span>Last Name</span>
+                {% if user.last_name %}
                 <p><strong>{{ user.last_name}}</strong></p>
+                {% else %}
+                <p><strong>-</strong></p>
+                {% endif %}
             </div>
             
             <div>
@@ -71,7 +79,11 @@
         <div class="d-flex justify-content-between mb-5">
             <div>
                 <span>Date of Birth</span>
+                {% if instance.date_of_birth %}
                 <p><strong>{{ instance.date_of_birth }}</strong></p>
+                {% else %}
+                <p><strong>-</strong></p>
+                {% endif %}
             </div>
             
             <div>
