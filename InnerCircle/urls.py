@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('broadcasts.urls')),
     path('', include('lists.urls')),
     path('', include('assistant.urls')),
+    path('', include('error_handling.urls')),
     path('api/', include(router.urls)),
 ]
 
@@ -36,4 +37,13 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# configuring custom error views
+handler400 = 'error_handling.views.custom_400'
+handler401 = 'error_handling.views.custom_401'
+handler403 = 'error_handling.views.custom_403'
+handler404 = 'error_handling.views.custom_404'
+handler405 = 'error_handling.views.custom_405'
+handler408 = 'error_handling.views.custom_408'
+handler500 = 'error_handling.views.custom_500'
     

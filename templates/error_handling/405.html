@@ -1,0 +1,15 @@
+{% extends 'error-base.html' %}
+
+{% block title %}405 Method Not Allowed{% endblock %}
+
+{% block error_content %}
+<h1><strong>405 Method Not Allowed</strong></h1>
+<p>Sorry, the requested method is not allowed for this resource.</p>
+<div class="d-flex justify-content-center mt-5">
+    {% if user.is_authenticated %}
+    <a href="{% url 'dashboard' %}" class="btn btn-dark">Back to Safety</a>
+    {% else %}
+    <a href="{% url 'home' %}" class="btn btn-dark">Back to Safety</a>
+    {% endif %}
+</div>
+{% endblock %}
