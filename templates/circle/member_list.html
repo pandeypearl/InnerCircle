@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load cache_bust %}
+{% load custom_filters %}
 {% load bootstrap_icons %}
 
 {% block title %}InnerCircle | Circle{% endblock %}
@@ -36,10 +37,12 @@
                 <img class="member-img-sm" src="{{ member.image.url }}" alt="Member Image">
                 <span>{{ member.name }}</span>
             </div>
-            {% if groups %}
-            {% else %}
-                <span class="badge bg-primary rounded-pill">Ungrouped</span>
-            {% endif %}
+
+            <div>
+                {% for group in member|get_member_groups:member_groups %}
+                <span class="badge bg-info rounded-pill">{{ group.group_name }}</span>
+                {% endfor %}
+            </div>
         </a>
         {% endfor %}
     </div>

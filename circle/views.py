@@ -144,9 +144,13 @@ def member_list(request):
     template = 'circle/member_list.html'
 
     members = Member.objects.filter(user=request.user) 
+    member_groups = {}
+    for member in members:
+        member_groups[member.id] = member.groups.all()
 
     context = {
         'members': members,
+        'member_groups': member_groups,
     }
 
     return render(request, template, context)
