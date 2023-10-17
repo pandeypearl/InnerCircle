@@ -32,21 +32,65 @@
             </div>
 
             <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info">
+                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info p-3">
                     <span>{% bs_icon 'people' %}&nbsp;&nbsp;&nbsp;Circle</span>
-                    <span class="badge bg-dark rounded-pill">{{ member_count }}</span>
+                    <div class="d-flex" style="gap: 20px;">
+                        <button type="button" class="btn btn-info btn-sm position-relative" disabled>
+                            {% bs_icon 'person-fill' %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ member_count }}</span>
+                            <span class="visually-hidden">member count</span>
+                        </button>
+                        <button type="button" class="btn btn-info btn-sm position-relative" disabled>
+                            {% bs_icon 'person-fill-gear' %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ group_count }}</span>
+                            <span class="visually-hidden">group count</span>
+                        </button>
+                    </div>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-warning">
+                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-warning p-3">
                     <span>{% bs_icon 'megaphone' %}&nbsp;&nbsp;&nbsp;Broadcasts</span>
-                    <span class="badge bg-dark rounded-pill">{{ broadcast_count }}</span>
+                    <div class="d-flex" style="gap: 20px;">
+                        <button type="button" class="btn btn-warning btn-sm position-relative" disabled>
+                            {% bs_icon 'envelope-check-fill' %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ broadcast_sent_count }}</span>
+                            <span class="visually-hidden">broadcast sent count</span>
+                        </button>
+                        <button type="button" class="btn btn-warning btn-sm position-relative" disabled>
+                            {% bs_icon 'envelope-exclamation-fill' %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ broadcast_draft_count }}</span>
+                            <span class="visually-hidden">broadcast draft count</span>
+                        </button>
+                    </div>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-success">
+                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-success p-3">
                     <span>{% bs_icon 'calendar-event' %}&nbsp;&nbsp;&nbsp;Events</span>
-                    <span class="badge bg-dark rounded-pill">{{ event_count }}</span>
+                    <div class="d-flex" style="gap: 20px;">
+                        <button type="button" class="btn btn-success btn-sm position-relative" disabled>
+                            {% bs_icon 'envelope-check-fill' %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ event_sent_count }}</span>
+                            <span class="visually-hidden">event sent count</span>
+                        </button>
+                        <button type="button" class="btn btn-success btn-sm position-relative" disabled>
+                            {% bs_icon 'envelope-exclamation-fill' %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ event_draft_count }}</span>
+                            <span class="visually-hidden">event draft count</span>
+                        </button>
+                    </div>
                 </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-danger">
+                <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-danger p-3">
                     <span>{% bs_icon 'card-list' %}&nbsp;&nbsp;&nbsp;Lists</span>
-                    <span class="badge bg-dark rounded-pill">{{ list_count }}</span>
+                    <div class="d-flex" style="gap: 20px;">
+                        <button type="button" class="btn btn-danger btn-sm position-relative" disabled>
+                            {% bs_icon 'envelope-check-fill' %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ list_sent_count }}</span>
+                            <span class="visually-hidden">list sent count</span>
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm position-relative" disabled>
+                            {% bs_icon 'envelope-exclamation-fill' %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ list_draft_count }}</span>
+                            <span class="visually-hidden">list draft count</span>
+                        </button>
+                    </div>
                 </li>
             </ul>
         </div>

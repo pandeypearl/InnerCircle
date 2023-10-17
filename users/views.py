@@ -36,9 +36,14 @@ def dashboard(request):
     lists = List.objects.filter(user=request.user)
     user_activities = UserActivity.objects.filter(user=request.user).order_by('-timestamp')
 
+    member_groups = {}
+    for member in members:
+        member_groups[member.id] = member.groups.all()
+
     context = {
         'user_activities': user_activities,
         'members': members,
+        'member_groups': member_groups,
         'events': events,
         'lists': lists,
         'broadcasts': broadcasts,

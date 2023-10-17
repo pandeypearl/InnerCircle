@@ -1,4 +1,4 @@
-from circle.models import Member
+from circle.models import Member, Group
 from broadcasts.models import Broadcast
 from events.models import Event
 from lists.models import List
@@ -14,6 +14,14 @@ def member_count(request):
     member_count = Member.objects.filter(user=user).count() if user.is_authenticated else 0
     return {'member_count': member_count}
 
+def group_count(request):
+    user = request.user
+    if isinstance(user, AnonymousUser):
+        user = get_user(request)
+
+    group_count = Group.objects.filter(user=user).count() if user.is_authenticated else 0
+    return {'group_count': group_count}
+
 def broadcast_count(request):
     user = request.user
     if isinstance(user, AnonymousUser):
@@ -21,6 +29,23 @@ def broadcast_count(request):
 
     broadcast_count = Broadcast.objects.filter(user=user).count() if user.is_authenticated else 0
     return {'broadcast_count': broadcast_count}
+
+def broadcast_draft_count(request):
+    user = request.user
+    if isinstance(user, AnonymousUser):
+        user = get_user(request)
+
+    broadcast_draft_count = Broadcast.objects.filter(user=user, is_draft=True).count() if user.is_authenticated else 0
+    return {'broadcast_draft_count': broadcast_draft_count}
+
+
+def broadcast_sent_count(request):
+    user = request.user
+    if isinstance(user, AnonymousUser):
+        user = get_user(request)
+
+    broadcast_sent_count = Broadcast.objects.filter(user=user, is_draft=False).count() if user.is_authenticated else 0
+    return {'broadcast_sent_count': broadcast_sent_count}
 
 def event_count(request):
     user = request.user
@@ -30,6 +55,22 @@ def event_count(request):
     event_count = Event.objects.filter(user=user).count() if user.is_authenticated else 0
     return {'event_count': event_count}
 
+def event_draft_count(request):
+    user = request.user
+    if isinstance(user, AnonymousUser):
+        user = get_user(request)
+
+    event_draft_count = Event.objects.filter(user=user, is_draft=True).count() if user.is_authenticated else 0
+    return {'event_draft_count': event_draft_count}
+
+def event_sent_count(request):
+    user = request.user
+    if isinstance(user, AnonymousUser):
+        user = get_user(request)
+
+    event_sent_count = Event.objects.filter(user=user, is_draft=False).count() if user.is_authenticated else 0
+    return {'event_sent_count': event_sent_count}
+
 def list_count(request):
     user = request.user
     if isinstance(user, AnonymousUser):
@@ -37,3 +78,19 @@ def list_count(request):
 
     list_count = List.objects.filter(user=user).count() if user.is_authenticated else 0
     return {'list_count': list_count}
+
+def list_draft_count(request):
+    user = request.user
+    if isinstance(user, AnonymousUser):
+        user = get_user(request)
+
+    list_draft_count = List.objects.filter(user=user, is_draft=True).count() if user.is_authenticated else 0
+    return {'list_draft_count': list_draft_count}
+
+def list_sent_count(request):
+    user = request.user
+    if isinstance(user, AnonymousUser):
+        user = get_user(request)
+
+    list_sent_count = List.objects.filter(user=user, is_draft=False).count() if user.is_authenticated else 0
+    return {'list_sent_count': list_sent_count}
