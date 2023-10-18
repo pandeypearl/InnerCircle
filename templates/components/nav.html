@@ -10,53 +10,50 @@
             <!-- <img src="{% static 'img/pic_female.png' %}" alt="Profile Picture"> -->
         </li>
             <li class="nav-item text-center"><small>@{{user.username}}</small></li>
-        <li class="nav-item"><small>{% bs_icon 'people-fill' %} {{member_count}}</small></li>
+        <li class="nav-item"><small><i class="bi bi-people-fill"></i> {{member_count}}</small></li>
     </ul>
     <hr>
     {% with request.resolver_match.url_name as url_name %}
     <ul class="p-2 nav flex-column">
         <li class="nav-item">
-            <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' or url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">
-                {% bs_icon 'person' %} Profile
+            <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' or url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">   
+                <i class="bi bi-person-fill"></i> Profile
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'dashboard' %}" 
+            class="nav-link {% if url_name == 'dashboard' or url_name == 'reminders' or url_name == 'notifications' %}text-secondary{% else %}text-white{% endif %}">
+                <i class="bi bi-grid-1x2-fill"></i> Dashboard
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="{% url 'assistant' %}" class="nav-link {% if url_name == 'assistant' or url_name == 'chat_history' %}text-secondary{% else %}text-white{% endif %}">
+                <i class="bi bi-chat-square-heart-fill"></i> Assistant
             </a>
         </li>
     </ul>
     
-    <ul class="p-2 nav flex-column">
-        <li class="nav-item">
-            <a href="{% url 'dashboard' %}" 
-            class="nav-link {% if url_name == 'dashboard' or url_name == 'reminders' or url_name == 'notifications' %}text-secondary{% else %}text-white{% endif %}">
-                {% bs_icon 'layout-wtf' %} Dashboard
-            </a>
-        </li>
+    <ul class="p-2 mt-3 nav flex-column">
         <li class="nav-item">
             <a href="{% url 'member_list' %}" 
             class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_group' or url_name == 'delete_group' %}
             text-secondary{% else %}text-info{% endif %}">
-                {% bs_icon 'people' %} Circle
+                <i class="bi bi-people-fill"></i> Circle
             </a>
         </li>
         <li class="nav-item">
             <a href="{% url 'broadcast_list' %}" class="nav-link {% if url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}text-secondary{% else %}text-warning{% endif %}">
-                {% bs_icon 'megaphone' %} Broadcasts
+                <i class="bi bi-megaphone-fill"></i> Broadcasts
             </a>
         </li>
         <li class="nav-item">
             <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}text-secondary{% else %}text-success{% endif %}">
-                {% bs_icon 'calendar-event' %} Events
+                <i class="bi bi-calendar-event-fill"></i> Events
             </a>
         </li>
         <li class="nav-item">
             <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or urla_name == 'edit_list' or url_name == 'delete_list' %}text-secondary{% else %}text-danger{% endif %}">
-                {% bs_icon 'card-list' %} Lists
-            </a>
-        </li>
-    </ul>
-
-    <ul class="p-2 nav flex-column">
-        <li class="nav-item">
-            <a href="{% url 'assistant' %}" class="nav-link {% if url_name == 'assistant' or url_name == 'chat_history' %}text-secondary{% else %}text-white{% endif %}">
-                {% bs_icon 'chat-square-heart' %} Assistant
+                <i class="bi bi-ui-checks"></i> Lists
             </a>
         </li>
     </ul>
