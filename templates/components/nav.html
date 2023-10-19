@@ -47,7 +47,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}text-secondary{% else %}text-success{% endif %}">
+            <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'sent_event_list' or url_name == 'draft_event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}text-secondary{% else %}text-success{% endif %}">
                 <i class="bi bi-calendar-event-fill"></i> Events
             </a>
         </li>

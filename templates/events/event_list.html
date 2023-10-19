@@ -3,13 +3,26 @@
 {% load cache_bust %}
 {% load bootstrap_icons %}
 
-{% block title %}InnerCircle | Events{% endblock %}
+{% block title %}
+{% with request.resolver_match.url_name as url_name %}
+    {% if url_name == 'event_list' %}
+    InnerCircle | Events
+    {% elif url_name == 'sent_event_list' %}
+    InnerCircle | Sent Events
+    {% elif url_name == 'draft_event_list' %}
+    InnerCircle | Draft Events
+    {% endif %}
+{% endwith %}
+{% endblock %}
 
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <h4 class="text-end text-secondary">Your Events</h4>
+    <div class="d-flex justify-content-end">
+        <a href="{% url 'create_event' %}" class="btn btn-dark text-end"><i class="bi bi-calendar-event-fill"></i> New Event</a>
+    </div>
 
 
     {% if messages %}
@@ -22,40 +35,63 @@
     </div>
     {% endif %}
 
-    
-    <div>
-        <h6 class="text-dark"><strong>Events</strong> &nbsp;&nbsp;{{ user_events.count }}</h6>
+    {% with request.resolver_match.url_name as url_name %}
+        {% if url_name == 'event_list' %}
+        <div>
+            <h6 class="text-dark"><strong>Events</strong> &nbsp;&nbsp;{{ user_events.count }}</h6>
 
-        {% if user_events %}
-        <div class="list-group list-group-flush">
-            {% for user_event in user_events %}
-            <a  href="{% url 'event_detail' user_event.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-success">
+            {% if user_events %}
+            <div class="list-group list-group-flush">
+                {% for user_event in user_events %}
+                <a  href="{% url 'event_detail' user_event.id %}" 
+                class="list-group-item list-group-action d-flex justify-content-between align-items-center {% if user_event.is_draft == True %}list-group-item-light{% else %}list-group-item-success{% endif %}">
                     <span class="d-block"><strong>{{ user_event.event_name }}</strong> : <small>{{ user_event.event_status }}</small></span>
                     <span class="d-block">{{ user_event.date|date:"d F Y" }}</span>
-            </a>
-            {% endfor %}
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-secondary text-center">You currently have no events.</p>
+            {% endif %}
         </div>
-        {% else %}
-        <p class="text-secondary text-center">You currently have no sent events.</p>
-        {% endif %}
-    </div>
+        {% elif url_name == 'sent_event_list' %}
+        <div>
+            <h6 class="text-dark"><strong>Events</strong> &nbsp;&nbsp;{{ sent_events.count }}</h6>
 
-    <div>
-        <h6 class="text-dark"><strong>Draft Events</strong> &nbsp;&nbsp;{{ drafts.count }}</h6>
-
-        {% if drafts %}
-        <div class="list-group list-group-flush">
-            {% for draft in drafts %}
-            <a  href="{% url 'event_detail' draft.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-light">
-                    <span class="d-block"><strong>{{ draft.event_name }}</strong> : <small>{{ draft.event_status }}</small></span>
-                    <span class="d-block">{{ draft.date|date:"d F Y" }}</span>
-            </a>
-            {% endfor %}
+            {% if sent_events %}
+            <div class="list-group list-group-flush">
+                {% for sent_event in sent_events %}
+                <a  href="{% url 'event_detail' sent_event.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-success">
+                        <span class="d-block"><strong>{{ sent_event.event_name }}</strong> : <small>{{ sent_event.event_status }}</small></span>
+                        <span class="d-block">{{ sent_event.date|date:"d F Y" }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-secondary text-center">You currently have no sent events.</p>
+            {% endif %}
         </div>
-        {% else %}
-        <p class="text-secondary text-center">You currently have no draft events.</p>
+        {% elif url_name == 'draft_event_list' %}
+        <div>
+            <h6 class="text-dark"><strong>Draft Events</strong> &nbsp;&nbsp;{{ draft_events.count }}</h6>
+    
+            {% if draft_events %}
+            <div class="list-group list-group-flush">
+                {% for draft_event in draft_events %}
+                <a  href="{% url 'event_detail' draft_event.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-light">
+                        <span class="d-block"><strong>{{ draft_event.event_name }}</strong> : <small>{{ draft_event.event_status }}</small></span>
+                        <span class="d-block">{{ draft_event.date|date:"d F Y" }}</span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-secondary text-center">You currently have no draft events.</p>
+            {% endif %}
+        </div>
         {% endif %}
-    </div>
+    {% endwith %}
+
+    
     
 
 </section>

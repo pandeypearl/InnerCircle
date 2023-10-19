@@ -14,15 +14,36 @@ from .serializers import EventSerializer, RSVPSerializer
 login_required(login_url='signIn')
 def event_list(request):
     template = 'events/event_list.html'
-    user_events = Event.objects.filter(user=request.user, is_draft=False)
-    drafts = Event.objects.filter(user=request.user, is_draft=True)
+    user_events = Event.objects.filter(user=request.user)
 
     context = {
         'user_events': user_events,
-        'drafts': drafts,
     }
 
     return render(request, template, context)
+
+
+login_required(login_url='signIn')
+def sent_event_list(request):
+    template = 'events/event_list.html'
+
+    sent_events = Event.objects.filter(user=request.user, is_draft=False)
+
+    context = {'sent_events': sent_events}
+
+    return render(request, template, context)
+
+
+login_required(login_url='signIn')
+def draft_event_list(request):
+    template = 'events/event_list.html'
+
+    draft_events = Event.objects.filter(user=request.user, is_draft=True)
+
+    context = {'draft_events': draft_events}
+
+    return render(request, template, context)
+
 
 login_required(login_url='signIn')
 def event_detail(request, event_id):
@@ -33,6 +54,7 @@ def event_detail(request, event_id):
         'event': event,
     }
     return render(request, template, context)
+
 
 login_required(login_url='signIn')
 def create_event(request):
@@ -78,6 +100,7 @@ def create_event(request):
 
     return render(request, template, context)
 
+
 login_required(login_url='signIn')
 def send_event_draft(request, draft_id):
     draft = get_object_or_404(Event, id=draft_id, is_draft=True)
@@ -93,6 +116,7 @@ def send_event_draft(request, draft_id):
     draft.save()
     messages.success(request, 'Event invitations sent')
     return redirect('event_detail', event_id=draft_id)
+
 
 login_required(login_url='signIn')
 def update_event(request, event_id):
@@ -122,6 +146,7 @@ def update_event(request, event_id):
     }
 
     return render(request, template, context)
+
 
 login_required(login_url='signIn')
 def delete_event(request, pk):
@@ -185,6 +210,7 @@ def rsvp_view(request, event_id, member_id):
     }
 
     return render(request, template, context)
+
 
 def rsvp_done(request, event_id, member_id):
     template = 'events/rsvp_done.html'

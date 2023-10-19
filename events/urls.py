@@ -16,6 +16,8 @@ router.register(r'rsvp', RSVPListCreateView)
 
 urlpatterns = [
     path('event_list', views.event_list, name='event_list'),
+    path('sent_event_list', views.sent_event_list, name='sent_event_list'),
+    path('draft_event_list', views.draft_event_list, name='draft_event_list'),
     path('event_detail/<str:event_id>', views.event_detail, name='event_detail'),
     path('create_event', views.create_event, name='create_event'),
     path('send_event_draft/<int:draft_id>/', views.send_event_draft, name='send_event_draft'),
