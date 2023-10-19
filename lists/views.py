@@ -22,15 +22,36 @@ from .serializers import ListSerializer, ListItemSerializer, CheckItemSerializer
 login_required(login_url='signIn')
 def lists(request):
     template = 'lists/lists.html'
-    user_lists = List.objects.filter(user=request.user, is_draft=False)
-    drafts = List.objects.filter(user=request.user, is_draft=True)
+    user_lists = List.objects.filter(user=request.user)
 
     context = {
         'user_lists': user_lists,
-        'drafts': drafts,
     }
 
     return render(request, template, context)
+
+
+login_required(login_url='signIn')
+def sent_lists(request):
+    template = 'lists/lists.html'
+
+    sent_lists = List.objects.filter(user=request.user, is_draft=False)
+
+    context = {'sent_lists': sent_lists}
+
+    return render(request, template, context)
+
+
+login_required(login_url='signIn')
+def draft_lists(request):
+    template = 'lists/lists.html'
+
+    draft_lists = List.objects.filter(user=request.user, is_draft=True)
+
+    context = {'draft_lists': draft_lists}
+
+    return render(request, template, context)
+
 
 login_required(login_url='signIn')
 def list_detail(request, list_id):

@@ -69,7 +69,7 @@
                 <a href="{% url 'draft_event_list' %}" class="nav-link {% if url_name == 'draft_event_list' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-envelope-exclamation-fill"></i> Event Drafts</a>
             </li>
         </ul>
-    {% elif url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or url_name == 'edit_list' or url_name == 'delete_list' %}
+    {% elif url_name == 'lists' or url_name == 'sent_lists' or url_name == 'draft_lists' or url_name == 'list_detail' or url_name == 'create_list' or url_name == 'edit_list' or url_name == 'delete_list' %}
         <h5 class="p-2 text-center">Your Lists</h5>
         <hr>
         <ul class="p-2 nav">
@@ -77,10 +77,10 @@
                 <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'edit_list' or url_name == 'delete_lits' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-ui-checks"></i> <small>All Lists</small></a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link text-white"><i class="bi bi-envelope-check-fill"></i> <small>Sent Lists</small></a>
+                <a href="{% url 'sent_lists' %}" class="nav-link {% if url_name == 'sent_lists' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-envelope-check-fill"></i> <small>Sent Lists</small></a>
             </li>
             <li class="nav-item">
-                <a href="" class="nav-link text-white"><i class="bi bi-envelope-exclamation-fill"></i> <small>List Drafts</small></a>
+                <a href="{% url 'draft_lists' %}" class="nav-link {% if url_name == 'draft_lists' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-envelope-exclamation-fill"></i> <small>List Drafts</small></a>
             </li>
         </ul>
     {% elif url_name == 'search_results' %}

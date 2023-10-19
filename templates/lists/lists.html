@@ -3,13 +3,26 @@
 {% load cache_bust %}
 {% load bootstrap_icons %}
 
-{% block title %}InnerCircle | Lists{% endblock %}
+{% block title %}
+    {% with request.resolver_match.url_name as url_name %}
+        {% if url_name == 'lists' %}
+        InnerCircle | Lists
+        {% elif url_name == 'sent_lists' %}
+        InnerCircle | Sent Lists
+        {% elif url_name == 'draft_lists' %}
+        InnerCircle | Draft Lists
+        {% endif %}
+    {% endwith %}
+{% endblock %}
 
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <h4 class="text-end text-secondary">Your Lists</h4>
+    <div class="d-flex justify-content-end">
+        <a href="{% url 'create_list' %}" class="btn btn-dark text-end"><i class="bi bi-ui-checks"></i> New List</a>
+    </div>
 
     {% if messages %}
     <div>
@@ -21,38 +34,60 @@
     </div>
     {% endif %}
 
-    <div>
-        <h6 class="text-dark"><strong>Lists</strong>&nbsp;&nbsp;{{ user_lists.count }}</h6>
+    {% with request.resolver_match.url_name as url_name %}
+        {% if url_name == 'lists' %}
+        <div>
+            <h6 class="text-dark"><strong>Lists</strong>&nbsp;&nbsp;{{ user_lists.count }}</h6>
 
-        {% if user_lists %}
-        <div class="list-group list-group-flush">
-            {% for user_list in user_lists %}
-            <a  href="{% url 'list_detail' user_list.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-danger">
-                    <span class="d-block"><strong>{{ user_list.list_name }}</strong><!-- &nbsp;&nbsp;{% bs_icon 'list-ul' %}<small>{{ user_lists.ListItem.count }}</small>--></span>
-                    <span class="d-block"><small>{{ user_list.created|date:"d F Y" }}</small></span>
-            </a>
-            {% endfor %}
+            {% if user_lists %}
+            <div class="list-group list-group-flush">
+                {% for user_list in user_lists %}
+                <a  href="{% url 'list_detail' user_list.id %}" 
+                class="list-group-item list-group-action d-flex justify-content-between align-items-center {% if user_list.is_draft == True%}list-group-item-light{% else %}list-group-item-danger{% endif %}">
+                        <span class="d-block"><strong>{{ user_list.list_name }}</strong><!-- &nbsp;&nbsp;{% bs_icon 'list-ul' %}<small>{{ user_lists.ListItem.count }}</small>--></span>
+                        <span class="d-block"><small>{{ user_list.created|date:"d F Y" }}</small></span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-secondary text-center">You currently have lists</p>
+            {% endif %}
         </div>
-        {% else %}
-        <p class="text-secondary text-center">You currently have no sent lists</p>
-        {% endif %}
-    </div>
+        {% elif url_name == 'sent_lists' %}
+        <div>
+            <h6 class="text-dark"><strong>Sent Lists</strong>&nbsp;&nbsp;{{ sent_lists.count }}</h6>
 
-    <div class="mt-5">
-        <h6 class="text-dark"><strong>Drafts</strong>&nbsp;&nbsp;{{ drafts.count }}</h6>
-
-        {% if drafts %}
-        <div class="list-group list-group-flush">
-            {% for draft in drafts %}
-            <a  href="{% url 'list_detail' draft.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-light">
-                    <span class="d-block"><strong>{{ draft.list_name }}</strong><!-- &nbsp;&nbsp;{% bs_icon 'list-ul' %}<small>{{ user_lists.ListItem.count }}</small>--></span>
-                    <span class="d-block"><small>{{ draft.created|date:"d F Y" }}</small></span>
-            </a>
-            {% endfor %}
+            {% if sent_lists %}
+            <div class="list-group list-group-flush">
+                {% for sent_list in sent_lists %}
+                <a  href="{% url 'list_detail' sent_list.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-danger">
+                    <span class="d-block"><strong>{{ sent_list.list_name }}</strong><!-- &nbsp;&nbsp;{% bs_icon 'list-ul' %}<small>{{ user_lists.ListItem.count }}</small>--></span>
+                    <span class="d-block"><small>{{ sent_list.created|date:"d F Y" }}</small></span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-secondary text-center">You currently have no sent lists</p>
+            {% endif %}
         </div>
-        {% else %}
-        <p class="text-secondary text-center">You currently have no list drafts.</p>
+        {% elif url_name == 'draft_lists' %}
+        <div class="mt-5">
+            <h6 class="text-dark"><strong>Draft Lists</strong>&nbsp;&nbsp;{{ draft_lists.count }}</h6>
+    
+            {% if draft_lists %}
+            <div class="list-group list-group-flush">
+                {% for draft_list in draft_lists %}
+                <a  href="{% url 'list_detail' draft_list.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-light">
+                        <span class="d-block"><strong>{{ draft_list.list_name }}</strong><!-- &nbsp;&nbsp;{% bs_icon 'list-ul' %}<small>{{ user_lists.ListItem.count }}</small>--></span>
+                        <span class="d-block"><small>{{ draft_list.created|date:"d F Y" }}</small></span>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-secondary text-center">You currently have no list drafts.</p>
+            {% endif %}
+        </div>
         {% endif %}
-    </div>
+    {% endwith %}
 </section>
 {% endblock %}

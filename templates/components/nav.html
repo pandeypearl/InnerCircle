@@ -52,7 +52,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'create_list' or urla_name == 'edit_list' or url_name == 'delete_list' %}text-secondary{% else %}text-danger{% endif %}">
+            <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'sent_lists' or url_name == 'draft_lists' or url_name == 'list_detail' or url_name == 'create_list' or urla_name == 'edit_list' or url_name == 'delete_list' %}text-secondary{% else %}text-danger{% endif %}">
                 <i class="bi bi-ui-checks"></i> Lists
             </a>
         </li>

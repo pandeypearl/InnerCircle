@@ -19,6 +19,8 @@ router.register(r'check_item', CheckItemListCreateView)
 
 urlpatterns = [
     path('lists', views.lists, name='lists'),
+    path('sent_lists', views.sent_lists, name='sent_lists'),
+    path('draft_lists', views.draft_lists, name='draft_lists'),
     path('list_detail/<str:list_id>', views.list_detail, name='list_detail'),
     path('create_list', views.create_list, name='create_list'),
     path('send_list_draft/<int:draft_id>/', views.send_list_draft, name='send_list_draft'),
