@@ -22,6 +22,9 @@
     <h4 class="text-end text-secondary">
         Your Broadcasts
     </h4>
+    <div class="d-flex justify-content-end">
+        <a href="{% url 'create_broadcast' %}" class="btn btn-dark text-end"><i class="bi bi-megaphone-fill"></i> New Broadcast</a>
+    </div>
 
     
     {% if messages %}
@@ -38,6 +41,7 @@
         {% if url_name == 'broadcast_list' %}
         <div>
             <h6 class="text-dark"><strong>Broadcasts</strong> &nbsp;&nbsp;{{ broadcasts.count }}</h6>
+            
 
             {% if broadcasts %}
             <div class="list-group list-group-flush">
