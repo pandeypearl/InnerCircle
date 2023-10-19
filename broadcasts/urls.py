@@ -10,6 +10,8 @@ router.register(r'broadcast', BroadcastListCreateView)
 
 urlpatterns = [
     path('broadcast_list', views.broadcast_list, name='broadcast_list'),
+    path('sent_broadcast_list', views.sent_broadcast_list, name='sent_broadcast_list'),
+    path('draft_broadcast_list', views.draft_broadcast_list, name='draft_broadcast_list'),
     path('broadcast_detail/<str:broadcast_id>', views.broadcast_detail, name='broadcast_detail'),
     path('create_broadcast', views.create_broadcast, name='create_broadcast'),
     path('send_broadcast_draft/<int:draft_id>/', views.send_broadcast_draft, name='send_broadcast_draft'),

@@ -14,14 +14,31 @@ from .serializers import BroadcastSerializer
 login_required(login_url='signIn')
 def broadcast_list(request):
     template = 'broadcasts/broadcast_list.html'
-    broadcasts = Broadcast.objects.filter(user=request.user, is_draft=False)
-
-    drafts = Broadcast.objects.filter(user=request.user, is_draft=True)
+    broadcasts = Broadcast.objects.filter(user=request.user)
 
     context = {
         'broadcasts': broadcasts,
-        'drafts': drafts,
     }
+
+    return render(request, template, context)
+
+login_required(login_url='signIn')
+def sent_broadcast_list(request):
+    template = 'broadcasts/broadcast_list.html'
+
+    sent_broadcasts = Broadcast.objects.filter(user=request.user, is_draft=False)
+
+    context = { 'sent_broadcasts': sent_broadcasts}
+
+    return render(request, template, context)
+
+login_required(login_url='signIn')
+def draft_broadcast_list(request):
+    template = 'broadcasts/broadcast_list.html'
+
+    draft_broadcasts = Broadcast.objects.filter(user=request.user, is_draft=True)
+
+    context = { 'draft_broadcasts': draft_broadcasts}
 
     return render(request, template, context)
 
