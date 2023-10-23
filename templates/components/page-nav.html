@@ -1,4 +1,3 @@
-{% load bootstrap_icons %}
 {% with request.resolver_match.url_name as url_name %}
 <div class="d-flex flex-column page-nav">
 
@@ -86,7 +85,7 @@
     {% elif url_name == 'search_results' %}
         <h5 class="p-2 text-center"><small>Search</small></h5>
         <hr>
-        <p class="text-center">{% bs_icon 'list-ol' %} <span class="badge bg-white text-secondary rounded-pill">{{ results|length }}</span></p>
+        <p class="text-center"><i class="bi bi-list-ol"></i> <span class="badge bg-white text-secondary rounded-pill">{{ results|length }}</span></p>
     {% elif url_name == 'assistant' or url_name == 'chat_history' %}
     <h5 class="p-2 text-center">Assistant</h5>
     <hr>
