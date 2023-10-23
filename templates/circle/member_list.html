@@ -13,7 +13,7 @@
 <h4 class="text-end text-secondary">Circle Members</h4>
 
 <div class="d-flex justify-content-end">
-    <a href="{% url 'create_member' %}" class="btn btn-dark text-end">{% bs_icon 'person-add' %}Add New Member</a>
+    <a href="{% url 'create_member' %}" class="btn btn-dark text-end"><i class="bi bi-person-add"></i> Add New Member</a>
 </div>
 
 {% if messages %}
@@ -27,7 +27,7 @@
 {% endif %}
 
 <div>
-    <h6 class="text-secondary">{% bs_icon 'people' %} {{ members.count }}</h6>
+    <h6 class="text-secondary"><i class="bi bi-people-fill"></i> {{ members.count }}</h6>
 
     {% if members %}
     <div class="list-group list-group-flush">

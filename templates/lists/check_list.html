@@ -9,7 +9,7 @@
 
 {% block member_content %}
 <div>
-    <p class="text-secondary">{% bs_icon 'person' %} {{ recipient.name }}</p>
+    <p class="text-secondary"><i class="bi bi-person-fill"></i> {{ recipient.name }}</p>
     <h2 class="text-white text-center bg-dark mb-5 p-3"> {{ list_obj.list_name }}</h2>
     <div class="d-flex justify-content-between">
         <p style="width: 40%"><strong>List By</strong><br>{{ list_obj.user.first_name }} {{ list_obj.user.last_name }}</p>

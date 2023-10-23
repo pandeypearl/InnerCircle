@@ -11,7 +11,7 @@
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
-        <a href="{% url 'member_detail' member.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <a href="{% url 'member_detail' member.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-dark text-end"> Delete {{ member.name }}</h4>
     </div>
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_member' pk=member.pk %}" method="POST">
@@ -26,8 +26,8 @@
         </div>
         
         <div>
-            <p>{% bs_icon 'balloon' %} {{ member.date_of_birth|date:"d F Y" }}</p>
-            <p>{% bs_icon 'envelope-at' %} {{ member.email }}</p>
+            <p><i class="bi bi-balloon-fill"></i> {{ member.date_of_birth|date:"d F Y" }}</p>
+            <p><i class="bi bi-envelope-at-fill"></i> {{ member.email }}</p>
         </div>
         
 
@@ -56,7 +56,7 @@
         <div>
           <p>Are you sure sure you would like to remove this person from your inner circle? Once you delete them, it can not be undone.</p>
 
-          <button class="btn btn-dark" type="submit">{% bs_icon 'trash3-fill' %} Delete</button>
+          <button class="btn btn-dark" type="submit"><i class="bi bi-trash3-fill"></i> Delete</button>
         </div>
     </form>
 </section>

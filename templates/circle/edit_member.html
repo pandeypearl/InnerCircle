@@ -10,7 +10,7 @@
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
-        <a href="{% url 'member_detail' instance.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <a href="{% url 'member_detail' instance.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end"> Edit {{ member.name }}</h4>
     </div>
 
@@ -50,7 +50,7 @@
             <input type="file" class="form-control" name="{{form.image.name}}" value="{{instance.image}}">
         </div>
     
-        <button class="btn btn-dark" type="submit">{% bs_icon 'pen-fill' %} &nbsp;Update</button>
+        <button class="btn btn-dark" type="submit"><i class="bi bi-pen-fill"></i> &nbsp;Update</button>
     </form>
 
 </section>

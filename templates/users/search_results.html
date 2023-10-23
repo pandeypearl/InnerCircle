@@ -24,7 +24,7 @@
                     <small class="badge bg-primary rounded-pill">{{ result.date_of_birth|date:"d F Y"}}</small>
                     <small class="badge bg-primary rounded-pill">{{ result.relationship }}</small>
                 </div>
-                <span class="badge bg-dark rounded-pill">{% bs_icon 'person' %}</span>
+                <span class="badge bg-dark rounded-pill"><i class="bi bi-person-fill"></i></span>
             </a>
             {% elif result.model_name == "Group" %}
             <a href="{% url 'group_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-primary d-flex justify-content-between align-items-center">
@@ -32,7 +32,7 @@
                     <strong>{{ result.group_name }}</strong>
                     <span class="badge bg-primary rounded-pill">group members : {{ result.members.count }}</span>
                 </div>
-                <span class="badge bg-dark rounded-pill">{% bs_icon 'people' %}</span>
+                <span class="badge bg-dark rounded-pill"><i class="bi bi-people-fill"></i></span>
             </a>
             {% elif result.model_name == "Broadcast" %}
             <a href="{% url 'broadcast_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center">
@@ -41,7 +41,7 @@
                     <span class="badge bg-warning rounded-pill">recipients : {{ result.receivers.count }}</span>
                 </div>
                 
-                <span class="badge bg-dark rounded-pill">{% bs_icon 'megaphone' %}</span>
+                <span class="badge bg-dark rounded-pill"><i class="bi bi-megaphone-fill"></i></span>
             </a>
             {% elif result.model_name == "Event" %}
             <a href="{% url 'event_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-success d-flex justify-content-between align-items-center">
@@ -49,7 +49,7 @@
                     <strong>{{ result.event_name }}</strong>
                     <span class="badge bg-success rounded-pill"> guests : {{ result.guests.count }}</span>
                 </div>
-                <span class="badge bg-dark rounded-pill">{% bs_icon 'calendar-event' %}</span>
+                <span class="badge bg-dark rounded-pill"><i class="bi bi-calendar-event-fill"></i></span>
             </a>
             {% elif result.model_name == "List" %}
             <a href="{% url 'list_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-danger d-flex justify-content-between align-items-center">
@@ -57,7 +57,7 @@
                     <strong>{{ result.list_name }}</strong>
                     <span class="badge bg-danger rounded-pill">recipients : {{ result.receivers.count }}</span>
                 </div>
-                <span class="badge bg-dark rounded-pill">{% bs_icon 'card-list' %}</span>
+                <span class="badge bg-dark rounded-pill"><i class="bi bi-ui-checks"></i></span>
             </a>
             {% endif %}
         {% endfor %}

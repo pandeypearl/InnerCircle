@@ -10,13 +10,13 @@
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
-        <a href="{% url 'group_list' %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <a href="{% url 'group_list' %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end">Group Info</h4>
     </div>
 
     <div class="d-flex justify-content-end" style="gap: 20px;">
-        <a class="btn btn-dark" href="{% url 'edit_group' group.id %}">{% bs_icon 'pen-fill' %} Edit</a>
-        <a class="btn btn-dark" href="{% url 'delete_group' group.id %}">{% bs_icon 'trash3-fill' %} Delete</a>
+        <a class="btn btn-dark" href="{% url 'edit_group' group.id %}"><i class="bi bi-pen-fill"></i> Edit</a>
+        <a class="btn btn-dark" href="{% url 'delete_group' group.id %}"><i class="bi bi-trash3-fill"></i> Delete</a>
     </div>
 
     <div>
@@ -28,7 +28,7 @@
     <div class="list-group list-group-flush">
         <div class="d-flex align-items-center" style="gap:20px">
             <h5 class="text-secondary">Group Members</h5>
-            <span class="badge bg-secondary rounded-pill">{% bs_icon 'person' %}{{ group.members.count }}</span>
+            <span class="badge bg-secondary rounded-pill"><i class="bi bi-person-fill"></i>&nbsp;{{ group.members.count }}</span>
         </div>
        
             {% for member in group.members.all %}

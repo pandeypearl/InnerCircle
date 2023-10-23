@@ -22,71 +22,71 @@
             </div>
 
             <div>
-                <p>{% bs_icon 'envelope-at' %} {{user_object.email}}</p>
-                <p>{% bs_icon 'balloon' %} {{user_profile.date_of_birth|date:"d F Y"}}</p>
+                <p><i class="bi bi-envelope-at-fill"></i> {{user_object.email}}</p>
+                <p><i class="bi bi-balloon-fill"></i> {{user_profile.date_of_birth|date:"d F Y"}}</p>
             </div>
                 
             <div>
-                <p>{% bs_icon 'hourglass-split' %} Joined {{user_object.date_joined|date:"d F Y"}}</p>
-                <p>{% bs_icon 'clock-history' %} Last Login {{user_object.last_login|date:"d M Y"}} {{user_object.last_login|time:"h:i A"}}</p>
+                <p><i class="bi bi-hourglass-split"></i> Joined {{user_object.date_joined|date:"d F Y"}}</p>
+                <p><i class="bi bi-clock-history"></i> Last Login {{user_object.last_login|date:"d M Y"}} {{user_object.last_login|time:"h:i A"}}</p>
             </div>
 
             <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-info p-3">
-                    <span>{% bs_icon 'people' %}&nbsp;&nbsp;&nbsp;Circle</span>
+                    <span><i class="bi bi-people-fill"></i>&nbsp;&nbsp;&nbsp;Circle</span>
                     <div class="d-flex" style="gap: 20px;">
                         <button type="button" class="btn btn-info btn-sm position-relative" disabled>
-                            {% bs_icon 'person-fill' %}
+                            <i class="bi bi-person-fill"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ member_count }}</span>
                             <span class="visually-hidden">member count</span>
                         </button>
                         <button type="button" class="btn btn-info btn-sm position-relative" disabled>
-                            {% bs_icon 'person-fill-gear' %}
+                            <i class="bi bi-person-fill-gear"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ group_count }}</span>
                             <span class="visually-hidden">group count</span>
                         </button>
                     </div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-warning p-3">
-                    <span>{% bs_icon 'megaphone' %}&nbsp;&nbsp;&nbsp;Broadcasts</span>
+                    <span><i class="bi bi-megaphone-fill"></i>&nbsp;&nbsp;&nbsp;Broadcasts</span>
                     <div class="d-flex" style="gap: 20px;">
                         <button type="button" class="btn btn-warning btn-sm position-relative" disabled>
-                            {% bs_icon 'envelope-check-fill' %}
+                            <i class="bi bi-envelope-check-fill"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ broadcast_sent_count }}</span>
                             <span class="visually-hidden">broadcast sent count</span>
                         </button>
                         <button type="button" class="btn btn-warning btn-sm position-relative" disabled>
-                            {% bs_icon 'envelope-exclamation-fill' %}
+                            <i class="bi bi-envelope-exclamation-fill"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ broadcast_draft_count }}</span>
                             <span class="visually-hidden">broadcast draft count</span>
                         </button>
                     </div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-success p-3">
-                    <span>{% bs_icon 'calendar-event' %}&nbsp;&nbsp;&nbsp;Events</span>
+                    <span><i class="bi bi-calendar-event-fill"></i>&nbsp;&nbsp;&nbsp;Events</span>
                     <div class="d-flex" style="gap: 20px;">
                         <button type="button" class="btn btn-success btn-sm position-relative" disabled>
-                            {% bs_icon 'envelope-check-fill' %}
+                            <i class="bi bi-envelope-check-fill"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ event_sent_count }}</span>
                             <span class="visually-hidden">event sent count</span>
                         </button>
                         <button type="button" class="btn btn-success btn-sm position-relative" disabled>
-                            {% bs_icon 'envelope-exclamation-fill' %}
+                            <i class="bi bi-envelope-exclamation-fill"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ event_draft_count }}</span>
                             <span class="visually-hidden">event draft count</span>
                         </button>
                     </div>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-danger p-3">
-                    <span>{% bs_icon 'card-list' %}&nbsp;&nbsp;&nbsp;Lists</span>
+                    <span><i class="bi bi-ui-checks"></i>&nbsp;&nbsp;&nbsp;Lists</span>
                     <div class="d-flex" style="gap: 20px;">
                         <button type="button" class="btn btn-danger btn-sm position-relative" disabled>
-                            {% bs_icon 'envelope-check-fill' %}
+                            <i class="bi bi-envelope-check-fill"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ list_sent_count }}</span>
                             <span class="visually-hidden">list sent count</span>
                         </button>
                         <button type="button" class="btn btn-danger btn-sm position-relative" disabled>
-                            {% bs_icon 'envelope-exclamation-fill' %}
+                            <i class="bi bi-envelope-exclamation-fill"></i>
                             <span class="position-absolute top-0 start-100 translate-middle badge bg-dark rounded-pill">{{ list_draft_count }}</span>
                             <span class="visually-hidden">list draft count</span>
                         </button>

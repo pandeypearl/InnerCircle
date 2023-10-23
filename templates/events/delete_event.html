@@ -10,7 +10,7 @@
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
-        <a href="{% url 'event_detail' event.id %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <a href="{% url 'event_detail' event.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-dark text-end"> Delete {{ event.event_name }}</h4>
     </div>
 
@@ -30,7 +30,7 @@
         <div class="list-group list-group-flush">
             <div class="d-flex align-items-center" style="gap:20px">
                 <h5 class="text-secondary">Guests</h5>
-                <span class="badge bg-secondary rounded-pill">{% bs_icon 'person' %}{{ event.guests.count }}</span>
+                <span class="badge bg-secondary rounded-pill"><i class="bi bi-person-fill"></i>&nbsp;{{ event.guests.count }}</span>
             </div>
            
                 {% for guest in event.guests.all %}
@@ -50,7 +50,7 @@
         <div>
             <p>Are you sure sure you would like to delete this event? Once you delete it, it can not be undone.</p>
 
-            <button class="btn btn-dark" type="submit">{% bs_icon 'trash3-fill' %} Delete</button>
+            <button class="btn btn-dark" type="submit"><i class="bi bi-trash3-fill"></i> Delete</button>
         </div>
     </form>
 </section>

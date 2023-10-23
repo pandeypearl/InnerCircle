@@ -12,7 +12,7 @@
     <h4 class="text-end text-secondary">Groups</h4>
 
     <div class="d-flex justify-content-end">
-        <a href="{% url 'create_group' %}" class="btn btn-dark text-end">{% bs_icon 'person-add' %}Add New Group</a>
+        <a href="{% url 'create_group' %}" class="btn btn-dark text-end"><i class="bi bi-person-gear"></i> Add New Group</a>
     </div>
 
     {% if messages %}
@@ -27,7 +27,7 @@
 
     <div>
 
-        <h6 class="text-secondary">{% bs_icon 'person-gear' %}{{ users_groups.count }}</h6>
+        <h6 class="text-secondary"><i class="bi bi-person-gear"></i> {{ users_groups.count }}</h6>
 
         {% if users_groups %}
         <div class="list-group list-group-flush">
@@ -36,7 +36,7 @@
                 <div class="d-flex" style="gap: 20px">
                     <span>{{ group.group_name }}</span>
                 </div>
-                <span class="badge bg-info rounded-pill">{% bs_icon 'people' %} {{group.members.count}}</span>
+                <span class="badge bg-info rounded-pill"><i class="bi bi-people-fill"></i> {{group.members.count}}</span>
             </a>
             {% endfor %}
         </div>

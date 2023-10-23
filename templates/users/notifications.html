@@ -18,7 +18,7 @@
             {% for notification in notifications %}
                 {% if notification.rsvp %}
                 <li class="list-group-item list-group-item-info">
-                    <span>{% bs_icon 'calendar-event' %}&nbsp;</span>
+                    <span><i class="bi bi-calendar-event-fill"></i>&nbsp;</span>
                     <span>
                         <strong>{{ notification.rsvp.guest.name}}</strong>
                          RSVPed <strong>{{ notification.rsvp.response_status}}</strong> for event : <strong>{{ notification.event.event_name }}</strong>
@@ -26,7 +26,7 @@
                 </li>
                 {% elif notification.check_item %}
                 <li class="list-group-item list-group-item-danger">
-                    <span>{% bs_icon 'card-list' %}&nbsp;</span>
+                    <span><i class="bi bi-ui-checks"></i>&nbsp;</span>
                     <span>
                         <strong>{{ notification.check_item.recipient.name }}</strong> 
                         checked <strong>{{ notification.check_item.item.item_name }}</strong> on the list 

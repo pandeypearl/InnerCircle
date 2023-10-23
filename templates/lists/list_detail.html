@@ -10,7 +10,7 @@
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
-        <a href="{% url 'lists' %}" class="text-dark">{% bs_icon 'arrow-left-circle-fill' size='1.5em' %}</a>
+        <a href="{% url 'lists' %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end"> {{list.list_name}}</h4>
     </div>
 
@@ -18,15 +18,15 @@
         {% if list.is_draft %}
         <form method="POST" action="{% url 'send_list_draft' draft_id=list.id %}" style="padding:0;">
             {% csrf_token %}
-            <button class="btn btn-dark" type="submit">{% bs_icon 'envelope-arrow-up-fill' %} Send List</button>
+            <button class="btn btn-dark" type="submit"><i class="bi bi-envelope-arrow-up-fill"></i> Send List</button>
         </form>
         <div class="d-flex" style="gap: 20px;">
-            <a class="btn btn-dark" href="{% url 'edit_list' list.id %}">{% bs_icon 'pen-fill' %} Edit</a>
-            <a class="btn btn-dark" href="{% url 'delete_list' list.id %}">{% bs_icon 'trash3-fill' %} Delete</a>
+            <a class="btn btn-dark" href="{% url 'edit_list' list.id %}"><i class="bi bi-pen-fill"></i> Edit</a>
+            <a class="btn btn-dark" href="{% url 'delete_list' list.id %}"><i class="bi bi-trash3-fill"></i> Delete</a>
         </div>
         {% else %}
         <div class="d-flex justify-content-end" style="width: 100%;">
-            <a class="btn btn-dark" href="{% url 'delete_list' list.id %}">{% bs_icon 'trash3-fill' %} Delete</a>
+            <a class="btn btn-dark" href="{% url 'delete_list' list.id %}"><i class="bi bi-trash3-fill"></i> Delete</a>
         </div>
         {% endif %}
     </div>
@@ -116,7 +116,7 @@
     <div class="list-group list-group-flush">
         <div class="d-flex align-items-center" style="gap:20px">
             <h5 class="text-secondary">List Recipients</h5>
-            <span class="badge bg-secondary rounded-pill">{% bs_icon 'person' %}{{ event.guests.count }}</span>
+            <span class="badge bg-secondary rounded-pill"><i class="bi bi-person-fill"></i>&nbsp;{{ list.receivers.count }}</span>
         </div>
        
         {% for receiver in list.receivers.all %}

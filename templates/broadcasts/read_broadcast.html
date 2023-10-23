@@ -9,7 +9,7 @@
 
 {% block member_content %}
 <div>
-    <p>{% bs_icon 'person' %}{{ member.name }}</p>
+    <p><i class="bi bi-person-fill"></i>{{ member.name }}</p>
     <h4 class="text-white text-center bg-dark mb-5">{{ broadcast.title }}</h4>
     <div class="d-flex" style="gap: 50px;">
         <p><small><strong>Created</strong><br>{{broadcast.created|date:"d F Y"}} {{broadcast.created|time:"h:i A"}}</small></p>

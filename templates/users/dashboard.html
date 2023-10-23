@@ -15,7 +15,7 @@
     <div class="card" style="width: 20rem;">
         <div class="card-header d-flex justify-content-between">
           <span>Circle </span>
-          <span> {% bs_icon 'people' %} {{ member_count }}</span>
+          <span><i class="bi bi-people-fill"></i> {{ member_count }}</span>
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
@@ -23,7 +23,7 @@
                 <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
                     <span>{{ member.name }}</span>
                     {% with member_groups_count=member|get_member_groups:member_groups|length %}
-                    <span class="badge bg-info">{% bs_icon 'person-fill-gear' %}{{ member_groups_count }}</span>
+                    <span class="badge bg-info"><i class="bi bi-person-fill-gear"></i>&nbsp;{{ member_groups_count }}</span>
                     {% endwith %}
                 </li>
                 {% endfor %}
@@ -34,7 +34,7 @@
     <div class="card" style="width: 20rem;">
         <div class="card-header d-flex justify-content-between">
           <span>Broadcasts </span>
-          <span>{% bs_icon 'megaphone' %} {{ broadcast_count }}</span>
+          <span><i class="bi bi-megaphone-fill"></i> {{ broadcast_count }}</span>
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
@@ -42,9 +42,9 @@
                 <li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
                     {{ broadcast.title }}
                     {% if broadcast.is_draft == True %}
-                        <span class="text-secondary">{% bs_icon 'envelope-exclamation-fill' %}</span>
+                        <span class="text-secondary"><i class="bi bi-envelope-exclamation-fill"></i></span>
                     {% else %}
-                        <span class="text-warning">{% bs_icon 'envelope-check-fill' %}</span>
+                        <span class="text-warning"><i class="bi bi-envelope-check-fill"></i></span>
                     {% endif %}
                 </li>
                 {% endfor %}
@@ -55,7 +55,7 @@
     <div class="card" style="width: 20rem;">
         <div class="card-header d-flex justify-content-between">
           <span>Events</span>
-          <span>{% bs_icon 'calendar-event' %} {{ event_count }}</span> 
+          <span><i class="bi bi-calendar-event-fill"></i> {{ event_count }}</span> 
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
@@ -63,9 +63,9 @@
                 <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
                     {{ event.event_name }}
                     {% if event.is_draft == True %}
-                    <span class="text-secondary">{% bs_icon 'envelope-exclamation-fill' %}</span>
+                    <span class="text-secondary"><i class="bi bi-envelope-exclamation-fill"></i></span>
                     {% else %}
-                        <span class="text-success">{% bs_icon 'envelope-check-fill' %}</span>
+                        <span class="text-success"><i class="bi bi-envelope-check-fill"></i></span>
                     {% endif %}
                 </li>
                 {% endfor %}
@@ -76,7 +76,7 @@
     <div class="card" style="width: 20rem;">
         <div class="card-header d-flex justify-content-between">
           <span>Lists</span>
-          <span>{% bs_icon 'card-list' %} {{ list_count }}</span> 
+          <span><i class="bi bi-ui-checks"></i> {{ list_count }}</span> 
         </div>
         <div class="card-body">
             <ul class="list-group list-group-flush">
@@ -84,9 +84,9 @@
                 <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
                     {{ list.list_name }}
                     {% if list.is_draft == True %}
-                        <span class="text-secondary">{% bs_icon 'envelope-exclamation-fill' %}</span>
+                        <span class="text-secondary"><i class="bi bi-envelope-exclamation-fill"></i></span>
                     {% else %}
-                        <span class="text-danger">{% bs_icon 'envelope-check-fill' %}</span>
+                        <span class="text-danger"><i class="bi bi-envelope-check-fill"></i></span>
                     {% endif %}
                 </li>
                 {% endfor %}

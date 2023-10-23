@@ -17,8 +17,8 @@
         {% for member in members %}
             <li class="list-group-item list-group-item-light">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{% bs_icon 'balloon-fill' %} {{ member.name }}'s Birthday</h5>
-                    <small class="{% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{% bs_icon 'hourglass-split' %} {{ member.days_until_birthday }} days</small>
+                    <h5 class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}"><i class="bi bi-balloon-fill"></i> {{ member.name }}'s Birthday</h5>
+                    <small class="{% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}"><i class="bi bi-hourglass-split"></i> {{ member.days_until_birthday }} days</small>
                 </div>
                 <p class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{{ member.date_of_birth }}</p>
             </li>
