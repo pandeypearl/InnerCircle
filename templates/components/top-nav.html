@@ -6,6 +6,7 @@
 </style>
 
 <div class="page-footer d-flex justify-content-between">
+    <a class="navbar-brand text-dark" href="{% url 'home' %}">InnerCircle</a>
     <ul class="nav nav-underline">
         <li class="nav-item ">
             <a href="" class="nav-link text-dark active">about</a>
@@ -20,9 +21,5 @@
 
     {% include 'components/search-bar.html' %}
 
-    <ul class="nav">
-        <li class="nav-item">
-            <a href="{% url 'logOut' %}" class="nav-link text-dark">log out</a>
-        </li>
-    </ul>
+    
 </div>

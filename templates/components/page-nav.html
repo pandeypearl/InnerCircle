@@ -1,10 +1,6 @@
 {% with request.resolver_match.url_name as url_name %}
-<div class="d-flex flex-column page-nav">
-
     {% if url_name == 'profile' or url_name == 'settings' %}
-        <h5 class="p-2 text-center">Profile</h5>
-        <hr>
-        <ul class="p-2 nav">
+        <ul class="nav">
             <li class="nav-item">
                 <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-person-circle"></i> Profile Info</a>
             </li>
@@ -13,9 +9,7 @@
             </li>
         </ul>
     {% elif url_name == 'dashboard' or url_name == 'reminders' or url_name == 'notifications' %}
-        <h5 class="p-2 text-center">Dashboard</h5>
-        <hr>
-        <ul class="p-2 nav">
+        <ul class="nav">
             <li class="nav-item">
                 <a href="{% url 'dashboard' %}" class="nav-link {% if url_name == 'dashboard' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-grid-1x2-fill"></i> Home</a>
             </li>
@@ -27,9 +21,7 @@
             </li>
         </ul>
     {% elif url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'edit_group' or url_name == 'delete_group' %}
-        <h5 class="p-2 text-center">Your Circle</h5>
-        <hr>
-        <ul class="p-2 nav">
+        <ul class="nav">
             <li class="nav-item">
                 <a href="{% url 'member_list' %}" 
                 class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'edit_member' or url_name == 'delete_member' %}text-dark{% else %} text-white{% endif %}">
@@ -41,9 +33,7 @@
             </li>   
         </ul>
     {% elif url_name == 'broadcast_list' or url_name == 'sent_broadcast_list' or url_name == 'draft_broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}
-        <h5 class="p-2 text-center">Broadcasts</h5>
-        <hr>
-        <ul class="p-2 nav">
+        <ul class="nav">
             <li class="nav-item">
                 <a href="{% url 'broadcast_list' %}" class="nav-link {% if url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-megaphone-fill"></i> <small>All Broadcasts</small></a>
             </li>
@@ -55,9 +45,7 @@
             </li>
         </ul>
     {% elif url_name == 'event_list' or url_name == 'sent_event_list' or url_name == 'draft_event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}
-        <h5 class="p-2 text-center">Your Events</h5>
-        <hr>
-        <ul class="p-2 nav">
+        <ul class="nav">
             <li class="nav-item">
                 <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'event_detail' or url_name == 'update_event' or url_name == 'delete_event' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-calendar-week-fill"></i> All Events</a>
             </li>
@@ -69,9 +57,7 @@
             </li>
         </ul>
     {% elif url_name == 'lists' or url_name == 'sent_lists' or url_name == 'draft_lists' or url_name == 'list_detail' or url_name == 'create_list' or url_name == 'edit_list' or url_name == 'delete_list' %}
-        <h5 class="p-2 text-center">Your Lists</h5>
-        <hr>
-        <ul class="p-2 nav">
+        <ul class="nav">
             <li class="nav-item">
                 <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'edit_list' or url_name == 'delete_lits' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-ui-checks"></i> <small>All Lists</small></a>
             </li>
@@ -83,13 +69,13 @@
             </li>
         </ul>
     {% elif url_name == 'search_results' %}
-        <h5 class="p-2 text-center"><small>Search</small></h5>
-        <hr>
-        <p class="text-center"><i class="bi bi-list-ol"></i> <span class="badge bg-white text-secondary rounded-pill">{{ results|length }}</span></p>
+    <ul class=nav>
+        <li class="nav-item d-flex align-items-center">
+            <p class="pt-2">Search Results &nbsp;&nbsp;<span class="badge bg-white text-secondary rounded-pill">{{ results|length }}</span></p>
+        </li>
+        </ul>
     {% elif url_name == 'assistant' or url_name == 'chat_history' %}
-    <h5 class="p-2 text-center">Assistant</h5>
-    <hr>
-    <ul class="p-2 nav">
+    <ul class="nav">
         <li class="nav-item">
             <a href="{% url 'assistant' %}" class="nav-link {% if url_name == 'assiatnt' %}text-dark{% else %}text-white{% endif %}"><i class="bi bi-chat-square-text-fill"></i> <small>Chat</small></a>
         </li>
@@ -98,5 +84,5 @@
         </li>
     </ul>
     {% endif %}
-</div>
+
 {% endwith %}
