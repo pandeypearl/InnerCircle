@@ -54,6 +54,23 @@
                             {% include 'components/page-nav.html' %}
                         </nav>
                         <div class="page-content overflow-scroll">
+                            {% for message in messages %}
+                                <div class="alert alert-dark alert-dismissible fade show d-flex align-items-center" role="alert">
+                                    {% if message.tags == 'success' %}
+                                    <span class="pe-5"><i class="bi bi-check-circle-fill"></i></span>
+                                    {% elif message.tags == 'warning' %}
+                                    <span class="pe-5"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                                    {% elif message.tags == 'info' %}
+                                    <span class="pe-5"><i class="bi bi-info-circle-fill"></i></span>
+                                    {% endif %}
+        
+                                    <div>
+                                        <strong>{{ message }}</strong>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            
                             {% block content %}
                             {% endblock %}
                         </div>
