@@ -111,9 +111,10 @@ def signIn(request):
     else:
         return render(request, template, context)
 
-@login_required(login_url='singIn')
+@login_required(login_url='signIn')
 def logOut(request):
     auth.logout(request)
+    messages.success(request, 'You have been logged out of your account.')
     return redirect('home')
 
 

@@ -12,11 +12,34 @@
     <title>{% block title %}{% endblock %}</title>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="{% static 'bootstrap_icons/css/bootstrap_icons.css' %}?{% cache_bust %}">
+    <link  href="{% static 'icons/bootstrap-icons.css' %}?{% cache_bust %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'scss/main.scss' %}?{% cache_bust %}">
 </head>
 <body class="bg-light">
-    {% include 'components/info-nav.html'%}
-    {% block info_content %}
-    {% endblock %}
+    <div class="info-wrapper">
+        {% include 'components/info-nav.html'%}
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-dark alert-dismissible fade show d-flex align-items-center shadow" role="alert">
+                    {% if message.tags == 'success' %}
+                    <span class="pe-5"><i class="bi bi-check-circle-fill"></i></span>
+                    {% elif message.tags == 'warning' %}
+                    <span class="pe-5"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                    {% elif message.tags == 'info' %}
+                    <span class="pe-5"><i class="bi bi-info-circle-fill"></i></span>
+                    {% endif %}
+                    
+                    <div>
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block info_content %}
+        {% endblock %}
+    </div>
 </body>
 </html>

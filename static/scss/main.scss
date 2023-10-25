@@ -37,6 +37,18 @@ html{
     }
 }
 
+.info-wrapper{
+    position: relative;
+
+    .alert{
+        position: absolute;
+        z-index: 2;
+        top: 15vh;
+        left: 10vw;
+        right: 10vw;
+    }
+}
+
 .main-nav{
     height: 100%;
     width: 180px;
