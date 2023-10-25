@@ -61,8 +61,22 @@
             </div>
                 
             {% elif  url_name == 'rsvp' or url_name == 'rsvp_done' or url_name == 'check_list' or url_name == 'read_broadcast' %}
-                <div class="d-flex justify-content-center align-self-center" style="height: 90vh;">
+                <div class="d-flex justify-content-center align-self-center" style="height: 100vh;">
                     <div class="bg-white p-5 rounded overflow-auto">
+                        <div class="alert alert-dark alert-dismissible fade show d-flex align-items-center shadow" role="alert">
+                            {% if message.tags == 'success' %}
+                            <span class="pe-5"><i class="bi bi-check-circle-fill"></i></span>
+                            {% elif message.tags == 'warning' %}
+                            <span class="pe-5"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                            {% elif message.tags == 'info' %}
+                            <span class="pe-5"><i class="bi bi-info-circle-fill"></i></span>
+                            {% endif %}
+                            <span class="pe-5"><i class="bi bi-info-circle-fill"></i></span>
+                            <div>
+                                <strong>Message here is a longer one for the user</strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
                         {% if messages %}
                             {% for message in messages %}
                                 <div class="alert alert-dark alert-dismissible fade show d-flex align-items-center shadow" role="alert">

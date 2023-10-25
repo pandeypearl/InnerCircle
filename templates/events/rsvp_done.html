@@ -7,7 +7,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block member_content %}
-<div>
+<div style="width: 80vw;">
     <h4 class="text-white text-center bg-dark mb-5">Rsvp Status for {{ member.name }} at {{ event.event_name }}</h4>
     {% if rsvp %}
     <h3>Your RSVP response has been sent!</h3>

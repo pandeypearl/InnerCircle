@@ -20,12 +20,12 @@
             <button class="btn btn-dark" type="submit"><i class="bi bi-envelope-arrow-up-fill"></i> Send Event Invitations</button>
         </form>
         <div class="d-flex" style="gap: 20px;">
-            <a class="btn btn-dark" href="{% url 'update_event' event.id %}">{% bs_icon 'pen-fill' %} Update</a>
+            <a class="btn btn-dark" href="{% url 'update_event' event.id %}"><i class="bi bi-pen-fill"></i> Update</a>
             <a class="btn btn-dark" href="{% url 'delete_event' event.id %}"><i class="bi bi-trash3-fill"></i> Delete</a>
         </div >
         {% else %}
         <div class="d-flex justify-content-end" style="width: 100%;">
-            <a class="btn btn-dark" href="{% url 'delete_event' event.id %}">{% bs_icon 'trash3-fill' %} Delete</a>
+            <a class="btn btn-dark" href="{% url 'delete_event' event.id %}"><i class="bi bi-trash3-fill"></i> Delete</a>
         </div>
         {% endif %}
     </div>

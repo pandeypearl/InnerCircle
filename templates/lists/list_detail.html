@@ -51,9 +51,9 @@
             <li class="list-group-item d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center" style="gap: 20px;">
                     {% if list_item.checked == True %}
-                    <span>{% bs_icon 'check-square' %}</span>
+                    <span><i class="bi bi-check-square"></i></span>
                     {% else %}
-                    <span>{% bs_icon 'dash-square' %}</span>
+                    <span><i class="bi bi-dash-square"></i></span>
                     {% endif %}
                     <img class="object-fit-cover border rounded" src="{{list_item.item_image.url}}" alt="{{list_item.item_name}}" style="width: 30px; height: 30px">
                     <span>{{list_item.item_name}}</span>

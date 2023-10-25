@@ -7,7 +7,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block member_content %}
-<div>
+<div style="width: 80vw;">
     <h4 class="text-white text-center bg-dark mb-5">Invitation for {{ member.name }}</h4>
     <h3>You're invited to <strong>{{ event.event_name }}</strong></h3>
     <hr>

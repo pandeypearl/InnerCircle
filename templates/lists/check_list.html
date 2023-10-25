@@ -7,7 +7,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block member_content %}
-<div>
+<div style="width: 80vw;">
     <p class="text-secondary"><i class="bi bi-person-fill"></i> {{ recipient.name }}</p>
     <h2 class="text-white text-center bg-dark mb-5 p-3"> {{ list_obj.list_name }}</h2>
     <div class="d-flex justify-content-between">
