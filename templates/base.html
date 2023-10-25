@@ -96,7 +96,7 @@
                         </nav>
                         <div class="page-content overflow-scroll">
                             {% for message in messages %}
-                                <div class="alert alert-dark alert-dismissible fade show d-flex align-items-center" role="alert">
+                                <div class="alert alert-dark alert-dismissible fade show d-flex align-items-center shadow" role="alert">
                                     {% if message.tags == 'success' %}
                                     <span class="pe-5"><i class="bi bi-check-circle-fill"></i></span>
                                     {% elif message.tags == 'warning' %}
