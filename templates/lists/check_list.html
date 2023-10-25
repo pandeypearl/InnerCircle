@@ -16,15 +16,6 @@
     </div>
     <p>{{ list.description }}</p>  
 
-    {% if messages %}
-    <div>
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
     <form action="{% url 'check_list' list_id=list_obj.id recipient_id=recipient.id %}" method="POST">
         {% csrf_token %}
         <h5>Check item(s) for {{list_obj.list_name}}</h5>

@@ -14,17 +14,6 @@
         <h4 class="text-secondary text-end"> New Circle Member</h4>
     </div>
 
-    {% if messages %}
-    <div>
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-    
-    
     <form action="{% url 'create_member' %}" class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="form-floating mb-3">

@@ -30,16 +30,6 @@
         {% endif %}
     </div>
 
-    {% if messages %}
-    <div>
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
     <div class="bg-light p-5">
         <h4>{{ list.list_name }}</h4>
         <p class="text-secondary">

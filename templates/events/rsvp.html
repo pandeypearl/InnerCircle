@@ -11,15 +11,7 @@
     <h4 class="text-white text-center bg-dark mb-5">Invitation for {{ member.name }}</h4>
     <h3>You're invited to <strong>{{ event.event_name }}</strong></h3>
     <hr>
-    {% if messages %}
-    <div>
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+
     <div class="d-flex justify-content-around">
         <div style="width: 30%;">
             <p><strong>Host</strong><br>{{ event.user.first_name }} {{ event.user.last_name }}</p>

@@ -23,16 +23,6 @@
         <a href="{% url 'create_list' %}" class="btn btn-dark text-end"><i class="bi bi-ui-checks"></i> New List</a>
     </div>
 
-    {% if messages %}
-    <div>
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
     {% with request.resolver_match.url_name as url_name %}
         {% if url_name == 'lists' %}
         <div>

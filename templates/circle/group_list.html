@@ -14,16 +14,6 @@
         <a href="{% url 'create_group' %}" class="btn btn-dark text-end"><i class="bi bi-person-gear"></i> Add New Group</a>
     </div>
 
-    {% if messages %}
-    <div>
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
     <div>
 
         <h6 class="text-secondary"><i class="bi bi-person-gear"></i> {{ users_groups.count }}</h6>

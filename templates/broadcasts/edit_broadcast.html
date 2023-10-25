@@ -13,15 +13,6 @@
         <h4 class="text-secondary text-end"> Edit {{ instance.title }}</h4>
     </div>
 
-    {% if messages %}
-    <div>
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
 
     <form action="{% url 'edit_broadcast' broadcast_id=instance.id %}" class="form-floating" method="POST">
         {% csrf_token %}

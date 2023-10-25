@@ -25,17 +25,6 @@
         <a href="{% url 'create_broadcast' %}" class="btn btn-dark text-end"><i class="bi bi-megaphone-fill"></i> New Broadcast</a>
     </div>
 
-    
-    {% if messages %}
-    <div>
-        {% for message in messages %}
-        <div class="alert alert-primary" role="alert">
-            {{ message }}
-        </div>
-        {% endfor %}
-    </div>
-    {% endif %}
-
     {% with request.resolver_match.url_name as url_name %}
         {% if url_name == 'broadcast_list' %}
         <div>
