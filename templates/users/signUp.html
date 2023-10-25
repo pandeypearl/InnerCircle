@@ -1,38 +1,33 @@
 {% extends 'base.html' %}
 
-{% block title %} Sign Up {% endblock %}
+{% block title %} InnerCircle | Sign Up {% endblock %}
 
 {% block auth_content %}
-
-    {% for message in messages %}
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>{{ message }}</strong>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {% endfor %}
-
     <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
         <div class="card text-bg-dark mb-3">
             <div class="card-header text-center bg-dark text-white">Sign Up</div>
             <div class="card-body">
-                <form class="container-sm" action="" method="POST">
+                <form class="container-sm" action="{% url 'signUp' %}" method="POST">
                     {% csrf_token %}
-                    <div class="mb-3">
+                    <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="username" placeholder="Username">
+                        <label for="username">Username</label>
                     </div>
-                    <div class="mb-3">
+                    <div class="form-floating mb-3">
                         <input type="email" class="form-control" name="email" placeholder="Email">
+                        <label for="email">Email</label>
                     </div>
-                    <div class="mb-3">
+                    <div class="form-floating mb-3">
                         <input type="password" class="form-control" name="password" placeholder="Password">
+                        <label for="password">Password</label>
                     </div>
-                    <div class="mb-3">
+                    <div class="form-floating mb-3">
                         <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
+                        <label for="password2">Confirm Password</label>
                     </div>
             
-                    <button type="submit" class="btn btn-outline-dark">Sign Up</button>
+                    <button type="submit" class="btn btn-dark">Sign Up</button>
+                    <p><small>Already have an account? Sign in <a class="text-dark" href="{% url 'signIn' %}"><strong>here</strong></a></small>.</p>
             
                 </form>
             </div>

@@ -32,11 +32,52 @@
     <div class="wrapper">
         {% with request.resolver_match.url_name as url_name %}
             {% if url_name == 'signUp' or url_name == 'signIn' %}
+            <div class="auth-wrapper">
+                <nav class="auth-nav d-flex justify-content-between align-items-center p-4">
+                    <a class="text-dark" href="{% url 'home' %}"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
+                    <a class="navbar-brand text-dark" href="{% url 'home' %}">InnerCircle</a>
+                </nav>
+                {% for message in messages %}
+                    <div class="alert alert-dark alert-dismissible fade show d-flex align-items-center shadow" role="alert">
+                        {% if message.tags == 'success' %}
+                        <span class="pe-5"><i class="bi bi-check-circle-fill"></i></span>
+                        {% elif message.tags == 'warning' %}
+                        <span class="pe-5"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                        {% elif message.tags == 'info' %}
+                        <span class="pe-5"><i class="bi bi-info-circle-fill"></i></span>
+                        {% endif %}
+                        <span class="pe-5"><i class="bi bi-check-circle-fill"></i></span>
+                        <div>
+                            <strong>{{ message }}</strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                {% endfor %}
+                    
                 {% block auth_content %}
                 {% endblock %}
+            </div>
+                
             {% elif  url_name == 'rsvp' or url_name == 'rsvp_done' or url_name == 'check_list' or url_name == 'read_broadcast' %}
                 <div class="d-flex justify-content-center align-self-center" style="height: 90vh;">
-                    <div class="bg-white p-5 rounded overflow-auto" >
+                    <div class="bg-white p-5 rounded overflow-auto">
+                        {% for message in messages %}
+                            <div class="alert alert-dark alert-dismissible fade show d-flex align-items-center" role="alert">
+                                {% if message.tags == 'success' %}
+                                <span class="pe-5"><i class="bi bi-check-circle-fill"></i></span>
+                                {% elif message.tags == 'warning' %}
+                                <span class="pe-5"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                                {% elif message.tags == 'info' %}
+                                <span class="pe-5"><i class="bi bi-info-circle-fill"></i></span>
+                                {% endif %}
+    
+                                <div>
+                                    <strong>{{ message }}</strong>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        {% endfor %}
+
                         {% block member_content %}
                         {% endblock %}
                     </div>
@@ -70,7 +111,7 @@
                                     </div>
                                 </div>
                             {% endfor %}
-                            
+
                             {% block content %}
                             {% endblock %}
                         </div>

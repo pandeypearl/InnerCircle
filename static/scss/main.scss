@@ -25,6 +25,18 @@ html{
     overflow: hidden;
 }
 
+.auth-wrapper{
+    position: relative;
+
+    .alert{
+        position: absolute;
+        top: 10px;
+        left: 15vw;
+        right: 15vw;
+        z-index: 2;
+    }
+}
+
 .main-nav{
     height: 100%;
     width: 180px;
