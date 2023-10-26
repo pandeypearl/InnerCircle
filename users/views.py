@@ -33,6 +33,13 @@ def about(request):
 
 
 @login_required(login_url='singIn')
+def help(request):
+    template = 'users/help.html'
+    context = {}
+    return render(request, template, context)
+
+
+@login_required(login_url='singIn')
 def dashboard(request):
     template = 'users/dashboard.html'
     members = Member.objects.filter(user=request.user)

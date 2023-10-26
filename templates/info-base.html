@@ -14,6 +14,9 @@
     <!-- CSS -->
     <link  href="{% static 'icons/bootstrap-icons.css' %}?{% cache_bust %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'scss/main.scss' %}?{% cache_bust %}">
+    <link rel="stylesheet" href="{% static 'scss/info.scss' %}?{% cache_bust %}">
+    {% block scss %}{% endblock %}
+    
 </head>
 <body class="bg-light">
     <div class="info-wrapper">

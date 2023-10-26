@@ -16,3 +16,13 @@ img{
     height: auto;
     border-radius: 50%;
 } 
+
+.page-nav{
+    border-bottom: 1px solid gainsboro;
+    border-top: 1px solid gainsboro;
+}
+
+.auth-nav{
+    position: fixed;
+    width: 100vw;
+}

@@ -1,0 +1,97 @@
+{% extends 'info-base.html' %}
+{% load cache_bust %}
+{% load static %}
+
+{% block title %}InnerCircle | Help{% endblock %}
+
+{% block scss %}
+<style>
+.help-content{
+    margin-top: 200px;
+}
+
+.help-nav{
+    position: fixed;
+    top: 15vh;
+    right: 50px;
+}
+
+.help-sections{
+    
+}
+
+section{
+    min-height: 80vh;
+}
+
+.btn:focus{
+    outline: none;
+    box-shadow: none;
+}
+</style>
+{% endblock %}
+
+{% block info_content %}
+<div class="info-content mt-5 p-5 help-content d-flex justify-content-center">
+    
+    <div class="ps-5 pe-5 mt-5 bg-white help-sections">
+        <div class="dropdown help-nav">
+            <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Help Topics
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark">
+                <li><a href="#profile" class="dropdown-item text-white"><strong>Profile</strong></a></li>
+                <li><a href="#aiAssistant" class="dropdown-item"><strong>AI Assistant</strong></a></li>
+                <li><a href="#circle" class="dropdown-item"><strong>Circle</strong></a></li>
+                <li><a href="#broadcasts" class="dropdown-item"><strong>Broadcasts</strong></a></li>
+                <li><a href="#events" class="dropdown-item"><strong>Events</strong></a></li>
+                <li><a href="#lists" class="dropdown-item"><strong>Lists</strong></a></li>
+            </ul>
+        </div>
+        <section class="pb-5 pt-5" id="profile">
+            <h4 class="text-secondary text-end">Profile</h4>
+            <hr>
+            <h5>Editing Profile</h5>
+            <p>You can edit/update your profile by through this navigation structure :  <code class="text-white bg-dark p-1 rounded"><i class="bi bi-person-fill"></i> Profile > <i class="bi bi-gear-fill"></i> Settings </p></code>
+            <h5>Changing Password</h5>
+        </section>
+
+        <section class="pb-5 pt-5" id="aiAssistant">
+            <h4 class="text-secondary text-end">AI Assistant</h4>
+            <hr>
+            <h5>Chat History</h5>
+            <p>Only you chat history for that particular day will be visible on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-chat-square-heart-fill"></i> Assistant > <i class="bi bi-chat-square-text-fill"></i> Chat</code> page.</p>
+            <p>If you would like to view your entire chat history you will find it on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-chat-square-heart-fill"></i> Assistant > <i class="bi bi-person-lines-fill"></i>&nbsp;<small></small> Chat History</code> page.</p>
+        </section>
+
+        <section class="pb-5 pt-5" id="circle">
+            <h4 class="text-secondary text-end">Circle</h4>
+            <hr>
+            <h5>Circle Members</h5>
+            <h5>Groups</h5>
+        </section>
+
+        <section class="pb-5 pt-5" id="broadcasts">
+            <h4 class="text-secondary text-end">Broadcasts</h4>
+            <hr>
+            <h5>Previewing Broadcasts</h5>
+            <p></p>
+            <h5>Sending Broadcasts</h5>
+        </section>
+        <section class="pb-5 pt-5" id="events">
+            <h4 class="text-secondary text-end">Events</h4>
+            <hr>
+            <h5>Previewing Event Invitations</h5>
+
+            <h5>Sending Event Invitations</h5>
+        </section>
+        <section class="pb-5 pt-5" id="lists">
+            <h4 class="text-secondary text-end">Lists</h4>
+            <hr>
+            <h5>Previewing Lists</h5>
+            <h5>Sending Lists</h5>
+        </section>
+    </div>
+    
+</div>
+{% endblock %}

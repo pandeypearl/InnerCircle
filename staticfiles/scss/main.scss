@@ -1,17 +1,7 @@
 html{
     scrollbar-color: #212529 white;
-    scrollbar-width: width;
+    scrollbar-width: thin;
     scrollbar-arrow-color: transparent;
-}
-body{
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    // position: relative;
-    
 }
 
 ::-webkit-scrollbar {
@@ -35,9 +25,47 @@ body{
     overflow: hidden;
 }
 
-.main-nav{
-    background-color: aqua;
+.auth-wrapper{
+    position: relative;
+
+    .alert{
+        position: absolute;
+        top: 10px;
+        left: 15vw;
+        right: 15vw;
+        z-index: 2;
+    }
 }
+
+.info-wrapper{
+    position: relative;
+
+    .alert{
+        position: absolute;
+        z-index: 2;
+        top: 15vh;
+        left: 10vw;
+        right: 10vw;
+    }
+}
+
+.main-nav{
+    height: 100%;
+    width: 180px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    padding-top: 10px;
+
+    img{
+        width: 70px;
+        height: 70px;
+    }
+}
+
+
 
 .container{
     width: 100%;
@@ -46,14 +74,35 @@ body{
     padding-left:0; 
 }
 
-.row{
-    height: 100%;
-}
+
 
 .page{
     position: relative;
+    margin-left: 180px;
 }
 
 .page-content{
-    height: 550px;
+    height: 100vh;
+    padding-bottom: 100px;
+    position: relative;
+
+    .alert{
+        position: absolute;
+        top: 30px;
+        left: 50px;
+        right: 50px;
+    }
+}
+
+// Help Content
+.help-content{
+    .help-nav{
+        position: fixed;
+        top: 0;
+        left: 0;
+    }
+
+    .help-content{
+        margin-left: 18rem;
+    }
 }
