@@ -22,10 +22,15 @@ from .serializers import UserSerializer, ProfileSerializer
 # Create your views here.
 def home(request):
     template = 'users/home.html'
-
     context = {}
-
     return render(request, template, context)
+
+
+def about(request):
+    template = 'users/about.html'
+    context = {}
+    return render(request, template, context)
+
 
 @login_required(login_url='singIn')
 def dashboard(request):

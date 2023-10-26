@@ -17,6 +17,7 @@ router.register(r'profile', ProfileListCreateView)
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('about', views.about, name='about'),
     path('dashboard', views.dashboard, name='dashboard'),
     path('signUp', views.signUp, name='signUp'),
     path('signIn', views.signIn, name='signIn'),
