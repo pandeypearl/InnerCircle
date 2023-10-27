@@ -9,7 +9,7 @@
 {% block content %}
 <section class="d-flex flex-column justify-content-between" style="gap: 50px">
     <div class="d-flex justify-content-end">
-        <h4 class="text-secondary text-end">New Broadcast</h4>
+        <h4 class="text-secondary">New Broadcast</h4>
     </div>
 
 
@@ -18,20 +18,37 @@
         <div class="form-floating mb-3">
             {{ form.title }}
             <label for="title">Broadcast Title</label>
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
-        <div class="mb-3">
-            <label for="content">Broadcast Content</label>
+
+        <div class="form-floating mb-3">
             {{ form.content }}
+            <label for="content">Broadcast Content</label>
+            {% if form.content.errors %}
+                {% for error in form.content.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="mb-3">
-            <label for="{{ form.receivers.id_for_label }}">Recipients</label>
-            <select class="form-select" id="{{ form.receivers.id_for_label }}" name="{{ form.receivers.name }}" multiple>   
+            <select class="form-select" id="{{ form.receivers.id_for_label }}" name="{{ form.receivers.name }}" size="10" multiple aria-label="Floating label select multiple">   
+                <option selected>Select Recipients</option>
                 {% for choice in form.receivers %}
                 <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
                 {% endfor %}
             </select>
+            <!-- <label for="{{ form.receivers.id_for_label }}">Recipients</label> -->
         </div>
-
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
+        
         <button class="btn btn-dark" type="submit" name="save_draft">Save</button>
         <button class="btn btn-dark" type="submit">Save and Send</button>
     </form>

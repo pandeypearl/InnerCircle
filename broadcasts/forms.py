@@ -1,6 +1,25 @@
 from django import forms
 from .models import Broadcast
 
+
+def clean_title(self):
+    title = self.cleaned_data_get('title')
+    if not title:
+        raise forms.ValidationError("Title can not be empty.")
+    return title
+
+
+def clean(self):
+    cleaned_data = self.cleaned_data
+    content = cleaned_data.get('content')
+    is_draft = cleaned_data.get('is_draft')
+
+    if not content and not is_draft:
+        raise forms.ValidationError("Content is required if not draft.")
+    
+    return cleaned_data
+
+
 class BroadcastForm(forms.ModelForm):
     class Meta:
         model = Broadcast
@@ -16,6 +35,8 @@ class BroadcastForm(forms.ModelForm):
             'receivers': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Receivers'}),
         }
 
+    
+    
 
 class EditBroadcastForm(forms.ModelForm):
     template_name = 'broadcasts/edit_broadcast.html'
