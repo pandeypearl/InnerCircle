@@ -149,6 +149,7 @@ def profile(request, pk):
 def settings(request, profile_id):
     template = 'users/settings.html'
     instance = get_object_or_404(Profile, id=profile_id)
+    user = request.user
     profile_form = ProfileEditForm(request.POST, request.FILES, instance=instance)
     account_form = AccountEditForm(request.POST, instance=request.user)
 
@@ -176,6 +177,7 @@ def settings(request, profile_id):
         'instance': instance,
         'profile_form': profile_form,
         'account_form': account_form,
+        'user': user,
     }
 
     return render(request, template, context)
