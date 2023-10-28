@@ -18,6 +18,24 @@ class ListForm(forms.ModelForm):
             'receivers': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Recipients'}),
         }
 
+    def clean_list_name(self):
+        ''' Field level validation to ensure list name is not empty. '''
+        list_name = self.cleaned_data.get('list_name')
+        if not list_name:
+            raise forms.ValidationError("List name cannot be empty.")
+        return list_name
+    
+    def clean(self):
+        ''' Form level validation ensuring list has at least one receiver. '''
+        cleaned_data = super().clean()
+        is_draft = cleaned_data.get('is_draft')
+        receivers = cleaned_data.get('receivers')
+
+        if not is_draft and not receivers:
+            raise forms.ValidationError("At least one receiver is required to send a list.")
+        
+        return cleaned_data
+
 
 class ListItemForm(forms.ModelForm):
     class Meta:
@@ -32,6 +50,13 @@ class ListItemForm(forms.ModelForm):
             'item_image': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Item Image'}),
             'item_url': forms.URLInput(attrs={'type': 'url', 'class': 'form-control', 'placeholder': 'Item Link'}),
         }
+
+    def clean_item_name(self):
+        ''' Field level validation to ensure item name is not empty. '''
+        item_name = self.cleaned_data.get('item_name')
+        if not item_name:
+            raise forms.ValidationError("Item name is required.")
+        return item_name
 
 
 class DeleteItemForm(forms.ModelForm):
@@ -66,6 +91,24 @@ class EditListForm(forms.ModelForm):
             self.fields['description'].initial = instance.description
             self.fields['receivers'].initial = instance.receivers
             self.fields['is_draft'].initial = instance.is_draft
+
+    def clean_list_name(self):
+        ''' Field level validation to ensure list name is not empty. '''
+        list_name = self.cleaned_data.get('list_name')
+        if not list_name:
+            raise forms.ValidationError("List name cannot be empty.")
+        return list_name
+    
+    def clean(self):
+        ''' Form level validation ensuring list has at least one receiver. '''
+        cleaned_data = super().clean()
+        is_draft = cleaned_data.get('is_draft')
+        receivers = cleaned_data.get('receivers')
+
+        if not is_draft and not receivers:
+            raise forms.ValidationError("At least one receiver is required to send a list.")
+        
+        return cleaned_data
 
 
 class CheckItemForm(forms.ModelForm):

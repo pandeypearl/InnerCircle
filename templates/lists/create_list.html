@@ -17,22 +17,47 @@
         <div class="form-floating mb-3">
             {{ form.list_name }}
             <label for="name">List Name</label>
+
+            {% if form.list_name.errors %}
+                {% for error in form.list_name.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
-        <div class="mb-3">
-            <label for="email">Description</label>
+        <div class="form-floating mb-3">
             {{ form.description }}
+            <label for="email">Description</label>
+
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="{{ form.receivers.id_for_label }}">Recipients</label>
-            <select class="form-select" id="{{ form.receivers.id_for_label }}" name="{{ form.receivers.name }}" multiple>   
+            <select class="form-select" id="{{ form.receivers.id_for_label }}" name="{{ form.receivers.name }}" multiple>
+                <option selected>Select Recipients</option>   
                 {% for choice in form.receivers %}
                 <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
                 {% endfor %}
             </select>
+
+            {% if form.receivers.errors %}
+                {% for error in form.receivers.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
 
-        <button class="btn btn-dark" type="submit" name="save_draft">Save</button>
-        <button class="btn btn-dark" type="submit">Save and Send</button>
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
+
+        <button class="btn btn-dark" type="submit" name="save_draft">Save List</button>
+        <button class="btn btn-dark" type="submit">Save and Send List</button>
     </form>
 </section>
 {% endblock %}

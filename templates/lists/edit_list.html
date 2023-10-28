@@ -8,7 +8,7 @@
 
 {% block content %}
 <section lass="d-flex flex-column justify-content-between" style="gap: 50px">
-    <div class="d-flex justify-content-between align-items-center" >
+    <div class="d-flex justify-content-between align-items-center pb-5">
         <a href="{% url 'list_detail' instance.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end"> Edit {{ instance.list_name }}</h4>
     </div>
@@ -16,20 +16,42 @@
     <form action="{% url 'edit_list' list_id=instance.id %}" class="form-floating" method="POST">
         {% csrf_token %}
         <div class="form-floating mb-3">
-            <!-- <input type="text" class="form-control" name="{{form.event_name.name}}" value="{{instance.event_name}}"> -->
             {{ form.list_name }}
             <label for="name">List Name</label>
+
+            {% if form.list_name.errors %}
+                {% for error in form.list_name.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
-        <div class="mb-3">
-            <label for="description">Description</label>
+        <div class="form-floating mb-3">
             {{ form.description }}
-            <!-- <textarea class="form-control" name="{{form.description.name}}" id="" cols="30" rows="10" value="">{{instance.description}}</textarea> -->
+            <label for="description">Description</label>
+
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="mb-3">
-            <label for="{{ form.receivers.id_for_label }}">Recipients</label>
             {{ form.receivers }}
+
+            {% if form.receivers.errors %}
+                {% for error in form.receivers.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
-        <button class="btn btn-dark" type="submit">Edit List</button>
+
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
+        
+        <button class="btn btn-dark" type="submit">Save Changes</button>
     </form>
 
 </section>

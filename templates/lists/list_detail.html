@@ -83,17 +83,41 @@
             <div class="form-floating mb-3">
                 {{ form.item_name }}
                 <label for="item_name">Item Name</label>
+
+                {% if form.item_name.errors %}
+                    {% for error in form.item_name.errors %}
+                    <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                    {% endfor %}
+                {% endif %}
             </div>  
             
             <div class="form-floating mb-3">
                 {{ form.item_url }}
                 <label for="item_url">Item Link</label>
+
+                {% if form.item_url.errors %}
+                    {% for error in form.item_url.errors %}
+                    <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                    {% endfor %}
+                {% endif %}
             </div>
     
             <div class="mb-3">
                 <label for="item_url">Item Image</label>
                 {{ form.item_image }}
+
+                {% if form.item_image.errors %}
+                    {% for error in form.item_image.errors %}
+                    <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                    {% endfor %}
+                {% endif %}
             </div>
+
+            {% if form.not_field_errors %}
+                {% for error in form.not_field_errors %}
+                    <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
             <button class="btn btn-dark " type="submit">Add Item</button>
         </form>
         <hr>
