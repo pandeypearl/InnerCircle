@@ -3,11 +3,6 @@ from django.forms import DateInput
 from .models import Member, Group, Note
 
 class MemberForm(forms.ModelForm):
-    # name = forms.TextInput()
-    # email = forms.EmailField()
-    # image = forms.ImageField()
-    # relationship = forms.TextInput()
-    # date_of_birth = forms.DateField()
     class Meta:
         model = Member
         fields = (
@@ -25,6 +20,21 @@ class MemberForm(forms.ModelForm):
             'relationship': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Relationship'}),
             'image': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Image'}),
         }
+
+    def clean_name(self):
+        ''' Field level validation to ensure name is not empty. '''
+        name = self.cleaned_data.get('name')
+        if not name:
+            raise forms.ValidationError("Name cannot be empty.")
+        return name
+    
+    def clean_email(self):
+        ''' Field level validation to ensure email is not empty. '''
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise forms.ValidationError("Email cannot be empty")
+        return email
+
 
 class EditMemberForm(forms.ModelForm):
     template_name = 'circle/edit_member.html'
@@ -49,6 +59,20 @@ class EditMemberForm(forms.ModelForm):
             self.fields['relationship'].initial = instance.relationship
             self.fields['image'].initial = instance.image
 
+    def clean_name(self):
+        ''' Field level validation to ensure name is not empty. '''
+        name = self.cleaned_data.get('name')
+        if not name:
+            raise forms.ValidationError("Name cannot be empty.")
+        return name
+    
+    def clean_email(self):
+        ''' Field level validation to ensure email is not empty. '''
+        email = self.cleaned_data.get('email')
+        if not email:
+            raise forms.ValidationError("Email cannot be empty")
+        return email
+    
 
 class GroupForm(forms.ModelForm):
     group_name = forms.TextInput()
@@ -71,6 +95,14 @@ class GroupForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Group Description'}),
             'members': forms.SelectMultiple(attrs={'class': 'form-select', 'placeholder': 'Group Members'}),
         }
+
+    def clean_members(self):
+        ''' Form level validation to ensure at least one group member is selected. '''
+        members = self.cleaned_data.get('members')
+        if not members:
+            raise forms.ValidationError("At least one group member is required.")
+        return members
+    
 
 class EditGroupForm(forms.ModelForm):
     template_name = 'circle/edit_group.html'
@@ -96,6 +128,13 @@ class EditGroupForm(forms.ModelForm):
             self.fields['description'].initial = instance.description
             self.fields['members'].initial = instance.members
 
+    def clean_members(self):
+        ''' Form level validation to ensure at least one group member is selected. '''
+        members = self.cleaned_data.get('members')
+        if not members:
+            raise forms.ValidationError("At least one group member is required.")
+        return members
+
 
 class NoteForm(forms.ModelForm):
     subject = forms.TextInput()
@@ -111,3 +150,10 @@ class NoteForm(forms.ModelForm):
             'subject': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Subject'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Note'}),
         }
+
+    def clean_subject(self):
+        ''' Field level validation to ensure subject is not empty. '''
+        subject = self.cleaned_data.get('subject')
+        if not subject:
+            raise forms.ValidationError("Subject cannot be empty.")
+        return subject

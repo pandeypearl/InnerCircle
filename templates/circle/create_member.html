@@ -19,25 +19,61 @@
         <div class="form-floating mb-3">
             {{ form.name }}
             <label for="name">Name</label>
+
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
             {{ form.email }}
             <label for="email">Email</label>
+
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
             {{ form.date_of_birth }}
             <label for="date_of_birth">Date of Birth</label>
+
+            {% if form.date_of_birth.errors %}
+                {% for error in form.date_of_birth.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
             {{ form.relationship }}
             <label for="relationship">Relationship</label>
+
+            {% if form.relationship.errors %}
+                {% for error in form.relationship.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="image">Image</label>
             {{ form.image }}    
+
+            {% if form.image.errors %}
+                {% for error in form.image.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
+
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
     
-        <button class="btn btn-dark" type="submit">add to circle</button>
+        <button class="btn btn-dark" type="submit">Add to Circle</button>
     </form>
 
 </section>

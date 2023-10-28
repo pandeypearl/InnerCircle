@@ -18,19 +18,44 @@
         <div class="form-floating mb-3">
             {{ form.group_name }}
             <label for="name">Group Name</label>
+
+            {% if form.group_name.errors %}
+                {% for error in form.group_name.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
             {{ form.description }}
             <label for="email">Group Description</label>
+
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="mb-3">
             <label for="{{ form.members.id_for_label }}">Group Members</label>
             <select class="form-select" id="{{ form.members.id_for_label }}" name="{{ form.members.name }}" multiple>   
+                <option selected>Select Members</option>
                 {% for choice in form.members %}
                 <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
                 {% endfor %}
             </select>
+
+            {% if form.members.errors %}
+                {% for error in form.members.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
+
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
     
         <button class="btn btn-dark" type="submit">Create Group</button>
     </form>

@@ -8,7 +8,7 @@
 
 {% block content %}
 <section lass="d-flex flex-column justify-content-between" style="gap: 50px">
-    <div class="d-flex justify-content-between align-items-center" >
+    <div class="d-flex justify-content-between align-items-center pb-5">
         <a href="{% url 'group_detail' instance.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end"> Edit {{ instance.group_name }}</h4>
     </div>
@@ -18,19 +18,43 @@
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="{{form.group_name.name}}" value="{{instance.group_name}}">
             <label for="name">Group Name</label>
+
+            {% if form.group_name.errors %}
+                {% for error in form.group_name.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
-        <div class="mb-3">
-            <label for="email">Group Description</label>
+        <div class="form-floating mb-3">
             <textarea class="form-control" name="{{form.description.name}}" id="" cols="30" rows="10" value="">{{instance.description}}</textarea>
+            <label for="email">Group Description</label>
+
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="mb-3">
-            <label for="{{ form.members.id_for_label }}">Group Members</label>
+            <!-- <label for="{{ form.members.id_for_label }}">Group Members</label> -->
             <select class="form-select" id="{{ form.members.id_for_label }}" name="{{ form.members.name }}" multiple>   
                 {% for choice in form.members.field.queryset %}
                 <option value="{{ choice.pk }}" {% if choice in instance.members.all %}selected{% endif %}>{{ choice }}</option>
                 {% endfor %}
             </select>
+
+            {% if form.members.errors %}
+                {% for error in form.members.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
+
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
     
         <button class="btn btn-dark" type="submit"><i class="bi bi-pen-fill"></i> &nbsp;Update Group</button>
     </form>

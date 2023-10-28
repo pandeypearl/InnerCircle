@@ -18,25 +18,60 @@
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="{{form.name.name}}" value="{{instance.name}}">
             <label for="name">Name</label>
+
+            {% if form.name.errors %}
+                {% for error in form.name.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
 
         <div class="form-floating mb-3">
             <input type="email" class="form-control" name="{{ form.email.name }}" value="{{instance.email}}">
             <label for="email">Email</label>
+
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
-            
             <input type="date" class="form-control" name="{{ form.date_of_birth.name }}" value="{{instance.date_of_birth|date:'Y-m-d'}}">
             <label for="date_of_birth">Date of Birth</label>
+
+            {% if form.date_of_birth.errors %}
+                {% for error in form.date_of_birth.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="{{form.relationship.name}}" value="{{instance.relationship}}">
             <label for="relationship">Relationship</label>
+
+            {% if form.relationship.errors %}
+                {% for error in form.relationship.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="mb-3 d-flex align-items-center">
             <img src="{{instance.image.url}}" alt="">
             <input type="file" class="form-control" name="{{form.image.name}}" value="{{instance.image}}">
+
+            {% if form.image.errors %}
+                {% for error in form.image.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
+
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
     
         <button class="btn btn-dark" type="submit"><i class="bi bi-pen-fill"></i> &nbsp;Update</button>
     </form>
