@@ -35,12 +35,31 @@
         <div class="form-floating mb-3">
             {{ form.response_status }}
             <label for="floatingInput">RSVP Response</label>
+
+            {% if form.response_status.errors %}
+                {% for error in form.response_status.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
 
-        <div class="mb-3">
-            <label for="floatingInput">Dietary Preferences</label>
+        <div class="form-floating mb-3">
             {{ form.dietary_preferences }}
+            <label for="floatingInput">Dietary Preferences</label>
+
+            {% if form.dietary_preferences.errors %}
+                {% for error in form.dietary_preferences.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
+
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
+
         <button  class="btn btn-dark" type="submit">Submit</button>
     </form>
 </div>

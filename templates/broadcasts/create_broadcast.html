@@ -2,7 +2,7 @@
 {% load static %}
 {% load cache_bust %}
 
-{% block title %}InnerCircle | New Event{% endblock %}
+{% block title %}InnerCircle | New Broadcast{% endblock %}
 
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
@@ -11,7 +11,6 @@
     <div class="d-flex justify-content-end">
         <h4 class="text-secondary">New Broadcast</h4>
     </div>
-
 
     <form action="{% url 'create_broadcast' %}" class="form-floating" method="POST" enctype="multipart/form-data">
         {% csrf_token %}

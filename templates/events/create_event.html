@@ -17,40 +17,80 @@
         <div class="form-floating mb-3">
             {{ form.event_name }}
             <label for="name">Event Name</label>
+            {% if form.event_name.errors %}
+                {% for error in form.event_name.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
-        <div class="mb-3">
-            <label for="email">Description</label>
+        <div class="form-floating mb-3">
             {{ form.description }}
+            <label for="email">Description</label>
+            {% if form.description.errors %}
+                {% for error in form.description.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
             {{ form.date }}
-            <label for="date_of_birth">Date and Time</label>
+            <label for="date">Date and Time</label>
+            {% if form.date.errors %}
+                {% for error in form.date.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
             {{ form.location }}
-            <label for="name">Location</label>
+            <label for="location">Location</label>
+            {% if form.location.errors %}
+                {% for error in form.location.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="form-floating mb-3">
             {{ form.dress_code }}
             <label for="dress_code">Dress Code</label>
+            {% if form.dress_code.errors %}
+                {% for error in form.dress_code.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
-        <div class="mb-3">
-            <label for="note">Event Notes</label> 
+        <div class="form-floating mb-3">
             {{ form.note }}
-            
+            <label for="note">Event Notes</label>
+            {% if form.note.errors %}
+                {% for error in form.note.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
         <div class="mb-3">
-            <label for="{{ form.guests.id_for_label }}">Guests</label>
+            <!-- <label for="{{ form.guests.id_for_label }}">Guests</label> -->
             <select class="form-select" id="{{ form.guests.id_for_label }}" name="{{ form.guests.name }}" multiple>   
+                <option selected>Select Guests</option>
                 {% for choice in form.guests %}
                 <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
                 {% endfor %}
             </select>
+            {% if form.guests.errors %}
+                {% for error in form.guests.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
         </div>
 
-        <div class="mb-3">
-            <label for="event_status">Event Status</label>
+        <div class="form-floating mb-3">
             {{form.event_status}}
+            <label for="event_status">Event Status</label>
+            {% if form.event_status.errors %}
+                {% for error in form.event_status.errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                {% endfor %}
+            {% endif %}
             <!-- {% for radio in form.event_status %}
             <div class="form-check d-flex" style="gap: 10px;">
                 {{ radio.tag }}
@@ -58,10 +98,15 @@
             </div>
             {% endfor %} -->
         </div>
-        
+
+        {% if form.not_field_errors %}
+            {% for error in form.not_field_errors %}
+                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+            {% endfor %}
+        {% endif %}
     
-        <button class="btn btn-dark" type="submit" name="save_draft">Save</button>
-        <button class="btn btn-dark" type="submit">Save and Send</button>
+        <button class="btn btn-dark" type="submit" name="save_draft">Save Event</button>
+        <button class="btn btn-dark" type="submit">Save and Send Event</button>
     </form>
 </section>
 {% endblock %}
