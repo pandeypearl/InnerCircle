@@ -1,3 +1,6 @@
+'''
+    Script mapping URLS to specific views in the assistant application.
+'''
 from django.urls import path
 from . import views
 

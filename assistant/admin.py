@@ -1,3 +1,5 @@
+''' Script to register models from the assistant application. '''
+
 from django.contrib import admin
 from .models import Chat
 

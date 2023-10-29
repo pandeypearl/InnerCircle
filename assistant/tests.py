@@ -1,3 +1,6 @@
+'''
+    Script containing unit tests for the assistant application.
+'''
 from django.test import TestCase
 from django.contrib.auth.models import User
 from .models import Chat
