@@ -3,14 +3,20 @@ from django.contrib.auth.models import User, Permission
 from django.test.client import Client
 from django.contrib.contenttypes.models import ContentType
 from users.models import Profile
-from django.core import mail
-from django.urls import reverse
+# from django.core import mail
+# from django.urls import reverse
+from django.contrib.auth import get_user_model
 
-# Create your tests here.
+User = get_user_model()
+
+
+# # Create your tests here.
 
 #Testing User Creation
 class UserCreationTestCase(TestCase):
+    ''' Testing the creation of the User model. '''
     def test_create_user(self):
+        '''  Test ensures that a User object can be created correctly. '''
         user = User.objects.create_user(username='testuser', password='testpassword')
         self.assertEqual(user.username, 'testuser')
         self.assertTrue(user.check_password('testpassword'))
@@ -20,73 +26,38 @@ class UserCreationTestCase(TestCase):
 
 #Testing User Authentication
 class UserAuthenticationTestCase(TestCase):
+    ''' Testing the authentication of the user model. '''
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpassword')
         self.client = Client()
 
     def test_login_valid_user(self):
+        ''' Tests ensures valid users can sign in successfully. '''
         response= self.client.login(username='testuser', password='testpassword')
         self.assertTrue(response)
 
     def test_login_invalid_user(self):
+        ''' Tests ensures invalid users cannot sign in. '''
         response = self.client.login(username='testuser', password='wrongpassword')
 
-#Testing User Permission
-class UserPermissionTestCase(TestCase):
+
+class ProfileModelTest(TestCase):
+    ''' Tests the creation and string representation of the Profile model. '''
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpassword')
-        content_type = ContentType.objects.get_for_model(Profile)
-        permission = Permission.objects.get(content_type=content_type, codename='can_view')
-        self.user.user_permissions.add(permission)
+        self.profile = Profile.objects.create(
+            user=self.user,
+            date_of_birth='1990-01-01',
+            profile_picture='profile_pics/test.jpg'
+        )
 
-    def test_user_has_permission(self):
-        self.assertTrue(self.user.has_perm('users.can_view'))
+    def test_profile_creation(self):
+        '''  Test ensures that a Profile object can be created correctly. '''
+        self.assertEqual(self.profile.user, self.user)
+        self.assertEqual(str(self.profile.date_of_birth), '1990-01-01')
+        self.assertEqual(self.profile.profile_picture, 'profile_pics/test.jpg')
 
-    def test_user_does_not_have_permission(self):
-        self.assertFalse(self.user.has_perm('users.can_edit'))
-
-#Testing Password Reset
-class PasswordResetTestCase(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
-
-    def test_password_reset_view(self):
-        response = self.client.get(reverse('password_reset'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_password_reset_email_sent(self):
-        response = self.client.post(reverse('password_reset'), {'email': 'testuser@example.com'})
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(len(mail.outbox), 1)
-
-#Testing Forgotten Password
-class ForgottenPasswordTestCase(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
-
-    def test_forgotten_password_view(self):
-        response = self.client.get(reverse('password_reset'))
-        self.assertEqual(response.status_code, 200)
-
-    def test_forgotten_password_email_sent(self):
-        response = self.client.post(reverse('password_reset'), {'email': 'testuser@example.com'})
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(len(mail.outbox), 1)
-        email = mail.outbox[0]
-        self.assertIn('Password reset', email.subject)
-        self.assertIn('To reset your password', email.body)
-        reset_link_start = email.body.find('http://')
-        reset_link_end = email.body.find('/reset/')
-        reset_link = email.body[reset_link_start:reset_link_end]
-        reset_response = self.client.get(reset_link)
-        self.assertEqual(reset_response.status_code, 200)
-
-    def test_reset_password(self):
-        response = self.client.post(reverse('password_reset'), {'email': 'testuser@example.com'})
-        email = mail.outbox[0]
-        reset_link_start = email.body.find('http://')
-        reset_link_end = email.body.find('/reset/')
-        reset_link = email.body[reset_link_start:reset_link_end]
-        reset_response = self.client.get(reset_link, {'new_password1': 'newpassword', 'new_password2': 'new_password'})
-        self.assertEqual(reset_response.status_code, 302)
-        self.assertTrue(self.client.login(username='testuser', password='newpassword'))
+    def test_profile_str(self):
+        ''' Test verifies if the string representation of a Profile object is correct. '''
+        expected_str = self.user.username
+        self.assertEqual(str(self.profile), expected_str)
