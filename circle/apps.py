@@ -1,3 +1,7 @@
+''' 
+    Configuration file for the circle application. 
+'''
+
 from django.apps import AppConfig
 
 

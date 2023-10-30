@@ -1,8 +1,13 @@
+'''
+    Forms to manage user input for the circle application.
+'''
+
 from django import forms
 from django.forms import DateInput
 from .models import Member, Group, Note
 
 class MemberForm(forms.ModelForm):
+    ''' New member creation form. '''
     class Meta:
         model = Member
         fields = (
@@ -37,6 +42,7 @@ class MemberForm(forms.ModelForm):
 
 
 class EditMemberForm(forms.ModelForm):
+    ''' Edit existing member form. '''
     template_name = 'circle/edit_member.html'
     class Meta:
         model = Member
@@ -75,6 +81,7 @@ class EditMemberForm(forms.ModelForm):
     
 
 class GroupForm(forms.ModelForm):
+    ''' New group creation form. '''
     group_name = forms.TextInput()
     description = forms.Textarea()
     members = forms.ModelMultipleChoiceField(
@@ -105,6 +112,7 @@ class GroupForm(forms.ModelForm):
     
 
 class EditGroupForm(forms.ModelForm):
+    ''' Edit existing group form. '''
     template_name = 'circle/edit_group.html'
     class Meta:
         model = Group
@@ -137,6 +145,7 @@ class EditGroupForm(forms.ModelForm):
 
 
 class NoteForm(forms.ModelForm):
+    ''' New (member)note creation form. '''
     subject = forms.TextInput()
     members = forms.Textarea()
 

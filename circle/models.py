@@ -1,9 +1,15 @@
+''' 
+    Script defining the structure and behavior of the 
+    database tables used by the circle application.
+'''
+
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Member(models.Model):
+    ''' Defines member model. '''
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='circle_members')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -22,6 +28,7 @@ class Member(models.Model):
 
 
 class Group(models.Model):
+    ''' Defines group model. '''
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='member_groups')
     group_name = models.CharField(max_length=255)
     description = models.TextField()
@@ -36,6 +43,7 @@ class Group(models.Model):
 
 
 class Note(models.Model):
+    ''' Defines member note model. '''
     member = models.ForeignKey(Member, on_delete=models.CASCADE, related_name='member_notes')
     subject = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)

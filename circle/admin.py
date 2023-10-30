@@ -1,3 +1,6 @@
+''' 
+    Script to manage the administrative aspects of the circle application. 
+'''
 from django.contrib import admin
 from .models import Group, Member, Note
 

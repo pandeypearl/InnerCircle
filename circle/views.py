@@ -1,3 +1,7 @@
+''' 
+    Script responsible for handling HTTP requests, processing data,
+    and returning a HTTP response for the circle application.
+'''
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
@@ -20,6 +24,7 @@ from .serializers import MemberSerializer, GroupSerializer, NoteSerializer
 # Create your views here.
 @login_required(login_url='signIn')
 def group_list(request):
+    ''' Group object list view for user. '''
     template = 'circle/group_list.html'
 
     users_groups = Group.objects.filter(user=request.user)
@@ -32,6 +37,7 @@ def group_list(request):
 
 @login_required(login_url='signIn')
 def group_detail(request, group_id):
+    ''' group object detail view for user. '''
     template = 'circle/group_detail.html'
 
     group = Group.objects.get(pk=group_id)
@@ -46,6 +52,7 @@ def group_detail(request, group_id):
 
 @login_required(login_url='signIn')
 def create_group(request):
+    ''' New group object creation view for user. '''
     template = 'circle/create_group.html'
     form = GroupForm(request.POST, request.FILES)
 
@@ -85,6 +92,7 @@ def create_group(request):
 
 @login_required(login_url='signIn')
 def edit_group(request, group_id):
+    ''' Edit existing group object view for user. '''
     template = 'circle/edit_group.html'
     instance = get_object_or_404(Group, id=group_id)
     form = EditGroupForm(request.POST, instance=instance)
@@ -119,6 +127,7 @@ def edit_group(request, group_id):
 
 login_required(login_url='signIn')
 def delete_group(request, pk):
+    ''' Delete existing group object view for user. '''
     template = 'circle/delete_group.html'
     group = get_object_or_404(Group, pk=pk)
 
@@ -141,6 +150,7 @@ def delete_group(request, pk):
 
 @login_required(login_url='signIn')
 def member_list(request):
+    ''' Member object list view for user. '''
     template = 'circle/member_list.html'
 
     members = Member.objects.filter(user=request.user) 
@@ -157,6 +167,7 @@ def member_list(request):
 
 @login_required(login_url='signIn')
 def member_detail(request, member_id):
+    ''' Member object detail view for user. '''
     template = 'circle/member_detail.html'
     member = Member.objects.get(pk=member_id)
     form = NoteForm()
@@ -185,6 +196,7 @@ def member_detail(request, member_id):
 
 @login_required(login_url='signIn')
 def create_member(request):
+    ''' New member object creation view for member. '''
     template = 'circle/create_member.html'
     form = MemberForm(request.POST, request.FILES)
 
@@ -224,6 +236,7 @@ def create_member(request):
 
 login_required(login_url='signIn')
 def edit_member(request, member_id):
+    ''' Edit existing member object view for user. '''
     template = 'circle/edit_member.html'
     instance = get_object_or_404(Member, id=member_id)
     form = EditMemberForm(request.POST, instance=instance)
@@ -256,6 +269,7 @@ def edit_member(request, member_id):
 
 login_required(login_url='signIn')
 def delete_member(request, pk):
+    ''' Delete existing member object for user. '''
     template = 'circle/delete_member.html'
     member = get_object_or_404(Member, pk=pk)
 
