@@ -1,3 +1,6 @@
+''' 
+Configuration file for the error_handling application. 
+'''
 from django.apps import AppConfig
 
 

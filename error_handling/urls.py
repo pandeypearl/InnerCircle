@@ -1,3 +1,6 @@
+'''
+    Script mapping URLS to specific views in the error_handling application.
+'''
 from django.urls import path
 from . import views
 
