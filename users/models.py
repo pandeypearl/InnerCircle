@@ -1,3 +1,8 @@
+''' 
+    Script defining the structure and behavior of the 
+    database tables used by the users application.
+'''
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
@@ -7,6 +12,7 @@ User = get_user_model()
 
 # Create your models here.
 class Profile(models.Model):
+    ''' Defines profile model. '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_of_birth = models.DateField(null=True, blank=True)
     profile_picture = models.ImageField(upload_to='profile_pics/', default='')

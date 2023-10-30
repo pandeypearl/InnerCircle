@@ -1,3 +1,7 @@
+''' 
+Configuration file for the users application. 
+'''
+
 from django.apps import AppConfig
 
 

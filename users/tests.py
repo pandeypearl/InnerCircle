@@ -1,8 +1,9 @@
+''' Unit tests for the users application. '''
 from django.test import TestCase
 from django.contrib.auth.models import User, Permission
 from django.test.client import Client
 from django.contrib.contenttypes.models import ContentType
-from users.models import Profile
+from .models import Profile
 # from django.core import mail
 # from django.urls import reverse
 from django.contrib.auth import get_user_model

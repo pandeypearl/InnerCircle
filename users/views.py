@@ -1,3 +1,8 @@
+''' 
+    Script responsible for handling HTTP requests, processing data,
+    and returning a HTTP response for the users application.
+'''
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
@@ -21,12 +26,14 @@ from .serializers import UserSerializer, ProfileSerializer
 
 # Create your views here.
 def home(request):
+    ''' Landing page view. '''
     template = 'users/home.html'
     context = {}
     return render(request, template, context)
 
 
 def about(request):
+    ''' About page view. '''
     template = 'users/about.html'
     context = {}
     return render(request, template, context)
@@ -34,6 +41,7 @@ def about(request):
 
 @login_required(login_url='singIn')
 def help(request):
+    ''' Help page view. '''
     template = 'users/help.html'
     context = {}
     return render(request, template, context)
@@ -41,6 +49,7 @@ def help(request):
 
 @login_required(login_url='singIn')
 def dashboard(request):
+    ''' User dashboard view. '''
     template = 'users/dashboard.html'
     members = Member.objects.filter(user=request.user)
     broadcasts = Broadcast.objects.filter(user=request.user)
@@ -65,6 +74,7 @@ def dashboard(request):
 
 
 def signUp(request):
+    ''' User sign up view. '''
     template = 'users/signUp.html'
 
     if request.method == 'POST':
@@ -101,6 +111,7 @@ def signUp(request):
         return render(request, template)
 
 def signIn(request):
+    ''' User sign in view. '''
     template = 'users/signIn.html'
 
     context = {}
@@ -125,6 +136,7 @@ def signIn(request):
 
 @login_required(login_url='signIn')
 def logOut(request):
+    ''' User log out function. '''
     auth.logout(request)
     messages.success(request, 'You have been logged out of your account.')
     return redirect('home')
@@ -132,6 +144,7 @@ def logOut(request):
 
 @login_required(login_url='signIn')
 def profile(request, pk):
+    ''' User profile view. '''
     template = 'users/profile.html'
     user_object = User.objects.get(username=pk)
     user_profile = Profile.objects.get(user=user_object)
@@ -147,6 +160,7 @@ def profile(request, pk):
 
 @login_required(login_url='signIn')
 def settings(request, profile_id):
+    ''' User account settings view. '''
     template = 'users/settings.html'
     instance = get_object_or_404(Profile, id=profile_id)
     user = request.user
@@ -185,6 +199,7 @@ def settings(request, profile_id):
 
 @login_required(login_url='signIn')
 def search(request):
+    ''' Search results view. '''
     template = 'users/search_results.html'
     query = request.GET.get('q', '')
 
@@ -227,6 +242,7 @@ def search(request):
 
 @login_required(login_url='signIn')
 def notifications(request):
+    ''' User notification view showing guest rsvp and list item checks. '''
     template = 'users/notifications.html'
 
     user = request.user
@@ -244,6 +260,7 @@ def notifications(request):
 
 @login_required(login_url='signIn')
 def reminders(request):
+    ''' User reminder view for upcoming birthdays. '''
     template = 'users/reminders.html'
     user = request.user 
     members = Member.objects.filter(user=user).order_by('date_of_birth')

@@ -1,3 +1,7 @@
+'''
+    Forms to manage user input for the users application.
+'''
+
 from django import forms
 from django.forms import DateInput
 from .models import Profile
@@ -6,6 +10,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 class AccountEditForm(UserChangeForm):
+    ''' User account edit form. '''
     class Meta:
         model = User
         fields = (
@@ -57,6 +62,7 @@ class AccountEditForm(UserChangeForm):
 
 
 class ProfileEditForm(forms.ModelForm):
+    ''' User profile edit form '''
     class Meta:
         model = Profile
         fields = (

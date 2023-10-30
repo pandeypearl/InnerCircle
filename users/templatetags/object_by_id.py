@@ -1,3 +1,6 @@
+'''
+    Template tag to get object by object ID
+'''
 from django import template
 from django.apps import apps
 

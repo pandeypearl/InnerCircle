@@ -1,3 +1,6 @@
+'''
+    Template filter for in_list function
+'''
 from django import template
 
 register = template.Library()

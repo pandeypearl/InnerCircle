@@ -1,3 +1,6 @@
+'''
+    Custom template filters for project.
+'''
 from django import template
 
 register = template.Library()
