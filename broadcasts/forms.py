@@ -1,3 +1,6 @@
+'''
+    Forms to manage user input for the broadcast broadcast application.
+'''
 from django import forms
 from .models import Broadcast
 

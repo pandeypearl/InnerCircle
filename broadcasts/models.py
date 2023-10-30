@@ -1,3 +1,7 @@
+''' 
+    Script defining the structure and behavior of the 
+    database tables used by the broadcast application.
+'''
 from django.db import models
 from django.contrib.auth.models import User
 from circle.models import Member

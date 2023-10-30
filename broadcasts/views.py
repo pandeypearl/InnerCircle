@@ -1,3 +1,7 @@
+''' 
+    Script responsible for handling HTTP requests, processing data,
+    and returning a HTTP response for the broadcast application.
+'''
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
