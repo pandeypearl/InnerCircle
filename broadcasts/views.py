@@ -17,6 +17,7 @@ from .serializers import BroadcastSerializer
 # Create your views here.
 login_required(login_url='signIn')
 def broadcast_list(request):
+    ''' All broadcast objects list view for user. '''
     template = 'broadcasts/broadcast_list.html'
     broadcasts = Broadcast.objects.filter(user=request.user)
 
@@ -28,6 +29,7 @@ def broadcast_list(request):
 
 login_required(login_url='signIn')
 def sent_broadcast_list(request):
+    ''' Sent broadcast objects list view for user. '''
     template = 'broadcasts/broadcast_list.html'
 
     sent_broadcasts = Broadcast.objects.filter(user=request.user, is_draft=False)
@@ -38,6 +40,7 @@ def sent_broadcast_list(request):
 
 login_required(login_url='signIn')
 def draft_broadcast_list(request):
+    ''' Draft broadcast objects list view for user. '''
     template = 'broadcasts/broadcast_list.html'
 
     draft_broadcasts = Broadcast.objects.filter(user=request.user, is_draft=True)
@@ -48,6 +51,7 @@ def draft_broadcast_list(request):
 
 login_required(login_url='signIn')
 def broadcast_detail(request, broadcast_id):
+    ''' Broadcast object detail view. '''
     template = 'broadcasts/broadcast_detail.html'
     broadcast = Broadcast.objects.get(pk=broadcast_id)
 
@@ -59,6 +63,7 @@ def broadcast_detail(request, broadcast_id):
 
 login_required(login_url='signIn')
 def create_broadcast(request):
+    ''' New broadcast object creation view for user. '''
     template = 'broadcasts/create_broadcast.html'
     form = BroadcastForm(request.POST)
 
@@ -98,6 +103,7 @@ def create_broadcast(request):
 
 login_required(login_url='signIn')
 def send_broadcast_draft(request, draft_id):
+    ''' Send broadcast to recipients function. '''
     draft = get_object_or_404(Broadcast, id=draft_id, is_draft=True)
     receivers = draft.receivers.all()
 
@@ -114,6 +120,7 @@ def send_broadcast_draft(request, draft_id):
 
 login_required(login_url='signIn')
 def edit_broadcast(request, broadcast_id):
+    ''' Edit existing broadcast object view for user. '''
     template = 'broadcasts/edit_broadcast.html'
     instance = get_object_or_404(Broadcast, id=broadcast_id)
     form = EditBroadcastForm(request.POST, instance=instance)
@@ -143,6 +150,7 @@ def edit_broadcast(request, broadcast_id):
 
 login_required(login_url='signIn')
 def delete_broadcast(request, pk):
+    ''' Delete existing broadcast object view for user. '''
     template = 'broadcasts/delete_broadcast.html'
     broadcast = get_object_or_404(Broadcast, pk=pk)
 
@@ -160,6 +168,7 @@ def delete_broadcast(request, pk):
     return render(request, template, context)
 
 def read_broadcast(request, broadcast_id, member_id):
+    ''' Read broadcast view for recipient. '''
     template = 'broadcasts/read_broadcast.html'
     broadcast = get_object_or_404(Broadcast, pk=broadcast_id)
     member = get_object_or_404(Member, pk=member_id)
