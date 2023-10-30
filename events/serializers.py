@@ -1,3 +1,7 @@
+'''
+    Script to convert querysets and model instances into 
+    native Python datatypes for the events application.
+'''
 from rest_framework import serializers
 from .models import Event, RSVP
 

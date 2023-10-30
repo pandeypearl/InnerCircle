@@ -1,9 +1,13 @@
+'''
+    Forms to manage user input for the events application.
+'''
 from django import forms
 from django.forms import DateTimeInput
 from .models import Event, RSVP
 from django.utils import timezone
 
 class EventForm(forms.ModelForm):
+    ''' New event creation form. '''
     class Meta:
         model = Event
         fields = (
@@ -48,6 +52,7 @@ class EventForm(forms.ModelForm):
     
 
 class UpdateEventForm(forms.ModelForm):
+    ''' Update existing event form. '''
     template_name = 'events/update_event.html'
     class Meta:
         model = Event
@@ -97,6 +102,7 @@ class UpdateEventForm(forms.ModelForm):
     
 
 class RSVPForm(forms.ModelForm):
+    ''' Event rsvp form. '''
     class Meta:
         model = RSVP
         fields = [

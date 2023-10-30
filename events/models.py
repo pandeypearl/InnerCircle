@@ -1,9 +1,14 @@
+''' 
+    Script defining the structure and behavior of the 
+    database tables used by the events application.
+'''
 from django.db import models
 from circle.models import Member
 from django.contrib.auth.models import User
 
 # Create your models here.
 class Event(models.Model):
+    ''' Defines event model. '''
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event_name = models.CharField(max_length=255)
     description = models.TextField()
@@ -22,6 +27,7 @@ class Event(models.Model):
 
         
 class RSVP(models.Model):
+    ''' Defines rsvp model. '''
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     guest = models.ForeignKey(Member, on_delete=models.CASCADE)
     response_status = models.CharField(max_length=15, choices=[('Attending',
@@ -44,6 +50,7 @@ class RSVP(models.Model):
 
 
 class RSVPNotification(models.Model):
+    ''' Defines rsvp notification model. '''
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     rsvp = models.ForeignKey(RSVP, on_delete=models.CASCADE)

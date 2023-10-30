@@ -1,3 +1,7 @@
+''' 
+    Script responsible for handling HTTP requests, processing data,
+    and returning a HTTP response for the events application.
+'''
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -13,6 +17,7 @@ from .serializers import EventSerializer, RSVPSerializer
 # Create your views here.
 login_required(login_url='signIn')
 def event_list(request):
+    ''' All event objects list view for user. '''
     template = 'events/event_list.html'
     user_events = Event.objects.filter(user=request.user)
 
@@ -25,6 +30,7 @@ def event_list(request):
 
 login_required(login_url='signIn')
 def sent_event_list(request):
+    ''' Sent event objects list view for user. '''
     template = 'events/event_list.html'
 
     sent_events = Event.objects.filter(user=request.user, is_draft=False)
@@ -36,6 +42,7 @@ def sent_event_list(request):
 
 login_required(login_url='signIn')
 def draft_event_list(request):
+    ''' Draft event objects list view for user. '''
     template = 'events/event_list.html'
 
     draft_events = Event.objects.filter(user=request.user, is_draft=True)
@@ -47,6 +54,7 @@ def draft_event_list(request):
 
 login_required(login_url='signIn')
 def event_detail(request, event_id):
+    ''' Event object detail view for user. '''
     template = 'events/event_detail.html'
     event = Event.objects.get(pk=event_id)
 
@@ -58,6 +66,7 @@ def event_detail(request, event_id):
 
 login_required(login_url='signIn')
 def create_event(request):
+    ''' New event object creation view for user. '''
     template = 'events/create_event.html'
     form = EventForm(request.POST)
 
@@ -103,6 +112,7 @@ def create_event(request):
 
 login_required(login_url='signIn')
 def send_event_draft(request, draft_id):
+    ''' Send event email to guests function. '''
     draft = get_object_or_404(Event, id=draft_id, is_draft=True)
     guests = draft.guests.all()
 
@@ -120,6 +130,7 @@ def send_event_draft(request, draft_id):
 
 login_required(login_url='signIn')
 def update_event(request, event_id):
+    ''' Update existing even object view for user. '''
     template = 'events/update_event.html'
     instance = get_object_or_404(Event, id=event_id)
     form = UpdateEventForm(request.POST, instance=instance)
@@ -150,6 +161,7 @@ def update_event(request, event_id):
 
 login_required(login_url='signIn')
 def delete_event(request, pk):
+    ''' Delete existing event object view for user. '''
     template = 'events/delete_event.html'
     event = get_object_or_404(Event, pk=pk)
 
@@ -167,6 +179,7 @@ def delete_event(request, pk):
 
 
 def rsvp_view(request, event_id, member_id):
+    ''' Event rsvp view for event guest. '''
     # Get Event and Member objects
     template = 'events/rsvp.html'
     event = get_object_or_404(Event, pk=event_id)
@@ -213,6 +226,7 @@ def rsvp_view(request, event_id, member_id):
 
 
 def rsvp_done(request, event_id, member_id):
+    ''' Event rsvp success view for guest. '''
     template = 'events/rsvp_done.html'
     event = get_object_or_404(Event, pk=event_id)
     member = get_object_or_404(Member, pk=member_id)

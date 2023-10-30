@@ -1,3 +1,6 @@
+''' 
+Configuration file for the events application. 
+'''
 from django.apps import AppConfig
 
 
