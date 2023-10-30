@@ -6,6 +6,7 @@ from .models import Broadcast
 
 
 class BroadcastForm(forms.ModelForm):
+    ''' Form for new broadcast creation. '''
     class Meta:
         model = Broadcast
         fields = [
@@ -41,6 +42,7 @@ class BroadcastForm(forms.ModelForm):
 
     
 class EditBroadcastForm(forms.ModelForm):
+    ''' Form to edit existing broadcast. '''
     template_name = 'broadcasts/edit_broadcast.html'
     class Meta:
         model = Broadcast

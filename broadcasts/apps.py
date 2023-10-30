@@ -1,3 +1,4 @@
+''' Configuration file for the broadcast application. '''
 from django.apps import AppConfig
 
 
