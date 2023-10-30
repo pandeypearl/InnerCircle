@@ -8,6 +8,7 @@ from circle.models import Member
 
 # Create your models here.
 class Broadcast(models.Model):
+    ''' Defines Broadcast model '''
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
