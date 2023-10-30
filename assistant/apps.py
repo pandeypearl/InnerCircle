@@ -1,3 +1,4 @@
+''' Configuration file for the assistant application. '''
 from django.apps import AppConfig
 
 
