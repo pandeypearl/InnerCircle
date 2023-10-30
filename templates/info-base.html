@@ -1,3 +1,4 @@
+<!-- Base HTML for Home, About, Help Pages -->
 {% load cache_bust %}
 {% load static %}
 {% load bootstrap5 %}
@@ -19,7 +20,7 @@
     
 </head>
 <body class="bg-light">
-    <div class="info-wrapper">
+    <div class="info-wrapper mt-5">
         {% include 'components/info-nav.html'%}
         
         {% if messages %}
@@ -43,6 +44,8 @@
 
         {% block info_content %}
         {% endblock %}
+
+        {% include 'components/footer.html' %}
     </div>
 </body>
 </html>

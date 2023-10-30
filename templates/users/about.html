@@ -1,11 +1,12 @@
+<!-- About Page serving about view. -->
 {% extends 'info-base.html' %}
 {% load static %}
 
 {% block title %}InnerCircle | About{% endblock %}
 
 {% block info_content %}
-<div class="info-content">
-    <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+<div class="info-content p-5">
+    <div class="d-flex justify-content-center align-items-center p-5" style="min-height: 80vh;">
         <div style="width: 60vw;">
             <h2>InnerCircle's Story</h2>
             <p>InnerCircle is a final project for the <a class="text-dark" href="https://www.alxafrica.com/software-engineering-plus/" target="_blank"><strong>ALX</strong></a>'s Software Engineering Plus with Backend Specialization Course.</p>
@@ -21,7 +22,7 @@
             <p>You can find out more about how I achieved this my creating your own account
                 <a class="text-dark" href="{% url 'signUp' %}"><strong>here</strong></a> or learn more about the application and its features <a class="text-dark" href="{% url 'home' %}"><strong>here</strong></a>.</p>
             
-            <p>This is a solo project by <a class="text-dark" href="https://github.com/pandeypearl" target="_blank"><strong>Pretty Pandey</strong></a></p>
+            <!-- <p>This is a solo project by <a class="text-dark" href="https://github.com/pandeypearl" target="_blank"><strong>Pretty Pandey</strong></a></p> -->
         </div>
     </div>
 </div>
