@@ -1,3 +1,7 @@
+''' 
+    Script responsible for handling HTTP requests, processing data,
+    and returning a HTTP response for the lists application.
+'''
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -21,6 +25,7 @@ from .serializers import ListSerializer, ListItemSerializer, CheckItemSerializer
 # Create your views here.
 login_required(login_url='signIn')
 def lists(request):
+    ''' All list objects list view for user. '''
     template = 'lists/lists.html'
     user_lists = List.objects.filter(user=request.user)
 
@@ -33,6 +38,7 @@ def lists(request):
 
 login_required(login_url='signIn')
 def sent_lists(request):
+    ''' Sent list objects list view for user. '''
     template = 'lists/lists.html'
 
     sent_lists = List.objects.filter(user=request.user, is_draft=False)
@@ -44,6 +50,7 @@ def sent_lists(request):
 
 login_required(login_url='signIn')
 def draft_lists(request):
+    ''' Draft list objects list view for user. '''
     template = 'lists/lists.html'
 
     draft_lists = List.objects.filter(user=request.user, is_draft=True)
@@ -55,6 +62,7 @@ def draft_lists(request):
 
 login_required(login_url='signIn')
 def list_detail(request, list_id):
+    ''' List object detail view for user. '''
     template = 'lists/list_detail.html'
     list = List.objects.get(pk=list_id)
     list_items = ListItem.objects.filter(list=list)
@@ -108,6 +116,7 @@ def list_detail(request, list_id):
 
 login_required(login_url='signIn')
 def create_list(request):
+    ''' List object creation view for user. '''
     template = 'lists/create_list.html'
     form = ListForm(request.POST)
 
@@ -148,6 +157,7 @@ def create_list(request):
 
 login_required(login_url='signIn')
 def send_list_draft(request, draft_id):
+    ''' Send list to recipient function. '''
     draft = get_object_or_404(List, id=draft_id, is_draft=True)
     receivers = draft.receivers.all()
     # Sending List to receivers
@@ -164,6 +174,7 @@ def send_list_draft(request, draft_id):
 
 login_required(login_url='signIn')
 def edit_list(request, list_id):
+    ''' Edit existing list object view for user. '''
     template = 'lists/edit_list.html'
     instance = get_object_or_404(List, id=list_id)
     form = EditListForm(request.POST, instance=instance)
@@ -193,6 +204,7 @@ def edit_list(request, list_id):
 
 login_required(login_url='signIn')
 def delete_list(request, pk):
+    ''' Delete existing list object for user. '''
     template = 'lists/delete_list.html'
     list = get_object_or_404(List, pk=pk)
 
@@ -210,6 +222,7 @@ def delete_list(request, pk):
 
 
 def check_list_item(request, list_id, recipient_id):
+    ''' Check list view for recipient. '''
     template = 'lists/check_list.html'
     list_obj = get_object_or_404(List, id=list_id)
     recipient = get_object_or_404(Member, id=recipient_id)

@@ -1,9 +1,13 @@
+'''
+    Forms to manage user input for the lists application.
+'''
 from django import forms
 from .models import List, ListItem
 from circle.models import Member
 
 
 class ListForm(forms.ModelForm):
+    ''' New list creation form. '''
     class Meta:
         model = List
         fields = [
@@ -38,6 +42,7 @@ class ListForm(forms.ModelForm):
 
 
 class ListItemForm(forms.ModelForm):
+    ''' New list item creation form. '''
     class Meta:
         model = ListItem
         fields = [
@@ -60,6 +65,7 @@ class ListItemForm(forms.ModelForm):
 
 
 class DeleteItemForm(forms.ModelForm):
+    ''' Existing list item delete form. '''
     class Meta:
         model = ListItem
         fields = []
@@ -68,6 +74,7 @@ class DeleteItemForm(forms.ModelForm):
 
 
 class EditListForm(forms.ModelForm):
+    ''' Edit existing list form. '''
     class Meta:
         model = List
         fields = [
@@ -112,6 +119,7 @@ class EditListForm(forms.ModelForm):
 
 
 class CheckItemForm(forms.ModelForm):
+    ''' Check list item form. '''
     class Meta:
         model = ListItem
         fields = ['checked']

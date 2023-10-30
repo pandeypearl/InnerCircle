@@ -1,3 +1,6 @@
+''' 
+Configuration file for the lists application. 
+'''
 from django.apps import AppConfig
 
 

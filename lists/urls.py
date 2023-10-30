@@ -1,3 +1,7 @@
+'''
+    Script mapping URLS to specific views in the lists application.
+'''
+
 from django.urls import path, include
 from . import views
 
