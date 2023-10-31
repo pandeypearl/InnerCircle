@@ -11,19 +11,19 @@
                 <form class="container-sm" action="{% url 'signUp' %}" method="POST">
                     {% csrf_token %}
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="username" placeholder="Username">
+                        <input type="text" class="form-control" name="username" placeholder="Username" required>
                         <label for="username">Username</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" name="email" placeholder="Email">
+                        <input type="email" class="form-control" name="email" placeholder="Email" required>
                         <label for="email">Email</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" name="password" placeholder="Password">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
                         <label for="password">Password</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" name="password2" placeholder="Confirm Password">
+                        <input type="password" class="form-control" name="password2" placeholder="Confirm Password" required>
                         <label for="password2">Confirm Password</label>
                     </div>
             

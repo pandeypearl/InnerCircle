@@ -19,7 +19,7 @@
                         {% endfor %}
                     {% endif %}
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="username" placeholder="Username" required>
+                        <input type="text" class="form-control" name="username" placeholder="Username">
                         <label for="username">Username</label>
                         {% if form.username.errors %}
                             {% for error in form.username.errors %}
@@ -29,10 +29,10 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                        <input type="password" class="form-control" name="password" placeholder="Password">
                         <label for="password">Password</label>
-                        {% if form.username.errors %}
-                            {% for error in form.username.errors %}
+                        {% if form.password.errors %}
+                            {% for error in form.password.errors %}
                             <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
                             {% endfor %}
                         {% endif %}

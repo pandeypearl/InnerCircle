@@ -10,8 +10,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 class SignInForm(forms.Form):
-    username = forms.CharField(max_length=30)
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(max_length=30, required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
 
 class AccountEditForm(UserChangeForm):
     ''' User account edit form. '''
