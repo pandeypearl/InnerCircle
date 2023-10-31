@@ -16,7 +16,7 @@ from events.models import Event, RSVPNotification
 from broadcasts.models import Broadcast
 from lists.models import List, CheckItemNotification
 
-from .forms import SignInForm, ProfileEditForm, AccountEditForm
+from .forms import SignInForm, SignUpForm, ProfileEditForm, AccountEditForm
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
@@ -76,39 +76,46 @@ def dashboard(request):
 def signUp(request):
     ''' User sign up view. '''
     template = 'users/signUp.html'
+    form = SignUpForm()
 
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        password2 = request.POST['password2']
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            password2 = form.cleaned_data['password2']
 
-        if password == password2:
+            if password != password2:
+                messages.info(request, 'Passwords do not match.')
+                return redirect('signUp')
+            
             if User.objects.filter(email=email).exists():
-                messages.info(request, 'Email already taken. Please use a different email or login')
+                messages.info(request, 'Email already taken. Please use a different email or sign in')
                 return redirect('signUp')
             elif User.objects.filter(username=username).exists():   
                 messages.info(request, 'Username unavailable')
                 return redirect('signUp')
-            else:
-                user = User.objects.create_user(username=username, email=email, password=password)
-                user.save()
+            
+            user = User.objects.create_user(username=username, email=email, password=password)
 
-                #Login user and redirect them to profile page
-                user_login = auth.authenticate.get(username=username)
-                auth.login(request, user_login)
+            user_login = authenticate(request, username=username, password=password)
+            login(request, user_login)
 
-                #Create profile object for new user
-                user_model = User.objects.get(username=username)
-                new_profile = Profile.objects.create(user=user_model)
-                new_profile.save()
-                return redirect('dashboard')
+            #Create profile object for new user
+            user_model = User.objects.get(username=username)
+            new_profile = Profile.objects.create(user=user_model)
+            new_profile.save()
 
-        else:
-            messages.info(request, 'Passwords do not match')
-            return redirect('signUp')
+            return redirect('dashboard')
     else:
-        return render(request, template)
+        form = SignUpForm()
+
+    context = {
+        'form': form,
+    }
+    
+    return render(request, template, context)
 
 
 def signIn(request):

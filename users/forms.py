@@ -9,9 +9,36 @@ from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+
+class SignUpForm(forms.Form):
+    ''' User Sign Up Form '''
+    username = forms.CharField(max_length=30, required=True)
+    email = forms.EmailField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput, required=True)
+    password2 = forms.CharField(widget=forms.PasswordInput, required=True)
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('Email already taken. Please use a different email or sign in.')
+        return email
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 =cleaned_data.get('password2')
+
+        if password and password2 and password != password2:
+            raise forms.ValidationError('Passwords do not match')
+        
+        return cleaned_data
+    
+
 class SignInForm(forms.Form):
+    ''' User Sign In Form '''
     username = forms.CharField(max_length=30, required=True)
     password = forms.CharField(widget=forms.PasswordInput, required=True)
+
 
 class AccountEditForm(UserChangeForm):
     ''' User account edit form. '''
