@@ -13,9 +13,8 @@
     right: 50px;
 }
 
-section{
-    min-height: 600px;
-    padding-top: 50px;
+.help-section{
+    min-height: 500px;
 }
 
 .btn:focus{
@@ -42,49 +41,83 @@ section{
                 <li><a href="#lists" class="dropdown-item"><strong>Lists</strong></a></li>
             </ul>
         </div>
-        <section class="pb-5 pt-5" id="profile">
+        <div class="pb-5 pt-5 help-section" id="profile">
             <h4 class="text-secondary text-end">Profile</h4>
             <hr>
-            <h5>Editing Profile</h5>
-            <p>You can edit/update your profile by through this navigation structure :  <code class="text-white bg-dark p-1 rounded"><i class="bi bi-person-fill"></i> Profile > <i class="bi bi-gear-fill"></i> Settings </p></code>
-            <h5>Changing Password</h5>
-        </section>
+            <h5><strong>Editing Profile</strong></h5>
+            <p class="bg-light p-3">You can edit/update your profile by through this navigation structure :  <code class="text-white bg-dark p-1 rounded"><i class="bi bi-person-fill"></i> Profile > <i class="bi bi-gear-fill"></i> Settings </code></p>
+            <h5><strong>Changing Password</strong></h5>
+            <p class="bg-light p-3">You can change your password on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-person-fill"></i> Profile > <i class="bi bi-gear-fill"></i> Settings</code> page and clicking on the <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true">Change Password</button> button</p>
+        </div>
 
-        <section class="pb-5 pt-5" id="aiAssistant">
+        <div class="pb-5 pt-5 help-section" id="aiAssistant">
             <h4 class="text-secondary text-end">AI Assistant</h4>
             <hr>
-            <h5>Chat History</h5>
-            <p>Only you chat history for that particular day will be visible on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-chat-square-heart-fill"></i> Assistant > <i class="bi bi-chat-square-text-fill"></i> Chat</code> page.</p>
-            <p>If you would like to view your entire chat history you will find it on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-chat-square-heart-fill"></i> Assistant > <i class="bi bi-person-lines-fill"></i>&nbsp;<small></small> Chat History</code> page.</p>
-        </section>
+            <h5><strong>Chat History</strong></h5>
+            <p class="bg-light p-3">Only you chat history for that particular day will be visible on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-chat-square-heart-fill"></i> Assistant > <i class="bi bi-chat-square-text-fill"></i> Chat</code> page.</p>
+            <p class="bg-light p-3">If you would like to view your entire chat history you will find it on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-chat-square-heart-fill"></i> Assistant > <i class="bi bi-person-lines-fill"></i>&nbsp;<small></small> Chat History</code> page.</p>
+        </div>
 
-        <section class="pb-5 pt-5" id="circle">
+        <div class="pb-5 pt-5 help-section" id="circle">
             <h4 class="text-secondary text-end">Circle</h4>
             <hr>
-            <h5>Circle Members</h5>
-            <h5>Groups</h5>
-        </section>
+            <h5><strong>Circle Members</strong></h5>
+            <p class="bg-light p-3">Upcoming birthdays for members of your circle can be found on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-grid-1x2-fill"></i> dashboard > <i class="bi bi-alarm-fill"></i> Reminders</code> page.</p>
 
-        <section class="pb-5 pt-5" id="broadcasts">
+            <h5><strong>Groups</strong></h5>
+            <p class="bg-light p-3">You can create groups and add circle members to these groups on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-people-fill"></i> circle > <i class="bi bi-person-gear"></i> groups</code> page</p>
+        </div>
+
+        <div class="pb-5 pt-5 help-section" id="broadcasts">
             <h4 class="text-secondary text-end">Broadcasts</h4>
             <hr>
-            <h5>Previewing Broadcasts</h5>
-            <p></p>
-            <h5>Sending Broadcasts</h5>
-        </section>
-        <section class="pb-5 pt-5" id="events">
+            <h5><strong>Previewing Broadcasts</strong></h5>
+            <p class="bg-light p-3">If you would like to preview what a broadcast will look like to your recipients
+                 you can do so by clicking on the recipient and view what the broadcast will look like for them.</p>
+            
+            <h5><strong>Sending Broadcasts</strong></h5>
+            <p class="bg-light p-3">A broadcast can be sent as soon as you create one or at a later stage.</p>
+            <p class="bg-light p-3">To send a broadcast as soon as you create one just click the <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true">save and send</button> button.</p>
+            <p class="bg-light p-3">To send a broadcast at a later stage just click on the <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true">save</button> button and you can send it at any time when clicking the
+                <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true"><i class="bi bi-envelope-arrow-up-fill"></i> send broadcast</button> button on that broadcast page.
+            </p>
+        </div>
+
+        <div class="pb-5 pt-5 help-section" id="events">
             <h4 class="text-secondary text-end">Events</h4>
             <hr>
-            <h5>Previewing Event Invitations</h5>
+            <h5><strong>Previewing Event Invitations</strong></h5>
+            <p class="bg-light p-3">If you would like to preview what a event invitation will look like to your guests
+                you can do so by clicking on the guest and view what the invitation will look like for them.</p>
+           
+            <h5><strong>Sending Event Invitations</strong></h5>
+            <p class="bg-light p-3">An event invitation can be sent as soon as you create one or at a later stage.</p>
+            <p class="bg-light p-3">To send an invitation as soon as you create one just click the <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true">save and send</button> button.</p>
+            <p class="bg-light p-3">To send an invitation at a later stage just click on the <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true">save</button> button and you can send it at any time before the event date when clicking the
+                <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true"><i class="bi bi-envelope-arrow-up-fill"></i> send invitation</button> button on that event page.
+            </p>
 
-            <h5>Sending Event Invitations</h5>
-        </section>
-        <section class="pb-5 pt-5" id="lists">
+            <h5><strong>Event RSVPs</strong></h5>
+            <p class="bg-light p-3">When guests RSVP to your event you will be notified on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-grid-1x2-fill"></i> Dashboard > <i class="bi bi-bell-fill"></i> Notifications</code> page.</p>
+        </div>
+
+        <div class="pb-5 pt-5 help-section" id="lists">
             <h4 class="text-secondary text-end">Lists</h4>
             <hr>
-            <h5>Previewing Lists</h5>
-            <h5>Sending Lists</h5>
-        </section>
+            <h5><strong>Previewing Lists</strong></h5>
+            <p class="bg-light p-3">If you would like to preview what a list will look like to your recipients
+                you can do so by clicking on the recipient and view what the list will look like for them.</p>
+
+            <h5><strong>Sending Lists</strong></h5>
+            <p class="bg-light p-3">A list can be sent as soon as you create one or at a later stage.</p>
+            <p class="bg-light p-3">To send a list as soon as you create one just click the <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true">save and send</button> button.</p>
+            <p class="bg-light p-3">To send a list at a later stage just click on the <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true">save</button> button and you can send it at any time when clicking the
+                <button class="btn btn-dark btn-sm" disabled tabindex="-1" role="button" aria-disabled="true"><i class="bi bi-envelope-arrow-up-fill"></i> send list</button> button on that list page.
+            </p>
+
+            <h5><strong>List Checks</strong></h5>
+            <p class="bg-light p-3">When list recipients check off items on your lists, you will be notified on the <code class="text-white bg-dark p-1 rounded"><i class="bi bi-grid-1x2-fill"></i> Dashboard > <i class="bi bi-bell-fill"></i> Notifications</code> page.</p>
+        </div>
     </div>
     
 </div>
