@@ -4,10 +4,10 @@
 '''
 
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.models import User, auth
+from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth import update_session_auth_hash, authenticate, login
 from datetime import date
 from .models import Profile, UserActivity
 from circle.models import Member
@@ -16,7 +16,7 @@ from events.models import Event, RSVPNotification
 from broadcasts.models import Broadcast
 from lists.models import List, CheckItemNotification
 
-from .forms import ProfileEditForm, AccountEditForm
+from .forms import SignInForm, ProfileEditForm, AccountEditForm
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
@@ -110,29 +110,32 @@ def signUp(request):
     else:
         return render(request, template)
 
+
 def signIn(request):
     ''' User sign in view. '''
     template = 'users/signIn.html'
-
-    context = {}
+    form = SignInForm()
 
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        form = SignInForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
 
-        user = auth.authenticate(username=username, password=password)
-
-        if user is not None:
-            auth.login(request, user)
-            return redirect('dashboard')
-        else:
-            context['error_message'] = 'Invalid username or password'
-
-    if request.user.is_authenticated:
-        return redirect('dashboard')
-
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+            else:
+                form.add_error(None, "Invalid username or password. Please try again.")
     else:
-        return render(request, template, context)
+        form = SignInForm()
+
+    context ={
+        'form': form,
+    }
+    return render(request, template, context)
+
 
 @login_required(login_url='signIn')
 def logOut(request):
