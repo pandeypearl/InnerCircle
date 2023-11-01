@@ -11,34 +11,36 @@
 {% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px; position: relative;">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px; position: relative;">
     <h4 class="text-end text-secondary">Your Chat History</h4>
    
     <div class="flex-grow-1">
-        <p>Chat history for <strong>@{{user.username}}</strong></p>
+        <h6 class="mb-4">Chat history for <strong>@{{user.username}}</strong></h6>
         {% if chats %}
         <ul class="list-unstyled messages-list">
             {% for chat in chats %}
                 {% if chat.user == request.user %}
-                <li class="message received">
+                <li class="message received alert-primary rounded shadow-sm p-3">
                     <div class="message-text">
                       <div class="message-sender d-felx justify-content-between">
-                        <b>AI Assistant</b>
+                        <strong><i class="bi bi-chat-dots-fill me-3"></i>AI Assistant</strong>
                       </div>
+                      <hr>
                       <div class="message-content">
-                        {{ chat.response }}
+                        {{ chat.response|linebreaks }}
                       </div>
                     </div>
                   </li>
     
-                  <li class="message sent alert-info">
+                  <li class="message sent alert-secondary rounded shadow-sm p-3">
                     <div class="message-text">
                       <div class="message-sender d-flex justify-content-between">
-                        <b>You</b>
-                        <small>{{chat.created_at|time:"H:iA"}} {{chat.created_at|date:"d F Y"}} </small>
+                        <strong><i class="bi bi-chat-dots me-3"></i>You</strong>
+                        <small><strong>{{chat.created_at|time:"H:iA"}} {{chat.created_at|date:"d F Y"}} </strong></small>
                       </div>
+                      <hr>
                       <div class="message-content">
-                        {{ chat.message }}
+                        {{ chat.message|linebreaks }}
                       </div>
                     </div>
                   </li>

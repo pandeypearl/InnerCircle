@@ -13,48 +13,49 @@
 
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px; position: relative;">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px; position: relative;">
     <h4 class="text-end text-secondary">AI Assistant</h4>
     
-    <div class="chat-container">
-      <div class="chat-intro">
-        <p>Hi <strong>{{ user.username }}</strong> ! I am your AI Assistant, you can ask me anything and I do my best to help you out</p>
+    <div class="chat-container"> 
+      <div class="chat-intro border-bottom z-3 ps-3 pe-3">
+        <p class="alert-primary p-3 rounded mb-4">Hi <strong>{{ user.username }}</strong> ! I am your AI Assistant, you can ask me anything and I do my best to help.</p>
         <form class="message-form d-flex justify-content-center">
           {%csrf_token%}
-          <div class="input-group">
-            <input type="text" class="form-control message-input" placeholder="Type your message here...">
-            <div class="input-group-append">
-              <button type="submit" class="btn btn-dark btn-send">Send</button>
-            </div>
+          <div class="input-group mb-1">
+            <span class="input-group-text" id="addon-wrapping"><i class="bi bi-chat-dots"></i></span>
+            <input type="text" class="form-control message-input" placeholder="Type your message here..." aria-label="Recipient's username" aria-describedby="button-addon2">
+            <button class="btn btn-dark" type="submit" id="button-addon2">Send</button>
           </div>
         </form>
       </div>
       
 
-        <div class="flex-grow-1">
-          
+        <div class="flex-grow-1 mt-5 ps-3 pe-3">
             <ul class="list-unstyled messages-list">
               {% for chat in chats %}
                 {% if chat.user == request.user %}
-                <li class="message received">
+                <li class="message received alert-primary rounded shadow-sm p-3">
                   <div class="message-text">
                     <div class="message-sender d-felx justify-content-between">
-                      <b>AI Assistant</b>
+                      <strong><i class="bi bi-chat-dots-fill me-3"></i>AI Assistant</strong>
                     </div>
+                    <hr class="z-n1">
                     <div class="message-content">
-                      {{ chat.response }}
+                      {{ chat.response|linebreaks }}
                     </div>
                   </div>
                 </li>
 
-                <li class="message sent">
+                <li class="message sent alert-secondary rounded shadow-sm p-3">
                   <div class="message-text">
                     <div class="message-sender d-flex justify-content-between">
-                      <b>You</b>
-                      <small>{{chat.created_at|time:"H:iA"}} {{chat.created_at|date:"d F Y"}} </small>
+                      <strong><i class="bi bi-chat-dots me-3"></i> You</strong>
+                      <small><strong>{{chat.created_at|time:"H:iA"}} {{chat.created_at|date:"d F Y"}}</strong></small>
+                      
                     </div>
+                    <hr class="z-n1">
                     <div class="message-content">
-                      {{ chat.message }}
+                      {{ chat.message|linebreaks }}
                     </div>
                   </div>
                 </li>
