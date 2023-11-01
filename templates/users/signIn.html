@@ -6,7 +6,7 @@
 {% block auth_content %}
 
     
-    <div class="constainer d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
         <div class="card" style="width: 20rem;">
             <div class="card-header text-center bg-dark text-white">Sign In</div>
             <div class="card-body">
@@ -31,6 +31,7 @@
                     <div class="form-floating mb-3">
                         <input type="password" class="form-control" name="password" placeholder="Password">
                         <label for="password">Password</label>
+                        <p><small><a class="text-dark" href="{% url 'password_reset' %}">Forgot your password?</a></small></p>
                         {% if form.password.errors %}
                             {% for error in form.password.errors %}
                             <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
@@ -38,8 +39,11 @@
                         {% endif %}
                     </div>
 
+                   
+
                     <button type="submit" class="btn btn-dark">Sign In</button>
                     <p class="mt-3"><small>Don't have an account? Sign up <a class="text-dark" href="{% url 'signUp' %}"><strong>here</strong></a></small>.</p>
+                    
                 </form>
             </div>
         </div>

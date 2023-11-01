@@ -32,7 +32,7 @@
 <body class="bg-light">
     <div class="wrapper">
         {% with request.resolver_match.url_name as url_name %}
-            {% if url_name == 'signUp' or url_name == 'signIn' %}
+            {% if url_name == 'signUp' or url_name == 'signIn' or url_name == 'password_reset' or url_name == 'password_reset_done' or url_name == 'password_reset_confirm' or url_name == 'password_reset_complete' %}
             <div class="auth-wrapper">
                 <nav class="auth-nav d-flex justify-content-between align-items-center p-4">
                     <a class="text-dark" href="{% url 'home' %}"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>

@@ -158,8 +158,9 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #Email backend
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend' #Email backend
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587 #Use SMTP port
 EMAIL_USE_TLS = True #Use TLS for secure email communication
