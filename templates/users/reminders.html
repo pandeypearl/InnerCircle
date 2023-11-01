@@ -10,15 +10,15 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
-    <h4 class="text-secondary text-end">Your Reminders</h4>
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
+    <h4 class="text-secondary text-end">Reminders</h4>
 
     <ul class="list-group list-group-flush">
         {% for member in members %}
             <li class="list-group-item list-group-item-light">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}"><i class="bi bi-balloon-fill"></i> {{ member.name }}'s Birthday</h5>
-                    <small class="{% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}"><i class="bi bi-hourglass-split"></i> {{ member.days_until_birthday }} days</small>
+                    <h5 class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-dark{% endif %}"><i class="bi bi-balloon-fill"></i> {{ member.name }}'s Birthday</h5>
+                    <small class="{% if member.days_until_birthday < 30 %}text-danger{% else %}text-dark{% endif %}"><i class="bi bi-hourglass-split"></i> {{ member.days_until_birthday }} days</small>
                 </div>
                 <p class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{{ member.date_of_birth }}</p>
             </li>
