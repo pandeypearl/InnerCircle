@@ -8,7 +8,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'broadcast_detail' broadcast.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-dark text-end"> Delete {{ broadcast.title }}</h4>
@@ -16,7 +16,7 @@
 
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_broadcast' pk=broadcast.pk %}" method="POST">
         {% csrf_token %}
-        <div class="bg-light p-5">
+        <div class="bg-light p-5 rounded-1 shadow">
             <h2><Strong>{{broadcast.title}}</Strong></h2>
             <hr>
             <div class="d-flex" style="gap: 50px;">
@@ -29,19 +29,17 @@
     
         {% if broadcast.receivers %}
         <div class="list-group list-group-flush">
-            <div class="d-flex align-items-center" style="gap:20px">
-                <h5 class="text-secondary">Recipients</h5>
-                <span class="badge bg-secondary rounded-pill"><i class="bi bi-person-fill"></i>&nbsp;{{ broadcast.receivers.count }}</span>
-            </div>
-           
-                {% for receiver in broadcast.receivers.all %}
-                <a  href="{% url 'member_detail' receiver.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-warning">
-                    <div class="d-flex" style="gap: 20px">
-                        <img class="member-img-sm" src="{{ receiver.image.url }}" alt="Member Image">
-                        <span>{{ receiver.name }}</span>
-                    </div>
-                </a>
-                {% endfor %}
+            
+            <p class="p-3 mb-1 bg-warning text-white rounded-1"><strong>Recipients&nbsp;&nbsp;{{ broadcast.receivers.count }}</strong></p>
+
+            {% for receiver in broadcast.receivers.all %}
+            <a  href="{% url 'member_detail' receiver.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-warning">
+                <div class="d-flex" style="gap: 20px">
+                    <img class="member-img-sm" src="{{ receiver.image.url }}" alt="Member Image">
+                    <span>{{ receiver.name }}</span>
+                </div>
+            </a>
+            {% endfor %}
            
         </div>
         {% else %}
@@ -49,7 +47,7 @@
         {% endif %}
 
         <div>
-            <p>Are you sure sure you would like to delete this event? Once you delete it, it can not be undone.</p>
+            <p>Are you sure sure you would like to delete this broadcast? Once you delete it, it cannot be undone.</p>
 
             <button class="btn btn-dark" type="submit"><i class="bi bi-trash3-fill"></i> Delete Broadcast</button>
         </div>

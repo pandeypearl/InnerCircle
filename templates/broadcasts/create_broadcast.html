@@ -8,7 +8,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <div class="d-flex justify-content-end">
         <h4 class="text-secondary">New Broadcast</h4>
     </div>
@@ -49,8 +49,8 @@
             {% endfor %}
         {% endif %}
         
-        <button class="btn btn-dark" type="submit" name="save_draft">Save</button>
-        <button class="btn btn-dark" type="submit">Save and Send</button>
+        <button class="btn btn-dark" type="submit" name="save_draft">Save Broadcast</button>
+        <button class="btn btn-outline-dark" type="submit">Save and Send</button>
     </form>
 </section>
 {% endblock %}

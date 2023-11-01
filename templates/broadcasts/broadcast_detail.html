@@ -8,7 +8,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'broadcast_list' %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end"> {{broadcast.title}}</h4>
@@ -31,7 +31,7 @@
         {% endif %}
     </div>
 
-    <div class="bg-light p-5">
+    <div class="bg-light p-5 rounded-1 shadow">
         <h2><Strong>{{broadcast.title}}</Strong></h2>
         <p class="text-secondary">
             {% if broadcast.is_draft == True %}
@@ -51,10 +51,7 @@
 
     {% if broadcast.receivers %}
     <div class="list-group list-group-flush">
-        <div class="d-flex align-items-center" style="gap:20px">
-            <h5 class="text-secondary">Recipients</h5>
-            <span class="badge bg-secondary rounded-pill"><i class="bi bi-person-fill"></i> &nbsp;{{ broadcast.receivers.count }}</span>
-        </div>
+            <p class="p-3 mb-1 bg-warning text-white rounded-1"><strong>Recipients&nbsp;&nbsp;{{ broadcast.receivers.count }}</strong></p>
        
             {% for receiver in broadcast.receivers.all %}
             <a  href="{% url 'read_broadcast' broadcast.id receiver.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-warning">
