@@ -9,7 +9,7 @@
 <!-- {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %} -->
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <h4 class="text-secondary text-end">Search Results </h4>
     <h5>Results for <strong>{{ query }}</strong></h5>
 
@@ -17,47 +17,79 @@
         <div class="list-group list-group-flush">
         {% for result in results %}
             {% if result.model_name == "Member" %}
-            <a href="{% url 'member_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-primary d-flex justify-content-between align-items-center">
+            <a href="{% url 'member_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-info d-flex justify-content-between align-items-center text-dark">
                 <div class="d-flex align-items-center" style="gap: 20px">
+                    <span class="badge bg-dark rounded-pill"><i class="bi bi-person-fill"></i></span>
                     <img class="member-img-sm" src="{{ result.image.url }}" alt="Member Image">
                     <strong>{{ result.name }}</strong>
-                    <small class="badge bg-primary rounded-pill">{{ result.date_of_birth|date:"d F Y"}}</small>
-                    <small class="badge bg-primary rounded-pill">{{ result.relationship }}</small>
                 </div>
-                <span class="badge bg-dark rounded-pill"><i class="bi bi-person-fill"></i></span>
-            </a>
-            {% elif result.model_name == "Group" %}
-            <a href="{% url 'group_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-primary d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center" style="gap: 20px">
-                    <strong>{{ result.group_name }}</strong>
-                    <span class="badge bg-primary rounded-pill">group members : {{ result.members.count }}</span>
-                </div>
-                <span class="badge bg-dark rounded-pill"><i class="bi bi-people-fill"></i></span>
-            </a>
-            {% elif result.model_name == "Broadcast" %}
-            <a href="{% url 'broadcast_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center">
-                <div class="d-flex align-items-center" style="gap: 20px">
-                    <strong>{{ result.title }}</strong>
-                    <span class="badge bg-warning rounded-pill">recipients : {{ result.receivers.count }}</span>
+                <div>
+                    <small class="badge bg-info rounded-pill">{{ result.date_of_birth|date:"d F Y"}}</small>
+                    <small class="badge bg-info rounded-pill">{{ result.relationship }}</small>
                 </div>
                 
-                <span class="badge bg-dark rounded-pill"><i class="bi bi-megaphone-fill"></i></span>
+            </a>
+            {% elif result.model_name == "Group" %}
+            <a href="{% url 'group_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-info d-flex justify-content-between align-items-center text-dark">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <span class="badge bg-dark rounded-pill"><i class="bi bi-people-fill"></i></span>
+                    <strong>{{ result.group_name }}</strong>
+                </div>
+                <div>
+                    <span class="badge bg-info rounded-pill">group members&nbsp;( {{ result.members.count }} )</span>
+                </div>
+            </a>
+            {% elif result.model_name == "Broadcast" %}
+            <a href="{% url 'broadcast_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center text-dark">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <span class="badge bg-dark rounded-pill"><i class="bi bi-megaphone-fill"></i></span>
+                    <strong>{{ result.title }}</strong>
+                </div>
+                <div>
+                    <span class="badge bg-warning rounded-pill">recipients&nbsp;( {{ result.receivers.count }} )</span>
+                    <span class="badge bg-warning rounded-pill">
+                        {% if result.is_draft == True %}
+                        draft
+                        {% elif result.is_draft == False %}
+                        sent
+                        {% endif %}
+                    </span>
+                </div>
             </a>
             {% elif result.model_name == "Event" %}
-            <a href="{% url 'event_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-success d-flex justify-content-between align-items-center">
+            <a href="{% url 'event_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-success d-flex justify-content-between align-items-center text-dark">
                 <div class="d-flex align-items-center" style="gap: 20px">
+                    <span class="badge bg-dark rounded-pill"><i class="bi bi-calendar-event-fill"></i></span>
                     <strong>{{ result.event_name }}</strong>
-                    <span class="badge bg-success rounded-pill"> guests : {{ result.guests.count }}</span>
                 </div>
-                <span class="badge bg-dark rounded-pill"><i class="bi bi-calendar-event-fill"></i></span>
+                <div>
+                    <span class="badge bg-success rounded-pill">guests&nbsp;( {{ result.guests.count }} )</span>
+                    <span class="badge bg-success rounded-pill">
+                        {% if result.is_draft == True %}
+                        draft
+                        {% elif result.is_draft == False %}
+                        sent
+                        {% endif %}
+                    </span>
+                </div>
+                
             </a>
             {% elif result.model_name == "List" %}
-            <a href="{% url 'list_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-danger d-flex justify-content-between align-items-center">
+            <a href="{% url 'list_detail' result.pk %}" class="list-group-item list-group-item-action list-group-item-danger d-flex justify-content-between align-items-center text-dark">
                 <div class="d-flex align-items-center" style="gap: 20px">
+                    <span class="badge bg-dark rounded-pill"><i class="bi bi-ui-checks"></i></span>
                     <strong>{{ result.list_name }}</strong>
-                    <span class="badge bg-danger rounded-pill">recipients : {{ result.receivers.count }}</span>
                 </div>
-                <span class="badge bg-dark rounded-pill"><i class="bi bi-ui-checks"></i></span>
+                <div>
+                    <span class="badge bg-danger rounded-pill">recipients&nbsp;( {{ result.receivers.count }} )</span>
+                    <span class="badge bg-danger rounded-pill">
+                        {% if result.is_draft == True %}
+                        draft
+                        {% elif result.is_draft == False %}
+                        sent
+                        {% endif %}
+                    </span>
+                </div>
             </a>
             {% endif %}
         {% endfor %}

@@ -11,11 +11,11 @@
 
 
 {% block content %}
-<section>
+<section class="m-5 p-5">
     <h4 class="text-secondary text-end">Settings</h4>
 
     
-    <form class="mt-5" action="{% url 'settings' profile_id=instance.id %}" method="POST">
+    <form class="mt-5 p-5 bg-light rounded-1" action="{% url 'settings' profile_id=instance.id %}" method="POST">
         {% csrf_token %}
         <h5 class="text-secondary mb-5">Account Settings</h5>
 
@@ -75,9 +75,8 @@
         </div>
     </form>
 
-    <hr>
     
-    <form class="mt-5" action="{% url 'settings' profile_id=instance.id %}" method="POST" enctype="multipart/form-data">
+    <form class="mt-5 p-5 bg-light rounded-1" action="{% url 'settings' profile_id=instance.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <h5 class="text-secondary mb-5">Profile Settings</h5>
 
