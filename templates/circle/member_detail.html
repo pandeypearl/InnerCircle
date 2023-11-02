@@ -8,10 +8,10 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'member_list' %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
-        <h4 class="text-dark text-end"> {{member.name}} Info</h4>
+        <h4 class="text-secondary text-end"> {{member.name}} Info</h4>
     </div>
 
     <div class="d-flex justify-content-end" style="gap: 20px;">
@@ -19,41 +19,109 @@
         <a class="btn btn-dark" href="{% url 'delete_member' member.id %}"><i class="bi bi-trash3-fill"></i> Delete</a>
     </div>
 
-    <div class="d-flex align-items-center" style="gap: 10px">
-        <img src="{{ member.image.url }}" alt="Member Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
-        <div>
-            <span style="font-size:1.5em;">{{ member.name }}</span><br>
-            <span><small>{{ member.relationship }}</small></span>
-        </div>
-    </div>
-    
-    <div>
-        <p><i class="bi bi-balloon-fill"></i> {{ member.date_of_birth|date:"d F Y" }}</p>
-        <p><i class="bi bi-envelope-at-fill"></i> {{ member.email }}</p>
-    </div>
-
-    <div class="d-flex justify-content-end">
-        <a href="" class="btn btn-dark">Add Note</a>
-    </div>
-    
-
-    <div>
-        <span class="badge bg-dark rounded-pill">{{ member.member_notes.count }} Notes</span>
-
+    <div class="bg-light p-5 shadow">
         
-
-        {% if member.member_notes.all %}
-        <div class="accordion accordion-flush">
-            {% for note in member.member_notes.all %}
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ note.id }}" aria-expanded="false" aria-controls="flush-collapseOne">
-                    {{ note.subject }}&nbsp;&nbsp;<small>{{ note.created|date:"d M Y"}}  {{note.created|time:"h:i A"}}</small>
-                  </button>
-                </h2>
-                <div id="flush-collapse{{ note.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">{{ note.content }}</div>
+        <div class="d-flex align-items-center" >
+            <div class="d-flex justify-content-between align-items-start" style="width: 100%">
+                <div class="d-flex align-items-center" style="gap: 10px">
+                    <img src="{{ member.image.url }}" alt="Member Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
+                    <div>
+                        <span style="font-size:1.5em;">{{ member.name }}</span><br>
+                        <span><small>{{ member.relationship }}</small></span>
+                    </div>
                 </div>
+
+                <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#newNoteModal" data-bs-whatever="@mdo"><i class="bi bi-plus-circle-fill me-2"></i>Add Note</button>
+                <!-- New Note Modal -->
+                <div class="modal fade" id="newNoteModal" tabindex="-1" aria-labelledby="newNoteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">New Note ({{ member.name }})</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form" action="{% url 'member_detail' member.id %}" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="form-floating mb-3">
+                                    {{ form.subject }}
+                                    <label for="subject">Subject</label>
+                    
+                                    {% if form.subject.errors %}
+                                        {% for error in form.subject.errors %}
+                                        <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                                    
+                                <div class="form-floating mb-3">
+                                    {{ form.content }}
+                                    <label for="content">Note</label>
+                    
+                                    {% if form.content.errors %}
+                                        {% for error in form.content.errors %}
+                                        <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                                        {% endfor %}
+                                    {% endif %}
+                                </div>
+                    
+                                {% if form.not_field_errors %}
+                                    {% for error in form.not_field_errors %}
+                                        <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                                    {% endfor %}
+                                {% endif %}
+                                <button type="submit" class="btn btn-dark">Add Note</button>
+                            </form>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div>
+            <p><small><i class="bi bi-balloon-fill text-secondary me-2"></i>{{ member.date_of_birth|date:"d F Y" }}</small></p>
+            <p><small><i class="bi bi-envelope-at-fill text-secondary me-2"></i> {{ member.email }}</small></p>
+
+            <span class="badge bg-info rounded-pill">{{ member.member_notes.count }} Notes</span>
+        </div>
+    
+        
+    </div>
+
+    
+
+    <div>
+        {% if member.member_notes.all %}
+        <div class="d-flex flex-wrap justify-content-between mt-5">
+            {% for note in member.member_notes.all %}
+            <div class="card p-3 bg-light shadow mb-5" style="width: 18rem;">
+                <i class="bi bi-sticky-fill text-info"></i>
+                <h5>{{ note.subject }}</h5>
+                <small class="text-secondary">{{ note.created|date:"d M Y"}}  {{note.created|time:"h:i A"}}</small>
+                <hr>
+                <p class="text-truncate">{{ note.content }}</p>
+
+                <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#memberNoteModal{{note.id}}" data-bs-whatever="@mdo">Read Note</button>
+                <!-- Member Note Modal -->
+                <div class="modal" id="memberNoteModal{{ note.id }}" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                            <div>
+                                <small class="text-secondary">{{ note.created|date:"d M Y"}}  {{note.created|time:"h:i A"}}</small>
+                                <h5 class="modal-title">{{ note.subject }}</h5>
+                            </div>
+                          
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>{{ note.content }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               </div>
             {% endfor %} 
         </div>
@@ -61,45 +129,7 @@
         <p>You current have no notes about {{ member.name }}</p>
         {% endif %}
     </div>
-
-    <hr class="text-primary">
     
-    <div id="addNote">
-        
-        <form class="form" action="{% url 'member_detail' member.id %}" method="POST" enctype="multipart/form-data">
-            <h4 class="text-secondary text-end"> New Note</h4>
-            {% csrf_token %}
-            <div class="form-floating mb-3">
-                {{ form.subject }}
-                <label for="subject">Subject</label>
-
-                {% if form.subject.errors %}
-                    {% for error in form.subject.errors %}
-                    <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
-                    {% endfor %}
-                {% endif %}
-            </div>
-                
-            <div class="form-floating mb-3">
-                {{ form.content }}
-                <label for="content">Note</label>
-
-                {% if form.content.errors %}
-                    {% for error in form.content.errors %}
-                    <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
-                    {% endfor %}
-                {% endif %}
-            </div>
-
-            {% if form.not_field_errors %}
-                {% for error in form.not_field_errors %}
-                    <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
-                {% endfor %}
-            {% endif %}
-            <button type="submit" class="btn btn-dark">Add Note</button>
-        </form>
-
-    </div>
 </section>
 
 {% endblock %}

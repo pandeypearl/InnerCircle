@@ -9,36 +9,34 @@
 
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'group_detail' group.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
-        <h4 class="text-dark text-end"> Delete {{ group.group_name }}</h4>
+        <h4 class="text-secondary text-end"> Delete {{ group.group_name }}</h4>
     </div>
 
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_group' pk=group.pk %}" method="POST">
         {% csrf_token %}
         <div>
-            <div>
+            <div class="bg-light p-5 shadow">
                 <h4>{{ group.group_name }}</h4>
                 <p>{{ group.description }}</p>
+                <span class="badge bg-info rounded-pill"><i class="bi bi-person-fill me-2"></i>{{ group.members.count }}</span>
             </div>
         
             {% if group.members %}
-            <div class="list-group list-group-flush">
-                <div class="d-flex align-items-center" style="gap:20px">
-                    <h5 class="text-secondary">Group Members</h5>
-                    <span class="badge bg-secondary rounded-pill"><i class="bi bi-person-fill"></i>&nbsp;{{ group.members.count }}</span>
-                </div>
+            <div class="list-group list-group-flush mt-5">
+                <p class="p-3 mb-1 border-pill bg-info text-white rounded-1">Group Members {{ users_groups.count }}</p>
                
-                    {% for member in group.members.all %}
-                    <a  href="{% url 'member_detail' member.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-primary">
-                        <div class="d-flex" style="gap: 20px">
-                            <img class="member-img-sm" src="{{ member.image.url }}" alt="Member Image">
-                            <span>{{ member.name }}</span>
-                        </div>
-                    </a>
-                    {% endfor %}
-               
+                {% for member in group.members.all %}
+                <a  href="{% url 'member_detail' member.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-info text-dark">
+                    <div class="d-flex align-items-center" style="gap: 20px">
+                        <i class="bi bi-person-fill me-2"></i>
+                        <img class="member-img-sm" src="{{ member.image.url }}" alt="Member Image">
+                        <span>{{ member.name }}</span>
+                    </div>
+                </a>
+                {% endfor %}
             </div>
             {% else %}
                 <p class="text-secodary text-center">You have no circle members. <a href="{% url 'create_member' %}">Add people to your circle</a></p>

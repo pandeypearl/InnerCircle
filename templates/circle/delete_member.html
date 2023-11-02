@@ -9,14 +9,14 @@
 
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'member_detail' member.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-dark text-end"> Delete {{ member.name }}</h4>
     </div>
-    <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_member' pk=member.pk %}" method="POST">
+    <form class="form d-flex flex-column " style="gap: 50px;" action="{% url 'delete_member' pk=member.pk %}" method="POST">
       {% csrf_token %}
-        <div>
+        <div class="bg-light p-5 shadow">
           <div class="d-flex align-items-center" style="gap: 10px">
             <img src="{{ member.image.url }}" alt="Member Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
             <div>
@@ -26,37 +26,19 @@
         </div>
         
         <div>
-            <p><i class="bi bi-balloon-fill"></i> {{ member.date_of_birth|date:"d F Y" }}</p>
-            <p><i class="bi bi-envelope-at-fill"></i> {{ member.email }}</p>
+            <p><i class="bi bi-balloon-fill text-secondary"></i> {{ member.date_of_birth|date:"d F Y" }}</p>
+            <p><i class="bi bi-envelope-at-fill text-secondary"></i> {{ member.email }}</p>
         </div>
         
 
-        <p>You have written {{ member.member_notes.count }} notes about this person. </p>
+        <span class="badge bg-info rounded-pill">{{ member.member_notes.count }} notes</span>
 
-        {% if member.member_notes.all %}
-        <div class="accordion accordion-flush">
-            {% for note in member.member_notes.all %}
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse{{ note.id }}" aria-expanded="false" aria-controls="flush-collapseOne">
-                    {{ note.subject }}&nbsp;&nbsp;<small>{{ note.created|date:"d M Y"}}  {{note.created|time:"h:i A"}}</small>
-                  </button>
-                </h2>
-                <div id="flush-collapse{{ note.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                  <div class="accordion-body">{{ note.content }}</div>
-                </div>
-              </div>
-            {% endfor %} 
-        </div>
-        {% else %}
-        <p>You current have no notes about {{ member.name }}</p>
-        {% endif %}
         </div>
         
         <div>
           <p>Are you sure sure you would like to remove this person from your inner circle? Once you delete them, it can not be undone.</p>
 
-          <button class="btn btn-dark" type="submit"><i class="bi bi-trash3-fill"></i> Delete</button>
+          <button class="btn btn-dark" type="submit"><i class="bi bi-trash3-fill"></i> Delete Member</button>
         </div>
     </form>
 </section>

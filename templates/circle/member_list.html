@@ -9,22 +9,23 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
 <h4 class="text-end text-secondary">Circle Members</h4>
 
 <div class="d-flex justify-content-end">
-    <a href="{% url 'create_member' %}" class="btn btn-dark text-end"><i class="bi bi-person-add"></i> Add New Member</a>
+    <a href="{% url 'create_member' %}" class="btn btn-dark text-end"><i class="bi bi-plus-circle-fill"></i> Add New Member</a>
 </div>
 
 
 <div>
-    <h6 class="text-secondary"><i class="bi bi-people-fill"></i> {{ members.count }}</h6>
-
+    <p class="p-3 mb-1 border-pill bg-info text-white rounded-1">Circle Members&nbsp;&nbsp;{{ members.count }}</p>
     {% if members %}
+    
     <div class="list-group list-group-flush">
         {% for member in members %}
-        <a  href="{% url 'member_detail' member.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-info">
-            <div class="d-flex" style="gap: 20px">
+        <a  href="{% url 'member_detail' member.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-info text-dark">
+            <div class="d-flex align-items-center" style="gap: 20px">
+                <i class="bi bi-person-fill text-info"></i>
                 <img class="member-img-sm" src="{{ member.image.url }}" alt="Member Image">
                 <span>{{ member.name }}</span>
             </div>
