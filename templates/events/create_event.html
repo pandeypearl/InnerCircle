@@ -8,8 +8,9 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
-    <div class="d-flex justify-content-end">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
+    <div class="d-flex justify-content-between">
+        <a href="{% url 'event_list' %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end">New Event</h4>
     </div>
 
@@ -107,7 +108,7 @@
         {% endif %}
     
         <button class="btn btn-dark" type="submit" name="save_draft">Save Event</button>
-        <button class="btn btn-dark" type="submit">Save and Send Event</button>
+        <button class="btn btn-dark" type="submit">Save and Send</button>
     </form>
 </section>
 {% endblock %}

@@ -8,15 +8,22 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'event_detail' event.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
-        <h4 class="text-dark text-end"> Delete {{ event.event_name }}</h4>
+        <h4 class="text-secondary text-end"> Delete {{ event.event_name }}</h4>
     </div>
 
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_event' pk=event.pk %}" method="POST">
         {% csrf_token %}
-        <div class="bg-light p-5">
+        <div class="bg-light p-5 shadow">
+            <p class="text-secondary">
+                {% if event.is_draft == True %}
+                <i class="bi bi-calendar-event-fill text-secondary"></i> Draft
+                {% elif event.is_draft == False %}
+                <i class="bi bi-calendar-event-fill text-success"></i> Sent to Recipients
+                {% endif %} 
+            </p>
             <p><strong>{{event.event_name}}</strong><br>{{event.description}}</p>
             <p><strong>Date</strong><br>{{event.date|date:"d F Y"}}</p>
             <p><strong>Time</strong><br>{{event.date|time:"h:i A"}}</p>
@@ -24,24 +31,21 @@
             <p><strong>Dress Code</strong><br>{{event.dress_code}}</p>
             <p><strong>Notes</strong><br>{{event.note}}</p>
             <p><strong>Event Status</strong> <br>{{event.event_status}}</p>
+            <span class="badge rounded-pill bg-success">Guests {{ event.guests.count }}</span>
         </div>
     
         {% if event.guests %}
         <div class="list-group list-group-flush">
-            <div class="d-flex align-items-center" style="gap:20px">
-                <h5 class="text-secondary">Guests</h5>
-                <span class="badge bg-secondary rounded-pill"><i class="bi bi-person-fill"></i>&nbsp;{{ event.guests.count }}</span>
-            </div>
+            <p class="p-3 mb-1 bg-success text-white rounded-1 mb-1">Guests {{ event.guests.count }}</p>
            
-                {% for guest in event.guests.all %}
-                <a  href="{% url 'member_detail' guest.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-success">
-                    <div class="d-flex" style="gap: 20px">
-                        <img class="member-img-sm" src="{{ guest.image.url }}" alt="Member Image">
-                        <span>{{ guest.name }}</span>
-                    </div>
-                </a>
-                {% endfor %}
-           
+            {% for guest in event.guests.all %}
+            <a  href="{% url 'member_detail' guest.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-success">
+                <div class="d-flex" style="gap: 20px">
+                    <img class="member-img-sm" src="{{ guest.image.url }}" alt="Member Image">
+                    <span>{{ guest.name }}</span>
+                </div>
+            </a>
+            {% endfor %}
         </div>
         {% else %}
             <p class="text-secodary text-center">There are no guests invited to this event. <a href="{% url 'update_event' %}">Invite Guests</a></p>
