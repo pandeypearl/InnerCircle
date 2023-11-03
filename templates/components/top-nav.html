@@ -10,13 +10,13 @@
     <a class="navbar-brand text-dark" href="{% url 'home' %}">InnerCircle</a>
     <ul class="nav nav-underline">
         <li class="nav-item ">
-            <a href="" class="nav-link text-dark active">about</a>
+            <a href="{% url 'home' %}" class="nav-link text-dark active">about</a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
             <a href="" class="nav-link text-dark">contact</a>
-        </li>
+        </li> -->
         <li class="nav-item">
-            <a href="" class="nav-link text-dark">help</a>
+            <a href="{% url 'help' %}" class="nav-link text-dark">help</a>
         </li>
     </ul>
 
