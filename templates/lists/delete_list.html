@@ -8,27 +8,34 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'list_detail' list.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-dark text-end"> Delete {{ list.list_name }}</h4>
     </div>
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_list' pk=list.pk %}" method="POST">
         {% csrf_token %}
-        <div class="bg-light p-5">
+        <div class="bg-light p-5 shadow">
+            <p class="text-secondary">
+                {% if list.is_draft == True %}
+                <i class="bi bi-ui-checks me-2 text-secondary"></i>Draft
+                {% elif list.is_draft == False %}
+                <i class="bi bi-ui-checks me-2 text-danger"></i>Sent to Recipients
+                {% endif %}
+            </p>
             <h4>{{ list.list_name }}</h4>
-            <div class="d-flex" style="gap: 50px;">
+            <div class="d-flex mt-3 text-secondary" style="gap: 50px;">
                 <p><small><strong>Created</strong><br>{{ list.created }}</small></p>
                 <p><small><strong>Updated</strong><br>{{ list.updated }}</small></p>
             </div>
-            <p>{{ list.description }}</p>
+            <p class="mt-2">{{ list.description }}</p>
     
             {% if list_items %}
             <div class="list-group list-group-flush">
                 {% for list_item in list_items %}
                 <li class="list-group-item d-flex align-items-center justify-content-between">
                     <div class="d-flex align-items-center" style="gap: 20px;">
-                        <span>{% bs_icon 'dash-square' %}</span>
+                        <span></span>
                         <img class="object-fit-cover border rounded" src="{{list_item.item_image.url}}" alt="{{list_item.item_name}}" style="width: 30px; height: 30px">
                         <span>{{list_item.item_name}}</span>
                         <a href="{{ list_item.item_url }}" target="_blank" class="btn btn-dark btn-sm">view item</a>
@@ -37,20 +44,19 @@
                 {% endfor %}
             </div>
             {% else %}
-            <p><strong>There are no items in this list.</strong></p>
+            <p class="list-group-item-secondary p-2 mt-5"><strong>There are no items in this list.</strong></p>
             {% endif %}
+
+            <span class="badge bg-danger rounded-pill mt-5">Recipients {{ list.receivers.count }}</span>
         </div>
 
         {% if list.receivers %}
-        <div class="list-group list-group-flush">
-            <div class="d-flex align-items-center" style="gap:20px">
-                <h5 class="text-secondary">List Recipients</h5>
-                <span class="badge bg-secondary rounded-pill"><i class="bi bi-person-fill"></i>&nbsp;{{ list.receivers.count }}</span>
-            </div>
-        
+        <div class="list-group list-group-flush mt-5">
+            <p class="p-3 mb-1 bg-danger text-white rounded-1 mb-1">Recipients&nbsp;&nbsp;{{ list.receivers.count }}</p>
             {% for receiver in list.receivers.all %}
-            <a  href="{% url 'member_detail' receiver.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-danger">
-                <div class="d-flex" style="gap: 20px">
+            <a  href="{% url 'member_detail' receiver.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-danger text-dark">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <i class="bi bi-person-fill"></i>
                     <img class="member-img-sm" src="{{ receiver.image.url }}" alt="Member Image">
                     <span>{{ receiver.name }}</span>
                 </div>
