@@ -36,14 +36,14 @@
    
         {% if url_name == 'broadcast_list' %}
         <div>
-            <p class="p-3 mb-1 border-pill bg-warning text-white rounded-1"><strong>Broadcasts&nbsp;&nbsp;{{ broadcasts.count }}</strong></p>
+            <p class="p-3 mb-1 border-pill bg-warning text-white rounded-1">All Broadcasts&nbsp;&nbsp;{{ broadcasts.count }}</p>
             
             {% if broadcasts %}
             <div class="list-group list-group-flush">
                 {% for broadcast in broadcasts %}
                 <a  href="{% url 'broadcast_detail' broadcast.id %}" 
-                class="list-group-item list-group-action d-flex justify-content-between align-items-center {% if broadcast.is_draft == True %}list-group-item-light{% else %}list-group-item-warning{% endif %}">
-                    <span class="d-block"><i class="bi bi-megaphone-fill me-4"></i><strong>{{ broadcast.title }}</strong></span>
+                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {% if broadcast.is_draft == True %}list-group-item-light{% else %}list-group-item-warning{% endif %} text-dark">
+                    <span class="d-block"><i class="bi bi-megaphone-fill me-4"></i>{{ broadcast.title }}</span>
                     <span class="d-block"><small>{{ broadcast.created|date:"d F Y" }} {{ broadcast.created|time:"h:i A" }}</small></span>
                 </a>
                 {% endfor %}
@@ -54,13 +54,13 @@
         </div>
         {% elif url_name == 'sent_broadcast_list' %}
         <div>
-            <p class="p-3 mb-1 bg-warning text-white rounded-1"><strong>Sent Broadcasts&nbsp;&nbsp;{{ sent_broadcasts.count }}</strong></p>
+            <p class="p-3 mb-1 bg-warning text-white rounded-1">Sent Broadcasts&nbsp;&nbsp;{{ sent_broadcasts.count }}</p>
 
             {% if sent_broadcasts %}
             <div class="list-group list-group-flush">
                 {% for sent_broadcast in sent_broadcasts %}
-                <a  href="{% url 'broadcast_detail' sent_broadcast.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-warning">
-                    <span class="d-block"><i class="bi bi-megaphone-fill me-4"></i><strong>{{ sent_broadcast.title }}</strong></span>
+                <a  href="{% url 'broadcast_detail' sent_broadcast.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-warning text-dark">
+                    <span class="d-block"><i class="bi bi-megaphone-fill me-4"></i>{{ sent_broadcast.title }}</span>
                     <span class="d-block"><small>{{ sent_broadcast.created|date:"d F Y" }} {{ sent_broadcast.created|time:"h:i A" }}</small></span>
                 </a>
                 {% endfor %}
@@ -70,14 +70,14 @@
             {% endif %}
         </div>
         {% elif url_name == 'draft_broadcast_list' %}
-        <div class="mt-5">
-            <p class="p-3 mb-1 border-pill bg-warning text-white rounded-1"><strong>Drafts</strong> &nbsp;&nbsp;{{ draft_broadcasts.count }}</p>
+        <div>
+            <p class="p-3 mb-1 border-pill bg-warning text-white rounded-1">Draft Broadcasts&nbsp;&nbsp;{{ draft_broadcasts.count }}</p>
     
             {% if draft_broadcasts %}
             <div class="list-group list-group-flush">
                 {% for draft_broadcast in draft_broadcasts %}
-                <a  href="{% url 'broadcast_detail' draft_broadcast.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-light">
-                        <span class="d-block"><i class="bi bi-megaphone-fill me-4"></i><strong>{{ draft_broadcast.title }}</strong></span>
+                <a  href="{% url 'broadcast_detail' draft_broadcast.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-light text-dark">
+                        <span class="d-block"><i class="bi bi-megaphone-fill me-4"></i>{{ draft_broadcast.title }}</span>
                         <span class="d-block"><small>{{ draft_broadcast.created|date:"d F Y" }} {{ draft_broadcast.created|time:"h:i A" }}</small></span>
                 </a>
                 {% endfor %}

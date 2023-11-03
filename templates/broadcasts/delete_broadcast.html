@@ -17,6 +17,13 @@
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_broadcast' pk=broadcast.pk %}" method="POST">
         {% csrf_token %}
         <div class="bg-light p-5 rounded-1 shadow">
+            <p class="text-secondary">
+                {% if broadcast.is_draft == True %}
+                <i class="bi bi-megaphone-fill me-2 text-secondary"></i>Draft
+                {% elif broadcast.is_draft == False %}
+                <i class="bi bi-megaphone-fill me-2 text-warning"></i>Sent to Recipients
+                {% endif %}
+            </p>
             <h2><Strong>{{broadcast.title}}</Strong></h2>
             <hr>
             <div class="d-flex" style="gap: 50px;">
@@ -25,16 +32,19 @@
             </div>
             <hr>
             <p>{{broadcast.content|linebreaks}}</p>
+
+            <span class="badge bg-warning rounded-pill mt-3">Recipients {{ broadcast.receivers.count }}</span>
         </div>
     
         {% if broadcast.receivers %}
         <div class="list-group list-group-flush">
             
-            <p class="p-3 mb-1 bg-warning text-white rounded-1"><strong>Recipients&nbsp;&nbsp;{{ broadcast.receivers.count }}</strong></p>
+            <p class="p-3 mb-1 bg-warning text-white rounded-1">Recipients&nbsp;&nbsp;{{ broadcast.receivers.count }}</p>
 
             {% for receiver in broadcast.receivers.all %}
-            <a  href="{% url 'member_detail' receiver.id %}" class="list-group-item list-group-action d-flex justify-content-between align-items-center list-group-item-warning">
-                <div class="d-flex" style="gap: 20px">
+            <a  href="{% url 'member_detail' receiver.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-warning text-dark">
+                <div class="d-flex align-items-center" style="gap: 20px">
+                    <i class="bi bi-person-fill"></i>
                     <img class="member-img-sm" src="{{ receiver.image.url }}" alt="Member Image">
                     <span>{{ receiver.name }}</span>
                 </div>
