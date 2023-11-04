@@ -1,0 +1,22 @@
+<!-- User Account Deactivation Page serving deactivate account view. -->
+{% extends 'base.html' %}
+
+{% block title %}InnerCircle | Deactivate Account{% endblock %}
+
+{% block auth_content %}
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;" >
+    <div class="card">
+        <div class="card-header text-center bg-dark text-white">Deactivate Account</div>
+        <div class="card-body">
+            <h4>You are about to deactivate your account.</h4>
+            <p>Are you sure you want to deactivate your account?</p>
+
+            <form method="post">
+                {% csrf_token %}
+                
+                <button class="btn btn-dark" type="submit">Deactivate Account</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

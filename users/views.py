@@ -231,11 +231,34 @@ def custom_password_change(request):
 
 @login_required(login_url='signIn')
 def custom_password_change_done(request):
+    '''Authenticated user password change done view.'''
     template = 'registration/password_change_done.html'
     context = {}
     return render(request, template, context)
 
 
+@login_required(login_url='signIn')
+def deactivate_account(request):
+    '''Deactivate active user account view. '''
+    template = 'users/deactivate_account.html'
+    if request.method == 'POST':
+        request.user.is_activate = False
+        request.user.save()
+
+        from django.contrib.auth import logout
+        logout(request)
+        return redirect('account_deactivated')
+    
+    context = {}
+
+    return render(request, template, context)
+
+
+def account_deactivated(request):
+    ''' Active user account deactivated view. '''
+    template = 'users/account_deactivated.html'
+    context = {}
+    return redirect(request, template, context)
 
 
 @login_required(login_url='signIn')

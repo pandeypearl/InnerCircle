@@ -40,6 +40,9 @@ urlpatterns = [
     # Change Password
     path('password_change/', views.custom_password_change, name='password_change'),
     path('password_change/done/', views.custom_password_change_done, name='password_change_done'),
+    # Deactivate Account
+    path('deactivate_account/', views.deactivate_account, name='deactivate_account'),
+    path('account_deactivated/', views.account_deactivated, name='account_deactivated'),
     # API
     path('api/user/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('api/profile/<int:pk>/', ProfileDetailView.as_view(), name='profile-detail'),
