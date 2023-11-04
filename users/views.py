@@ -16,7 +16,7 @@ from events.models import Event, RSVPNotification
 from broadcasts.models import Broadcast
 from lists.models import List, CheckItemNotification
 
-from .forms import SignInForm, SignUpForm, ProfileEditForm, AccountEditForm
+from .forms import SignInForm, SignUpForm, ProfileEditForm, AccountEditForm, CustomPasswordChangeForm
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
@@ -205,6 +205,37 @@ def settings(request, profile_id):
     }
 
     return render(request, template, context)
+
+
+@login_required(login_url='signIn')
+def custom_password_change(request):
+    ''' Authenticated user password change view. '''
+    template = 'registration/password_change_form.html'
+
+    form = CustomPasswordChangeForm(request.user)
+
+    if request.method == 'POST':
+        form = CustomPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            form.save()
+            return('password_change_done')
+    else:
+        form = CustomPasswordChangeForm(request.user)
+
+    context = {
+        'form': form
+    }
+
+    return render(request, template, context)
+
+
+@login_required(login_url='signIn')
+def custom_password_change_done(request):
+    template = 'registration/password_change_done.html'
+    context = {}
+    return render(request, template, context)
+
+
 
 
 @login_required(login_url='signIn')

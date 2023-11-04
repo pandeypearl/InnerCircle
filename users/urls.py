@@ -38,8 +38,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('reset/done', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     # Change Password
-    path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
-    path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+    path('password_change/', views.custom_password_change, name='password_change'),
+    path('password_change/done/', views.custom_password_change_done, name='password_change_done'),
     # API
     path('api/user/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('api/profile/<int:pk>/', ProfileDetailView.as_view(), name='profile-detail'),

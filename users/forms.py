@@ -5,7 +5,7 @@
 from django import forms
 from django.forms import DateInput
 from .models import Profile
-from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.forms import UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.utils import timezone
 
@@ -132,3 +132,8 @@ class ProfileEditForm(forms.ModelForm):
         if commit:
             profile.save()
         return profile
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    ''' Authenticated user password change form. '''
+    pass
