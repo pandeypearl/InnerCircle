@@ -57,9 +57,18 @@ def event_detail(request, event_id):
     ''' Event object detail view for user. '''
     template = 'events/event_detail.html'
     event = Event.objects.get(pk=event_id)
+    rsvps = RSVP.objects.filter(event=event)
+
+    attending_count = rsvps.filter(response_status='Attending').count()
+    not_attending_count = rsvps.filter(response_status='Not Attending').count()
+    undecided_count = rsvps.filter(response_status='Undecided').count()
 
     context = {
         'event': event,
+        'rsvps': rsvps,
+        'attending_count': attending_count,
+        'not_attending_count': not_attending_count,
+        'undecided_count': undecided_count,
     }
     return render(request, template, context)
 

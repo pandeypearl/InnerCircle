@@ -114,9 +114,9 @@ class RSVPForm(forms.ModelForm):
             'dietary_preferences': forms.Textarea(attrs={'rows': 5, 'class': 'form-control', 'placeholder': 'Dietary Preferences'}),
         }
 
-    def clean_dietary_preferences(self):
-        ''' Field level validation ensuring dietary preferences is not empty. '''
-        dietary_preferences = self.cleaned_data.get('dietary_preferences')
-        if not dietary_preferences:
-            raise forms.ValidationError("Dietary Preferences cannot be empty.")
-        return dietary_preferences
+    # def clean_dietary_preferences(self):
+    #     ''' Field level validation ensuring dietary preferences is not empty. '''
+    #     dietary_preferences = self.cleaned_data.get('dietary_preferences')
+    #     if not dietary_preferences:
+    #         raise forms.ValidationError("Dietary Preferences cannot be empty.")
+    #     return dietary_preferences

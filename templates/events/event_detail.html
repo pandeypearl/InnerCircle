@@ -67,5 +67,72 @@
         <p class="text-secodary text-center">There are no guests invited to this event. <a href="{% url 'update_event' %}">Invite Guests</a></p>
     {% endif %}
 
+    <div>
+        <h4 class="text-secondary mt-5 mb-3">RSVP Info</h4>
+        {% if rsvps %}
+        <div>
+            <div class="bg-success p-3 rounded-1 text-light">
+                <div class="d-flex justify-content-between">
+                    <small class="d-block">Total Invited Guests</small>
+                    <small class="d-block">{{ event.guests.count }}</small>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <small class="d-block">Guests Attending</small>
+                    <small class="d-block">{{ attending_count }}</small>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <small class="d-block">Guests Not Attending</small>
+                    <small class="d-block">{{ not_attending_count }}</small>
+                </div>
+                
+                <div class="d-flex justify-content-between">
+                    <small class="d-block">Guests Undecided</small>
+                    <small class="d-block">{{ undecided_count }}</small>
+                </div>
+                
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for rsvp in rsvps %}
+                <li  class="list-group-item d-flex justify-content-between align-items-center {% if rsvp.response_status == 'Attending' %}list-group-item-success{% elif rsvp.response_status == 'Not Attending' %}list-group-item-secondary{%  elif rsvp.response_status == 'Undecided' %}list-group-item-light{% endif %} text-dark">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-person-fill me-3"></i>
+                        <img class="member-img-sm me-3" src="{{ rsvp.guest.image.url}} " alt="Guest Image">
+                        <span class="me-5">{{ rsvp.guest.name}}</span>
+                    </div>
+
+                    {% if rsvp.response_status == 'Attending' %}
+                    <button class="btn btn-sm btn-outline-dark" data-bs-toggle="modal" data-bs-target="#dietaryPreferenceModal{{rsvp.id}}">Dietary Preferences</button>
+                    <!-- Dietary Preferences Modal-->
+                    <div class="modal" id="dietaryPreferenceModal{{rsvp.id}}" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div>
+                                    <h5 class="modal-title">Dietary Preferences for <strong>{{ rsvp.guest.name }}</strong></h5>
+                                </div>
+                            
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>{{ rsvp.dietary_preferences }}</p>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <span class="badge rounded-pill {% if rsvp.response_status == 'Attending' %}bg-success{% elif rsvp.response_status == 'Not Attending' %}bg-secondary{% elif rsvp.response_status == 'Undecided' %}bg-light text-dark{% endif %}">{{ rsvp.response_status }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <p class="g-secondary p-3">No guests have RSVP'd yet.</p>
+        {% endif %}
+    </div>
+    
+
 </section>
 {% endblock %}
