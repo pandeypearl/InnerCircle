@@ -111,8 +111,9 @@
             <p><small><strong>Updated</strong><br>{{ list.updated }}</small></p>
         </div>
         <p class="mt-2">{{ list.description }}</p>
-
+        
         {% if list_items %}
+        <span class="badge bg-danger rounded-pill mt-5">Checked Items {{ checked_items_count }}</span>
         <ul class="list-group list-group-flush mt-5">
             {% for list_item in list_items %}
             <li class="list-group-item list-group-item-action list-group-item-secondary d-flex align-items-center justify-content-between">

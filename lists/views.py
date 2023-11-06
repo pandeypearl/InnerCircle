@@ -67,6 +67,7 @@ def list_detail(request, list_id):
     template = 'lists/list_detail.html'
     list = List.objects.get(pk=list_id)
     list_items = ListItem.objects.filter(list=list)
+    checked_items_count = list_items.filter(checked=True).count()
     form = ListItemForm(request.POST, request.FILES)
 
     if request.method == 'POST':
@@ -109,6 +110,7 @@ def list_detail(request, list_id):
     context = {
         'list': list,
         'list_items': list_items,
+        'checked_items_count': checked_items_count,
         'form': form,
         'delete_form': delete_form,
     }
