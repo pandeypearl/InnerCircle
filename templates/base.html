@@ -130,6 +130,11 @@
         {% endwith %}
     </div>
 
+<script>
+    function submitForm(itemId) {
+        document.getElementById('form_' + itemId).submit();
+    }
+</script>
 {% block scripts %}
 {% endblock %}
 </body>

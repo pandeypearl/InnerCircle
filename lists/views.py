@@ -13,6 +13,7 @@ from .forms import (
     ListItemForm,
     EditListForm, 
     DeleteItemForm,
+    IndividualCheckItemForm,
     CheckItemForm
 )
 from .utils import send_list_email, generate_list_check_url
@@ -229,24 +230,25 @@ def check_list_item(request, list_id, recipient_id):
     list_items = ListItem.objects.filter(list=list_obj)
 
     if request.method == 'POST':
-        forms = [CheckItemForm(request.POST, instance=item) for item in list_items]
-        if all(form.is_valid() for form in forms):
-            for form in forms:
-                form.save()
-                item = form.instance
-                if item.checked:
-                    CheckItem.objects.get_or_create(item=item, recipient=recipient)
-                else:
-                    CheckItem.objects.filter(item=item, recipient=recipient).delete()
+        form = IndividualCheckItemForm(request.POST)
+        if form.is_valid():
+            item_id = form.cleaned_data['item_id']
+            checked = form.cleaned_data['checked']
+            item = get_object_or_404(ListItem, id=item_id)
+            item.checked = checked
+            item.save()
+
+            if checked:
+                CheckItem.objects.get_or_create(item=item, recipient=recipient)
+            else:
+                CheckItem.objects.filter(item=item, recipient=recipient).delete()
+
             messages.success(request, 'List updated')
             return redirect('check_list', list_id, recipient_id)
-        else:
-            messages.warning(request, 'Something went wrong. Please try again')
-            return redirect('check_list', list_id=list_id, recipient_id=recipient_id)
 
-    forms = [CheckItemForm(instance=item) for item in list_items]
+    forms = [IndividualCheckItemForm(initial={'item_id': item.id, 'checked': item.checked}) for item in list_items]
     items_and_forms = zip(list_items, forms)
-        
+
     context = {
         'list_obj': list_obj,
         'recipient': recipient,

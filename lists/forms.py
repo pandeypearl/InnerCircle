@@ -117,6 +117,10 @@ class EditListForm(forms.ModelForm):
         
         return cleaned_data
 
+class IndividualCheckItemForm(forms.Form):
+    ''' Check individual list item form. '''
+    checked = forms.BooleanField(required=False, initial=False, widget=forms.CheckboxInput(attrs={'class': 'checkbox'}))
+    item_id = forms.IntegerField(widget=forms.HiddenInput())
 
 class CheckItemForm(forms.ModelForm):
     ''' Check list item form. '''
@@ -128,20 +132,3 @@ class CheckItemForm(forms.ModelForm):
             'checked': forms.CheckboxInput(attrs={'class': 'checkbox'})
         }
 
-# class CheckItemForm(forms.Form):
-
-#     def __init__(self, *args, recipient=None, **kwargs):
-#         super().__init__(*args, **kwargs)
-#         # Filtering the queryset to display only unchecked items for the contact
-#         self.fields['checked_items'].queryset = ListItem.objects.filter(list__receivers=recipient, checked=False)
-            
-#     checked_items = forms.ModelMultipleChoiceField(
-#         queryset=ListItem.objects.none(),
-#         widget=forms.CheckboxSelectMultiple,
-#         required=False,
-#     )
-
-#     item_ids = forms.MultipleChoiceField(
-#         widget=forms.MultipleHiddenInput,
-#         required=False,
-#     )
