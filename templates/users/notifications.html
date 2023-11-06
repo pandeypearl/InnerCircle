@@ -13,32 +13,32 @@
 <section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
     <h4 class="text-secondary text-end">Notifications</h4>
 
-    <ul class="list-group list-group-flush">
+    <div class="list-group list-group-flush">
         {% if notifications %}
             {% for notification in notifications %}
                 {% if notification.rsvp %}
-                <li class="list-group-item list-group-item-success text-dark">
+                <a href="{% url 'event_detail' notification.rsvp.event.id %}" class="list-group-item list-group-item-action list-group-item-success text-dark">
                     <span><i class="bi bi-calendar-event-fill"></i>&nbsp;</span>
                     <span>
                         <strong>{{ notification.rsvp.guest.name}}</strong>
                          RSVPed <strong>{{ notification.rsvp.response_status}}</strong> for event : <strong>{{ notification.event.event_name }}</strong>
                     </span>
-                </li>
+                </a>
                 {% elif notification.check_item %}
-                <li class="list-group-item list-group-item-danger text-dark">
+                <a href="{% url 'list_detail' notification.check_item.item.list.id %}" class="list-group-item list-group-item-action list-group-item-danger text-dark">
                     <span><i class="bi bi-ui-checks"></i>&nbsp;</span>
                     <span>
                         <strong>{{ notification.check_item.recipient.name }}</strong> 
                         checked <strong>{{ notification.check_item.item.item_name }}</strong> on the list 
                         <strong>{{ notification.check_item.item.list.list_name }}</strong>
                     </span>
-                </li>
+                </a>
                 {% endif %}
             {% endfor %}
         {% else %}
         <p class="text-center">You currently have no notifications</p>
         {% endif %}
-    </ul>
+            </div>
 
     
 </section>
