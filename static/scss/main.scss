@@ -70,9 +70,6 @@ html{
     }
 }
 
-section{
-
-}
 
 .container{
     width: 100%;
@@ -130,6 +127,14 @@ img{
     width: 100vw;
 }
 
+.top-nav{
+    .mobile-nav-btn{
+        width: 35px;
+        height: 35px;
+        display: none!important;
+    }
+}
+
 @media (min-width: 768px) and (max-width: 992px){ 
     .main-nav{
         width: 80px;
@@ -165,4 +170,25 @@ img{
             display: none;
         }
     }
+
+    .top-nav{
+        .info-links{
+            display: none;
+        }
+
+        .search-bar{
+            display: none;
+        }
+
+        .mobile-nav-btn{
+            display: flex!important;
+        }
+    }
+
+    section{
+        padding: 25px;
+    }   
+
+    
  }
+
