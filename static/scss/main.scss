@@ -101,6 +101,35 @@ section{
     }
 }
 
+// Nav Styles
+
+ul{
+    li{
+       img{
+        width: 100px;
+        height: auto;
+       } 
+    }
+}
+
+img{
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    height: auto;
+    border-radius: 50%;
+} 
+
+.page-nav{
+    border-bottom: 1px solid gainsboro;
+    border-top: 1px solid gainsboro;
+}
+
+.auth-nav{
+    position: fixed;
+    width: 100vw;
+}
+
 @media (min-width: 768px) and (max-width: 992px){ 
     .main-nav{
         width: 80px;
@@ -129,5 +158,11 @@ section{
 
     .page{
         margin-left: 0;
+    }
+
+    .page-nav{
+        .page-icon-desc{
+            display: none;
+        }
     }
  }
