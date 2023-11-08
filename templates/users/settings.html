@@ -11,13 +11,13 @@
 
 
 {% block content %}
-<section class="m-5 p-5">
+<section class="m-md-5 p-md-5">
     <h4 class="text-secondary text-end">Settings</h4>
 
-    <form class="mt-5 p-5 bg-light rounded-1" action="{% url 'settings' profile_id=instance.id %}" method="POST">
+    <form class="mt-md-5 p-md-5 bg-light rounded-1" action="{% url 'settings' profile_id=instance.id %}" method="POST">
         {% csrf_token %}
         <h5 class="text-secondary mb-5">Account Settings</h5>
-        <div class="d-flex justify-content-between mb-5">
+        <div class="d-flex justify-content-between mb-5 settings-div">
             <div>
                 <span>First Name</span>
                 {% if user.first_name %}
@@ -39,7 +39,7 @@
             </div>
         </div>  
 
-        <div class="d-flex justify-content-between mb-5">
+        <div class="d-flex justify-content-between mb-5 settings-div">
             <div>
                 <span>Last Name</span>
                 {% if user.last_name %}
@@ -74,14 +74,14 @@
     </form>
 
     
-    <form class="mt-5 p-5 bg-light rounded-1" action="{% url 'settings' profile_id=instance.id %}" method="POST" enctype="multipart/form-data">
+    <form class="mt-md-5 p-md-5 bg-light rounded-1" action="{% url 'settings' profile_id=instance.id %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <h5 class="text-secondary mb-5">Profile Settings</h5>
 
-        <div class="d-flex justify-content-between align-items-center mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-5 settings-div">
             <div>
                 <span>Profile Picture</span><br>
-                <img src="{{user.profile.profile_picture.url}}" alt="Profile Picture">
+                <img class="rounded-circle settings-profile-pic" src="{{user.profile.profile_picture.url}}" alt="Profile Picture" width="100" height="100">
             </div>
             
             <div>
@@ -97,7 +97,7 @@
             
         </div>
 
-        <div class="d-flex justify-content-between mb-5">
+        <div class="d-flex justify-content-between mb-5 settings-div">
             <div>
                 <span>Date of Birth</span>
                 {% if user.profile.date_of_birth %}

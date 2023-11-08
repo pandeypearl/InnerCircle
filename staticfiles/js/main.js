@@ -1,7 +1,7 @@
 function openNavbar() {
-    document.getElementById("navbar").style.display = "flex";
+    document.getElementById("mobileNavbar").style.display = "flex";
 }
 
 function closeNavbar() {
-    document.getElementById("navbar").style.display = "none";
+    document.getElementById("mobileNavbar").style.display = "none";
 }

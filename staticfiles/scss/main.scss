@@ -50,6 +50,10 @@ html{
     }
 }
 
+.navbar-toggler{
+    display: none!important;
+}
+
 .main-nav{
     height: 100%;
     width: 180px;
@@ -109,17 +113,19 @@ ul{
     }
 }
 
-img{
-    width: 70px;
-    height: 70px;
-    object-fit: cover;
-    height: auto;
-    border-radius: 50%;
-} 
+
 
 .page-nav{
     border-bottom: 1px solid gainsboro;
     border-top: 1px solid gainsboro;
+
+    img{
+        width: 70px;
+        height: 70px;
+        object-fit: cover;
+        height: auto;
+        border-radius: 50%;
+    } 
 }
 
 .auth-nav{
@@ -135,7 +141,6 @@ img{
         position: fixed;
         top: 10px;
         right: 20px;
-        z-index: 1;
     }
 
     .mobile-navbar{
@@ -150,8 +155,66 @@ img{
         align-items: center;
         justify-content: center;
         text-align: center;
+        z-index: 1;
+
+        .close-mobile-nav-btn{
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            z-index: 99!important;
+        }
     }
 }
+
+.landing-content{
+    .landing-intro{
+        width: 30vw;
+    }
+
+    .landing-img-one{
+        position: absolute; 
+        z-index: -1; 
+        top: 50px; 
+        right: 200px;
+    }
+
+    .landing-img-two{
+        position: absolute;
+        z-index: -1; 
+        bottom: -100px; 
+        left: 250px;
+    }
+
+    #features{
+        div{
+            h2{
+                gap: 50px;
+            }
+        }
+    }
+}
+
+
+.help-nav{
+    position: fixed;
+    top: 15vh;
+    right: 50px;
+}
+
+
+.btn:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.about-content{
+    width: 60vw;
+}
+
+// Settings Page
+
 
 @media (min-width: 768px) and (max-width: 992px){ 
     .main-nav{
@@ -169,14 +232,36 @@ img{
         }
     }
 
+    .navbar-toggler{
+        display: flex!important;
+    }
+
     .page{
         margin-left: 80px;
     }
+
+    .landing-content{
+        .landing-img-one{
+            top: 100px; 
+            right: 30px;
+        }
+    
+        .landing-img-two{
+            bottom: 80px; 
+            left: 0;
+        }
+
+    }
+
  }
 
  @media (max-width: 767.98px) {
     .main-nav{
         display: none!important;
+    }
+
+    .navbar-toggler{
+        display: flex!important;
     }
 
     .page{
@@ -203,19 +288,54 @@ img{
             
         }
 
-        .mobile-navbar{
-            .close-mobile-nav-btn{
-                position: absolute;
-                top: 10px;
-                right: 20px;
-            }
-        }
     }
 
     section{
         padding: 25px;
-    }   
+    } 
 
+    .landing-content{
+        overflow: hidden;
+        .landing-intro{
+            width: 80vw;
+        }
+
+        .landing-img-one{
+            top: -80px; 
+            right: 10px;
+        }
     
- }
+        .landing-img-two{
+            bottom: -50px; 
+            left: 0;
+        }
+
+        #features{
+            div{
+                h2{
+                    gap: 10px;
+                }
+            }
+        }
+    }
+
+    #features{
+        padding: 30px;
+    }
+
+    .help-sections{
+        .help-section{
+            padding: 30px
+        }
+
+        .help-nav{
+            top: 10vh;
+            right: 30px;
+        }        
+    }
+
+    .about-content{
+        width: 90vw;
+    }
+}
 

@@ -9,7 +9,7 @@
 <!-- {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %} -->
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
     <h4 class="text-secondary text-end">Search Results </h4>
     <h5>Results for <strong>{{ query }}</strong></h5>
 
@@ -23,7 +23,7 @@
                     <img class="member-img-sm" src="{{ result.image.url }}" alt="Member Image">
                     <strong>{{ result.name }}</strong>
                 </div>
-                <div>
+                <div class="search-extra-info">
                     <small class="badge bg-info rounded-pill">{{ result.date_of_birth|date:"d F Y"}}</small>
                     <small class="badge bg-info rounded-pill">{{ result.relationship }}</small>
                 </div>
@@ -35,7 +35,7 @@
                     <span class="badge bg-dark rounded-pill"><i class="bi bi-people-fill"></i></span>
                     <strong>{{ result.group_name }}</strong>
                 </div>
-                <div>
+                <div class="search-extra-info">
                     <span class="badge bg-info rounded-pill">group members&nbsp;( {{ result.members.count }} )</span>
                 </div>
             </a>
@@ -45,7 +45,7 @@
                     <span class="badge bg-dark rounded-pill"><i class="bi bi-megaphone-fill"></i></span>
                     <strong>{{ result.title }}</strong>
                 </div>
-                <div>
+                <div class="search-extra-info">
                     <span class="badge bg-warning rounded-pill">recipients&nbsp;( {{ result.receivers.count }} )</span>
                     <span class="badge bg-warning rounded-pill">
                         {% if result.is_draft == True %}
@@ -62,7 +62,7 @@
                     <span class="badge bg-dark rounded-pill"><i class="bi bi-calendar-event-fill"></i></span>
                     <strong>{{ result.event_name }}</strong>
                 </div>
-                <div>
+                <div class="search-extra-info">
                     <span class="badge bg-success rounded-pill">guests&nbsp;( {{ result.guests.count }} )</span>
                     <span class="badge bg-success rounded-pill">
                         {% if result.is_draft == True %}
@@ -80,7 +80,7 @@
                     <span class="badge bg-dark rounded-pill"><i class="bi bi-ui-checks"></i></span>
                     <strong>{{ result.list_name }}</strong>
                 </div>
-                <div>
+                <div class="search-extra-info">
                     <span class="badge bg-danger rounded-pill">recipients&nbsp;( {{ result.receivers.count }} )</span>
                     <span class="badge bg-danger rounded-pill">
                         {% if result.is_draft == True %}

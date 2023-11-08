@@ -43,6 +43,13 @@
                 </li>
             </ul>
             <hr>
+            <form action="{% url 'search_results' %}" method="GET">
+                <div class="input-group">
+                    <input type="text" name="q" class="form-control" placeholder="Search">
+                    <button class="btn btn-secondary" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+            </form>
+            <hr>
             {% with request.resolver_match.url_name as url_name %}
             <ul class="p-2 nav flex-column">
                 <li class="nav-item">

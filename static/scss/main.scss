@@ -50,7 +50,7 @@ html{
     }
 }
 
-.navbar-toggler{
+.info-nav-mobile-btn{
     display: none!important;
 }
 
@@ -168,6 +168,12 @@ ul{
     }
 }
 
+.search-bar form{
+    margin: 5px 0;
+    padding: 0;
+    width: auto;
+}
+
 .landing-content{
     .landing-intro{
         width: 30vw;
@@ -213,13 +219,14 @@ ul{
     width: 60vw;
 }
 
+
 @media (min-width: 768px) and (max-width: 992px){ 
     .main-nav{
         width: 80px;
 
         ul li {
             .icon-desc, .username{
-                display: none;
+                display: none!important;
             }
 
             img{
@@ -333,6 +340,14 @@ ul{
 
     .about-content{
         width: 90vw;
+    }
+
+    .settings-div{
+        flex-direction: column;
+    }
+
+    .search-extra-info{
+        display: none;
     }
 }
 
