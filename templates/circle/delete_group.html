@@ -9,7 +9,7 @@
 
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'group_detail' group.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end"> Delete {{ group.group_name }}</h4>
@@ -18,7 +18,7 @@
     <form class="form d-flex flex-column" style="gap: 50px;" action="{% url 'delete_group' pk=group.pk %}" method="POST">
         {% csrf_token %}
         <div>
-            <div class="bg-light p-5 shadow">
+            <div class="bg-light p-md-5 shadow group-info">
                 <h4>{{ group.group_name }}</h4>
                 <p>{{ group.description }}</p>
                 <span class="badge bg-info rounded-pill"><i class="bi bi-person-fill me-2"></i>{{ group.members.count }}</span>

@@ -8,7 +8,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'member_detail' instance.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-secondary text-end"> Edit {{ instance.name }} Info</h4>
@@ -58,7 +58,7 @@
             {% endif %}
         </div>
         <div class="mb-3 d-flex align-items-center">
-            <img src="{{instance.image.url}}" alt="">
+            <img class="rounded-circle object-fit-contain" src="{{instance.image.url}}" alt="Member Image" width="100" height="auto">
             <input type="file" class="form-control" name="{{form.image.name}}" value="{{instance.image}}">
 
             {% if form.image.errors %}

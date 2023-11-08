@@ -296,6 +296,7 @@ ul{
 
     section{
         padding: 25px;
+        margin-top: 30px;
     } 
 
     .landing-content{
@@ -346,8 +347,28 @@ ul{
         flex-direction: column;
     }
 
-    .search-extra-info{
+    .search-extra-info,
+    .member-extra-info,
+    .group-extra-info{
         display: none;
     }
+
+    .member-content{
+        padding: 10px;
+
+        .member-info{
+            flex-direction: column;
+    
+            .add-note-btn{
+                margin: 30px 0;
+            }
+        }
+    }
+
+    .group-info{
+        padding: 10px;
+    }
+
+    
 }
 

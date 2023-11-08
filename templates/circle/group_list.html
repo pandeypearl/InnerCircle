@@ -8,7 +8,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
     <h4 class="text-end text-secondary">Groups</h4>
 
     <div class="d-flex justify-content-end">
@@ -27,7 +27,7 @@
                     <i class="bi bi-people-fill"></i>
                     <span>{{ group.group_name }}</span>
                 </div>
-                <span class="badge bg-info rounded-pill"><i class="bi bi-person-fill me-2"></i>{{group.members.count}}</span>
+                <span class="badge bg-info rounded-pill group-extra-info"><i class="bi bi-person-fill me-2"></i>{{group.members.count}}</span>
             </a>
             {% endfor %}
         </div>

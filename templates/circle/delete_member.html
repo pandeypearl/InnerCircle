@@ -9,14 +9,14 @@
 
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
     <div class="d-flex justify-content-between align-items-center" >
         <a href="{% url 'member_detail' member.id %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
         <h4 class="text-dark text-end"> Delete {{ member.name }}</h4>
     </div>
     <form class="form d-flex flex-column " style="gap: 50px;" action="{% url 'delete_member' pk=member.pk %}" method="POST">
       {% csrf_token %}
-        <div class="bg-light p-5 shadow">
+        <div class="bg-light p-md-5 shadow member-content">
           <div class="d-flex align-items-center" style="gap: 10px">
             <img src="{{ member.image.url }}" alt="Member Image" style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%;">
             <div>
