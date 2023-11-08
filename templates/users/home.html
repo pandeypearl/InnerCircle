@@ -5,12 +5,12 @@
 {% block title %}InnerCircle{% endblock %}
 
 {% block info_content %}
-    <div class="info-centent">
+    <div class="info-content landing-content">
         <div class="d-flex flex-column justify-content-center align-items-center mt-5" style="min-height: 80vh;position: relative;padding: 100px 0;">
-            <div style="position: absolute; z-index: -1; top: 50px; right: 200px;">
+            <div class="landing-img-one">
                 <img class="opacity-25" src="{% static 'img/community.svg' %}" alt="Community" style="width: 400px;">
             </div>
-            <div style="width:30vw">
+            <div class="landing-intro">
                 <h1 class="text-dark text-center">Prioritize The People That Matter.</h1>
                 <p class="text-center">InnerCircle helps you manage your relationships with the people that make your life special</p>
                 <div class="d-flex justify-content-center">
@@ -22,92 +22,56 @@
                 </div>
                 
             </div>
-            <div style="position: absolute; z-index: -1; bottom: -100px; left: 250px;">
+            <div class="landing-img-two">
                 <img class="opacity-25" src="{% static 'img/group_hangout.svg' %}" alt="Group Hangout" style="width: 400px;"> 
             </div>
             
         </div>
 
-        <div class="bg-dark mt-5 p-5" id="features">
+        <div class="bg-dark mt-5 p-md-5" id="features">
             <h1 class="mt-5 text-light text-center">Features</h1>
 
-            <div class="m-5 pt-5 pb-5 text-info text-center">
+            <div class="m-md-5 pt-5 pb-5 text-info text-center">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
-                <h2 class="text-info text-center d-flex justify-content-center" style="gap: 50px;"><span class="badge rounded-pill bg-info text-dark">1</span> Manage Your Circle</h2>
+                <h2 class="text-info text-center d-flex justify-content-center align-items-center"><span class="badge rounded-pill bg-info text-dark">1</span> Manage Your Circle</h2>
                 <h5 class="text-center pt-4 text-white">All The Important People In Your Life All In One Place.</h5>
                 <img class="img-fluid rounded mx-auto d-block shadow mt-5 mb-5" src="{% static 'img/landing/circle_page.png' %}" alt="Circle Page">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
             </div>
 
-            <div class="m-5 pt-5 pb-5 text-warning text-center">
+            <div class="m-md-5 pt-5 pb-5 text-warning text-center">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
-                <h2 class="text-warning text-center d-flex justify-content-center" style="gap: 50px;"><span class="badge rounded-pill bg-warning text-dark">2</span> Send Private Broadcasts</h2>
+                <h2 class="text-warning text-center d-flex justify-content-center"><span class="badge rounded-pill bg-warning text-dark">2</span> Send Private Broadcasts</h2>
                 <h5 class="text-center pt-4 text-white">Keep The People You Love Up To Date With Your Life.</h5>
                 <img class="img-fluid rounded mx-auto d-block shadow mt-5 mb-5" src="{% static 'img/landing/broadcast_page.png' %}" alt="Broadcast Page">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
             </div>
 
-            <div class="m-5 pt-5 pb-5 text-success text-center">
+            <div class="m-md-5 pt-5 pb-5 text-success text-center">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
-                <h2 class="text-success text-center d-flex justify-content-center" style="gap: 50px;"><span class="badge rounded-pill bg-success text-dark">3</span> Create Events</h2>
+                <h2 class="text-success text-center d-flex justify-content-center"><span class="badge rounded-pill bg-success text-dark">3</span> Create Events</h2>
                 <h5 class="text-center pt-4 text-white">Create Events And Invite The People You Love.</h5>
                 <img class="img-fluid rounded mx-auto d-block shadow mt-5 mb-5" src="{% static 'img/landing/event_page.png' %}" alt="Event Page">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
             </div>
 
-            <div class="m-5 pt-5 pb-5 text-danger text-center">
+            <div class="m-md-5 pt-5 pb-5 text-danger text-center">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
-                <h2 class="text-danger text-center d-flex justify-content-center" style="gap: 50px;"><span class="badge rounded-pill bg-danger text-dark">4</span> Create Lists</h2>
+                <h2 class="text-danger text-center d-flex justify-content-center"><span class="badge rounded-pill bg-danger text-dark">4</span> Create Lists</h2>
                 <h5 class="text-center pt-4 text-white">Create Lists and Let Your People Check Items.</h5>
                 <img class="img-fluid rounded mx-auto d-block shadow mt-5 mb-5" src="{% static 'img/landing/list_page.png' %}" alt="List Page">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
             </div>
 
-            <div class="m-5 pt-5 pb-5 text-primary text-center">
+            <div class="m-md-5 pt-5 pb-5 text-primary text-center">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
-                <h2 class="text-primary text-center d-flex justify-content-center" style="gap: 50px;"><span class="badge rounded-pill bg-primary text-dark">5</span> Personal Assistant</h2>
+                <h2 class="text-primary text-center d-flex justify-content-center"><span class="badge rounded-pill bg-primary text-dark">5</span> Personal Assistant</h2>
                 <h5 class="text-center pt-4 text-white">Your own Personal Assistant Powered by AI</h5>
                 <img class="img-fluid rounded mx-auto d-block shadow mt-5 mb-5" src="{% static 'img/landing/ai_chat_page.png' %}" alt="AI Chat Page">
                 <p class="mt-5 mb-5">&bull;&nbsp;&bull;&nbsp;&bull;</p>
             </div>
 
         </div>
-
-        <!-- <div class="d-flex flex-row justify-content-center align-items-center mt-5" style="min-height: 80vh;">
-            <div>
-                <h2>Your Circle</h2>
-                
-            </div>
-
-            <div>
-                <p>sdfjksdhf</p>
-            </div>
-        </div>
-
-        <div class="d-flex flex-row justify-content-center align-items-center mt-5" style="min-height: 80vh;">
-            <div>
-                <h2>Broadcast The things That Matter To The People That Matter The Most.</h2>
-            </div>
-        </div>
-
-        <div class="d-flex flex-row justify-content-center align-items-center mt-5" style="min-height: 80vh;">
-            <div>
-                <h2>Create Events With Your People In Mind.</h2>
-            </div>
-        </div>
-
-
-        <div class="d-flex flex-row justify-content-center align-items-center mt-5" style="min-height: 80vh;">
-            <div>
-                <h2>Help Your Loved Ones With Lists About What Matters To You.</h2>
-            </div>
-        </div>
-
-        <div class="d-flex flex-row justify-content-center align-items-center mt-5" style="min-height: 80vh;">
-            <div>
-                <h2>Our AI Assistant Is Here To Help You Be Your Best Self For The Best People.</h2>
-            </div>
-        </div>-->
 
     </div> 
     
