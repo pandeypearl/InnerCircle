@@ -22,7 +22,83 @@
 
     {% include 'components/search-bar.html' %}
 
-    <a href="javascript:void(0);" class="shadow rounded-circle mobile-nav-btn d-flex justify-content-center align-items-center bg-dark text-white" onclick="openNav()">
+    <a href="#" class="shadow rounded-circle d-flex justify-content-center align-items-center bg-dark text-white open-mobile-nav-btn" onclick="openNavbar()">
         <i class="bi bi-three-dots-vertical"></i>
     </a>
+    <!-- Mobile Nav -->
+    <div id="mobileNavbar" class="mobile-navbar bg-dark">
+        
+        <a href="#" class="d-flex justify-content-center align-items-center close-mobile-nav-btn text-dark bg-light shadow rounded-circle" onclick="closeNavbar()"><i class="bi bi-x-lg"></i></a>
+        <!-- Add your navbar content here -->
+        <div class="text-start">
+            <ul class="p2 nav flex-column">
+                <li class="nav-item text-center">
+                    <a class="nav-link text-light fs-1" href="{% url 'home' %}">InnerCircle</a>
+                </li>
+                <li class="nav-item text-center">
+                    <a class="nav-link text-light" href="{% url 'about' %}">About</a>
+                </li>
+                <li class="nav-item text-center">
+                    <a class="nav-link text-light" href="{% url 'help' %}">Help</a>
+                </li>
+            </ul>
+            <hr>
+            {% with request.resolver_match.url_name as url_name %}
+            <ul class="p-2 nav flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' or url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">   
+                        <i class="bi bi-person-circle me-2"></i><span class="icon-desc">Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'dashboard' %}" 
+                    class="nav-link {% if url_name == 'dashboard' or url_name == 'reminders' or url_name == 'notifications' %}text-secondary{% else %}text-white{% endif %}">
+                        <i class="bi bi-grid-1x2-fill me-2"></i><span class="icon-desc">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'assistant' %}" class="nav-link {% if url_name == 'assistant' or url_name == 'chat_history' %}text-secondary{% else %}text-primary{% endif %}">
+                        <i class="bi bi-chat-dots-fill me-2"></i><span class="icon-desc">Assistant</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <ul class="p-2 mt-3 nav flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'member_list' %}" 
+                    class="nav-link {% if url_name == 'member_list' or url_name == 'member_detail' or url_name == 'create_member' or url_name == 'edit_member' or url_name == 'delete_member' or url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_group' or url_name == 'delete_group' %}
+                    text-secondary{% else %}text-info{% endif %}">
+                        <i class="bi bi-person-fill me-2"></i><span class="icon-desc">Circle</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'broadcast_list' %}" class="nav-link {% if url_name == 'broadcast_list' or url_name == 'sent_broadcast_list' or url_name == 'draft_broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}text-secondary{% else %}text-warning{% endif %}">
+                        <i class="bi bi-megaphone-fill me-2"></i><span class="icon-desc">Broadcasts</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'sent_event_list' or url_name == 'draft_event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}text-secondary{% else %}text-success{% endif %}">
+                        <i class="bi bi-calendar-event-fill me-2"></i><span class="icon-desc">Events</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'sent_lists' or url_name == 'draft_lists' or url_name == 'list_detail' or url_name == 'create_list' or urla_name == 'edit_list' or url_name == 'delete_list' %}text-secondary{% else %}text-danger{% endif %}">
+                        <i class="bi bi-ui-checks me-2"></i><span class="icon-desc">Lists</span>
+                    </a>
+                </li>
+
+            
+            </ul>
+            <hr>
+
+            <ul class="p-2 mt-3 nav flex-column">
+                <li class="nav-item">
+                    <a href="{% url 'logOut' %}" class="nav-link text-white">
+                        <i class="bi bi-box-arrow-left me-2"></i><span class="icon-desc">Log out</span>
+                    </a>
+                </li>
+            </ul>
+            {% endwith %}
+        </div>
+    </div>
 </div>

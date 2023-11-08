@@ -128,10 +128,37 @@ img{
 }
 
 .top-nav{
-    .mobile-nav-btn{
+    .open-mobile-nav-btn{
         width: 35px;
         height: 35px;
         display: none!important;
+        position: fixed;
+        top: 10px;
+        right: 20px;
+    }
+
+    .mobile-navbar{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 1;
+
+        .close-mobile-nav-btn{
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            z-index: 99!important;
+        }
     }
 }
 
@@ -180,9 +207,11 @@ img{
             display: none;
         }
 
-        .mobile-nav-btn{
+        .open-mobile-nav-btn{
             display: flex!important;
+            
         }
+
     }
 
     section{
