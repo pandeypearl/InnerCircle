@@ -31,7 +31,7 @@
             <li class="nav-item">
                 <a href="{% url 'group_list' %}" 
                 class="nav-link {% if url_name == 'group_list' or url_name == 'group_detail' or url_name == 'create_group' or url_name == 'edit_group' or url_name == 'delete_group' %}text-secondary text-opacity-75{% else %} text-dark{% endif %}"><i class="bi bi-people-fill me-2"></i><small class="page-icon-desc">Groups</small></a>
-            </li>   
+            </li>
         </ul>
     {% elif url_name == 'broadcast_list' or url_name == 'sent_broadcast_list' or url_name == 'draft_broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}
         <ul class="nav">

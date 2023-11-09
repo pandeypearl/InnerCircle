@@ -156,7 +156,7 @@ ul{
         align-items: center;
         justify-content: center;
         text-align: center;
-        z-index: 1;
+        z-index: 99;
 
         .close-mobile-nav-btn{
             width: 35px;
@@ -166,6 +166,17 @@ ul{
             right: 20px;
             z-index: 99!important;
         }
+    }
+}
+
+.add-content-btns{
+    top: 150px;
+    right: 100px;
+    gap: 20px;
+    z-index: 3;
+
+    span{
+        padding: 2px;
     }
 }
 
@@ -281,7 +292,7 @@ ul{
 
     .page-nav{
         .page-icon-desc{
-            display: none;
+            // display: none;
         }
     }
 
@@ -303,7 +314,7 @@ ul{
 
     section{
         padding: 25px;
-        margin-top: 30px;
+        margin-top: 100px;
     } 
 
     .landing-content{
@@ -407,6 +418,10 @@ ul{
         .add-item-btn{
             margin: 30px 0;
         }
+    }
+
+    .add-content-btns{
+        right: 30px;
     }
     
 }
