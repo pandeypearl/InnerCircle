@@ -36,37 +36,37 @@
     {% elif url_name == 'broadcast_list' or url_name == 'sent_broadcast_list' or url_name == 'draft_broadcast_list' or url_name == 'broadcast_detail' or url_name == 'create_broadcast' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}
         <ul class="nav">
             <li class="nav-item">
-                <a href="{% url 'broadcast_list' %}" class="nav-link {% if url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-megaphone-fill me-2"></i><small class="page-icon-desc">All Broadcasts</small></a>
+                <a href="{% url 'broadcast_list' %}" class="nav-link {% if url_name == 'broadcast_list' or url_name == 'broadcast_detail' or url_name == 'edit_broadcast' or url_name == 'delete_broadcast' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-megaphone-fill me-2"></i><small class="page-icon-desc">All</small></a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'sent_broadcast_list' %}" class="nav-link {% if url_name == 'sent_broadcast_list' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-check-fill me-2"></i><small class="page-icon-desc">Sent Broadcasts</small></a>
+                <a href="{% url 'sent_broadcast_list' %}" class="nav-link {% if url_name == 'sent_broadcast_list' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-check-fill me-2"></i><small class="page-icon-desc">Sent</small></a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'draft_broadcast_list' %}" class="nav-link {% if url_name == 'draft_broadcast_list' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-exclamation-fill me-2"></i><small class="page-icon-desc">Broadcast Drafts</small></a>
+                <a href="{% url 'draft_broadcast_list' %}" class="nav-link {% if url_name == 'draft_broadcast_list' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-exclamation-fill me-2"></i><small class="page-icon-desc">Drafts</small></a>
             </li>
         </ul>
     {% elif url_name == 'event_list' or url_name == 'sent_event_list' or url_name == 'draft_event_list' or url_name == 'event_detail' or url_name == 'create_event' or url_name == 'update_event' or url_name == 'delete_event' %}
         <ul class="nav">
             <li class="nav-item">
-                <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'event_detail' or url_name == 'update_event' or url_name == 'delete_event' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-calendar-week-fill me-2"></i><small class="page-icon-desc">All Events</small></a>
+                <a href="{% url 'event_list' %}" class="nav-link {% if url_name == 'event_list' or url_name == 'event_detail' or url_name == 'update_event' or url_name == 'delete_event' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-calendar-week-fill me-2"></i><small class="page-icon-desc">All</small></a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'sent_event_list' %}" class="nav-link {% if url_name == 'sent_event_list' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-check-fill me-2"></i><small class="page-icon-desc">Sent Events</small></a>
+                <a href="{% url 'sent_event_list' %}" class="nav-link {% if url_name == 'sent_event_list' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-check-fill me-2"></i><small class="page-icon-desc">Sent</small></a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'draft_event_list' %}" class="nav-link {% if url_name == 'draft_event_list' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-exclamation-fill me-2"></i><small class="page-icon-desc">Event Drafts</small></a>
+                <a href="{% url 'draft_event_list' %}" class="nav-link {% if url_name == 'draft_event_list' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-exclamation-fill me-2"></i><small class="page-icon-desc">Drafts</small></a>
             </li>
         </ul>
     {% elif url_name == 'lists' or url_name == 'sent_lists' or url_name == 'draft_lists' or url_name == 'list_detail' or url_name == 'create_list' or url_name == 'edit_list' or url_name == 'delete_list' %}
         <ul class="nav">
             <li class="nav-item">
-                <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'edit_list' or url_name == 'delete_lits' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-ui-checks me-2"></i><small class="page-icon-desc">All Lists</small></a>
+                <a href="{% url 'lists' %}" class="nav-link {% if url_name == 'lists' or url_name == 'list_detail' or url_name == 'edit_list' or url_name == 'delete_lits' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-ui-checks me-2"></i><small class="page-icon-desc">All</small></a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'sent_lists' %}" class="nav-link {% if url_name == 'sent_lists' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-check-fill me-2"></i><small class="page-icon-desc">Sent Lists</small></a>
+                <a href="{% url 'sent_lists' %}" class="nav-link {% if url_name == 'sent_lists' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-check-fill me-2"></i><small class="page-icon-desc">Sent</small></a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'draft_lists' %}" class="nav-link {% if url_name == 'draft_lists' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-exclamation-fill me-2"></i><small class="page-icon-desc">List Drafts</small></a>
+                <a href="{% url 'draft_lists' %}" class="nav-link {% if url_name == 'draft_lists' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-envelope-exclamation-fill me-2"></i><small class="page-icon-desc">Drafts</small></a>
             </li>
         </ul>
     {% elif url_name == 'search_results' %}
