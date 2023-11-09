@@ -220,7 +220,8 @@ ul{
 }
 
 .member-broadcast-view,
-.member-event-view{
+.member-event-view,
+.member-list-view{
     width: 80vw;
 }
 
@@ -356,7 +357,8 @@ ul{
     .member-extra-info,
     .group-extra-info,
     .broadcast-extra-info,
-    .event-extra-info{
+    .event-extra-info,
+    .list-extra-info{
         display: none;
     }
 
@@ -395,6 +397,14 @@ ul{
         flex-direction: column;
         div{
             width: 100%!important;
+        }
+    }
+
+    .list-info{
+        flex-direction: column;
+
+        .add-item-btn{
+            margin: 30px 0;
         }
     }
     

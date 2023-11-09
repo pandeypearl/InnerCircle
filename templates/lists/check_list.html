@@ -8,7 +8,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block member_content %}
-<div style="width: 80vw;">
+<div class="member-list-view">
     <p class="text-secondary mb-5"><i class="bi bi-person-fill"></i> {{ recipient.name }}</p>
     <div class="d-flex justify-content-between text-secondary">
         <small><strong>List By</strong><br>{{ list_obj.user.first_name }} {{ list_obj.user.last_name }}</small>
@@ -23,18 +23,17 @@
     <code class="mb-3"><i class="bi bi-info-circle-fill me-2"></i>click the corresponding checkbox and button to check off a list item</code>
     <ul class="list-group list-group-flush mt-3">
         {% for item, form in items_and_forms %}
-        <li class="list-group-item list-group-item-secondary text-dark ps-5 pe-5">
+        <li class="list-group-item list-group-item-secondary text-dark ps-md-5 pe-md-5">
             <form class="p-0 m-0 d-flex justify-content-between align-items-center" action="{% url 'check_list' list_id=list_obj.id recipient_id=recipient.id %}" method="POST">
                 {% csrf_token %}
                 <div>
-                    
-                    <img class="object-fit-cover border rounded me-5" src="{{ item.item_image.url }}" alt="{{ item.item_name }}" style="width: 30px; height: 30px">
+                    <img class="object-fit-cover border rounded me-md-5" src="{{ item.item_image.url }}" alt="{{ item.item_name }}" style="width: 30px; height: 30px">
                     <a href="{{ item.item_url }}" target="_blank" class="text-dark" style="text-decoration: none;">{{ item.item_name }} <i class="bi bi-link-45deg"></i></a>
                 </div>
                 
                 <div>
                     <input type="hidden" name="item_id" value="{{ item.id }}">
-                    <span class="me-5">{{ form.checked }}</span>
+                    <span class="me-md-5">{{ form.checked }}</span>
                     <button class="btn btn-dark btn-sm" type="submit">Update Item</button>
                 </div>
             </form>
