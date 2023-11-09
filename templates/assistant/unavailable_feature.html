@@ -1,0 +1,18 @@
+<!-- Unavailable Feature Page serving the unavailable_feature view -->
+{% extends 'base.html' %}
+{% load cache_bust %}
+{% load static %}
+
+{% block title %}InnerCircle | AI Assistant{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">
+<link rel="stylesheet" href="{% static 'scss/assistant.scss' %}?{% cache_bust %}">
+{% endblock %}
+
+
+{% block content %}
+<section class="d-flex flex-column justify-content-center align-items-center m-md-5 p-md-5" style="gap: 50px;">
+    <h1 class="text-dark"><i class="bi bi-exclamation-circle-fill me-2 text-primary"></i>Sorry, this feature is currently unavailable for this account.</h1>
+</section>
+{% endblock %}

@@ -7,4 +7,5 @@ from . import views
 urlpatterns = [
     path('assistant', views.assistant, name='assistant'),
     path('chat_history', views.chat_history, name='chat_history'),
+    path('unavailable_feature', views.unavailable_feature, name='unavailable_feature'),
 ]

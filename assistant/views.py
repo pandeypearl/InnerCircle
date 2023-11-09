@@ -2,7 +2,7 @@
     Script responsible for handling HTTP requests, processing data,
     and returning a HTTP response for the assistant application.
 '''
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 import openai
@@ -32,6 +32,9 @@ def ask_openai(message):
 login_required(login_url='signIn')
 def assistant(request):
     ''' User chat view. '''
+    if not request.user.is_superuser:
+        return redirect('unavailable_feature')
+    
     template = 'assistant/assistant.html'
     today = timezone.now().date()
     chats = Chat.objects.filter(user=request.user, created_at__date=today).order_by('-created_at')
@@ -52,6 +55,9 @@ def assistant(request):
 login_required(login_url='signIn')
 def chat_history(request):
     ''' User chat history view. '''
+    if not request.user.is_superuser:
+        return redirect('unavailable_feature')
+    
     template = 'assistant/chat_history.html'
 
     chats = Chat.objects.filter(user=request.user).order_by('-created_at')
@@ -60,4 +66,12 @@ def chat_history(request):
         'chats': chats,
     }
 
+    return render(request, template, context)
+
+
+login_required(login_url='signIn')
+def unavailable_feature(request):
+    ''' Unavailable feature view. '''
+    template = 'assistant/unavailable_feature.html'
+    context = {}
     return render(request, template, context)
