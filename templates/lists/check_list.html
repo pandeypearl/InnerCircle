@@ -9,6 +9,11 @@
 
 {% block member_content %}
 <div class="member-list-view">
+    <div class="mb-5">
+        <a class="navbar-brand text-dark" href="{% url 'home' %}"><strong>InnerCircle</strong></a>
+        <small class="d-block text-secondary">Prioritize The People That Matter</small>
+    </div>
+    
     <p class="text-secondary mb-5"><i class="bi bi-person-fill"></i> {{ recipient.name }}</p>
     <div class="d-flex justify-content-between text-secondary">
         <small><strong>List By</strong><br>{{ list_obj.user.first_name }} {{ list_obj.user.last_name }}</small>

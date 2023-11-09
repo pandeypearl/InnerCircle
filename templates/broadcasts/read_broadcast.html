@@ -9,6 +9,11 @@
 
 {% block member_content %}
 <div class="member-broadcast-view">
+    <div class="mb-5">
+        <a class="navbar-brand text-dark" href="{% url 'home' %}"><strong>InnerCircle</strong></a>
+        <small class="d-block text-secondary">Prioritize The People That Matter</small>
+    </div>
+    
     <p><i class="bi bi-person-fill"></i>{{ member.name }}</p>
     <h4 class="text-white text-center bg-dark mb-5">{{ broadcast.title }}</h4>
     <div class="d-flex detail-dates" style="gap: 50px;">
