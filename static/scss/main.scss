@@ -219,7 +219,8 @@ ul{
     width: 60vw;
 }
 
-.member-broadcast-view{
+.member-broadcast-view,
+.member-event-view{
     width: 80vw;
 }
 
@@ -354,7 +355,8 @@ ul{
     .search-extra-info,
     .member-extra-info,
     .group-extra-info,
-    .broadcast-extra-info{
+    .broadcast-extra-info,
+    .event-extra-info{
         display: none;
     }
 
@@ -389,6 +391,12 @@ ul{
         gap: 10px!important;
     }
 
+    .member-event-info{
+        flex-direction: column;
+        div{
+            width: 100%!important;
+        }
+    }
     
 }
 

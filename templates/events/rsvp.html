@@ -8,12 +8,12 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block member_content %}
-<div style="width: 80vw;">
+<div class="member-event-view">
     <h4 class="text-white text-center bg-dark mb-5">Invitation for {{ member.name }}</h4>
     <h3>You're invited to <strong>{{ event.event_name }}</strong></h3>
     <hr>
 
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around member-event-info">
         <div style="width: 30%;">
             <p><strong>Host</strong><br>{{ event.user.first_name }} {{ event.user.last_name }}</p>
             <p><strong>Date</strong><br>{{event.date|date:"d F Y"}}</p>

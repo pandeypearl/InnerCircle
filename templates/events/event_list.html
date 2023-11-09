@@ -18,7 +18,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block content %}
-<section class="d-flex flex-column justify-content-between m-5 p-5" style="gap: 50px">
+<section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
     <h4 class="text-end text-secondary">
         {% if url_name == 'event_list'%}
         All Events
@@ -46,7 +46,7 @@
                         <span class="d-block"><strong>{{ user_event.event_name }}</strong> : <small>{{ user_event.event_status }}</small></span>
                     </div>
                 
-                    <span class="d-block">{{ user_event.date|date:"d F Y" }}</span>
+                    <span class="d-block"><small class="event-extra-info">{{ user_event.date|date:"d F Y" }}</small></span>
                 </a>
                 {% endfor %}
             </div>
@@ -66,7 +66,7 @@
                         <span class="d-block"><strong>{{ sent_event.event_name }}</strong> : <small>{{ sent_event.event_status }}</small></span>
                     </div>
                     
-                    <span class="d-block">{{ sent_event.date|date:"d F Y" }}</span>
+                    <span class="d-block"><small class="event-extra-info">{{ sent_event.date|date:"d F Y" }}</small></span>
                 </a>
                 {% endfor %}
             </div>
@@ -85,7 +85,7 @@
                         <i class="bi bi-calendar-event-fill me-2"></i>
                         <span class="d-block"><strong>{{ draft_event.event_name }}</strong> : <small>{{ draft_event.event_status }}</small></span>
                     </div>  
-                    <span class="d-block">{{ draft_event.date|date:"d F Y" }}</span>
+                    <span class="d-block event-extra-info"><small class="event-extra-info">{{ draft_event.date|date:"d F Y" }}</small></span>
                 </a>
                 {% endfor %}
             </div>

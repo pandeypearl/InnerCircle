@@ -8,7 +8,7 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block member_content %}
-<div style="width: 80vw;">
+<div class="member-event-view">
     <h4 class="text-white text-center bg-dark mb-5">Rsvp Status for {{ member.name }} at {{ event.event_name }}</h4>
     {% if rsvp %}
     <h3>Your RSVP response has been sent!</h3>
@@ -18,7 +18,7 @@
     <h3>No RSVP submitted for this event.</h3>
     {% endif %}
     <hr>
-    <div class="d-flex justify-content-around">
+    <div class="d-flex justify-content-around member-event-info">
         <div style="width: 30%;">
             
             <p><strong>Event</strong><br>{{ event.event_name }}</p>
