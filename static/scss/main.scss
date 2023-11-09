@@ -219,6 +219,10 @@ ul{
     width: 60vw;
 }
 
+.member-broadcast-view{
+    width: 80vw;
+}
+
 
 @media (min-width: 768px) and (max-width: 992px){ 
     .main-nav{
@@ -349,7 +353,8 @@ ul{
 
     .search-extra-info,
     .member-extra-info,
-    .group-extra-info{
+    .group-extra-info,
+    .broadcast-extra-info{
         display: none;
     }
 
@@ -367,6 +372,21 @@ ul{
 
     .group-info{
         padding: 10px;
+    }
+
+    .detail-intro-btns{
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .detail-content{
+        background-color: white!important;
+        box-shadow: none!important;
+    }
+
+    .detail-dates{
+        flex-direction: column;
+        gap: 10px!important;
     }
 
     

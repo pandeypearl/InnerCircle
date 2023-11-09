@@ -8,14 +8,13 @@
 {% block css %}<link rel="stylesheet" href="{% static 'scss/circle.scss' %}?{% cache_bust %}">{% endblock %}
 
 {% block member_content %}
-<div style="width: 80vw;">
+<div class="member-broadcast-view">
     <p><i class="bi bi-person-fill"></i>{{ member.name }}</p>
     <h4 class="text-white text-center bg-dark mb-5">{{ broadcast.title }}</h4>
-    <div class="d-flex" style="gap: 50px;">
+    <div class="d-flex detail-dates" style="gap: 50px;">
         <p><small><strong>Created</strong><br>{{broadcast.created|date:"d F Y"}} {{broadcast.created|time:"h:i A"}}</small></p>
         <p><small><strong>Updated</strong><br>{{broadcast.updated|date:"d F Y"}} {{broadcast.updated|time:"h:i A"}}</small></p>
     </div>
     <p>{{broadcast.content|linebreaks}}</p>
-  
 </div>
 {% endblock %}
