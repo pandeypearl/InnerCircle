@@ -9,9 +9,9 @@
 
 {% block content %}
 <section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between mb-5">
         <a href="{% url 'lists' %}" class="text-dark"><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
-        <h4 class="text-secondary text-end">Create New List</h4>
+        <h4 class="text-secondary text-end">New List</h4>
     </div>
 
     <form action="{% url 'create_list' %}" class="form" method="POST" enctype="multipart/form-data">
