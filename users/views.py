@@ -16,7 +16,14 @@ from events.models import Event, RSVPNotification
 from broadcasts.models import Broadcast
 from lists.models import List, CheckItemNotification
 
-from .forms import SignInForm, SignUpForm, ProfileEditForm, AccountEditForm, CustomPasswordChangeForm
+from .forms import (
+    SignInForm, 
+    SignUpForm,
+    ProfileForm,
+    ProfileEditForm, 
+    AccountEditForm, 
+    CustomPasswordChangeForm
+)
 
 from rest_framework import generics
 from rest_framework.generics import RetrieveAPIView
@@ -115,6 +122,26 @@ def signUp(request):
         'form': form,
     }
     
+    return render(request, template, context)
+
+
+def create_profile(request):
+    ''' User create profile view. '''
+    template = 'users/create_profile.html'
+
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    form = ProfileForm(instance=profile)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+
+    context = {
+        'form': form,
+    }
     return render(request, template, context)
 
 

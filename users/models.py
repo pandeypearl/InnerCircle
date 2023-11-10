@@ -14,8 +14,11 @@ User = get_user_model()
 class Profile(models.Model):
     ''' Defines profile model. '''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    full_name = models.CharField(null=True, blank=True, max_length=255)
+    bio = models.TextField(null=True, blank=True)
+    location = models.CharField(null=True, blank=True, max_length=255)
     date_of_birth = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', default='')
+    profile_picture = models.ImageField(upload_to='profile_pics/', default='img/defaults/default_profile_pic.png')
 
     def __str__(self):
         return self.user.username
