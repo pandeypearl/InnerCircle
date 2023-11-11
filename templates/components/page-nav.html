@@ -3,10 +3,10 @@
     {% if url_name == 'profile' or url_name == 'settings' or url_name == 'create_profile' %}
         <ul class="nav">
             <li class="nav-item">
-                <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-person-circle me-2"></i><small class="page-icon-desc">Profile Info</small></a>
+                <a href="{% url 'profile' pk=user.pk %}" class="nav-link {% if url_name == 'profile' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-person-circle me-2"></i><small class="page-icon-desc">Profile Info</small></a>
             </li>
             <li class="nav-item">
-                <a href="{% url 'settings' user.id %}" class="nav-link {% if url_name == 'settings' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-gear-fill me-2"></i><small class="page-icon-desc">Settings</small></a>
+                <a href="{% url 'settings' %}" class="nav-link {% if url_name == 'settings' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-gear-fill me-2"></i><small class="page-icon-desc">Settings</small></a>
             </li>
         </ul>
     {% elif url_name == 'dashboard' or url_name == 'reminders' or url_name == 'notifications' %}

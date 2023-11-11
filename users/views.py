@@ -114,7 +114,7 @@ def signUp(request):
             new_profile = Profile.objects.create(user=user_model)
             new_profile.save()
 
-            return redirect('dashboard')
+            return redirect('settings')
     else:
         form = SignUpForm()
 
@@ -122,31 +122,6 @@ def signUp(request):
         'form': form,
     }
     
-    return render(request, template, context)
-
-
-def create_profile(request):
-    ''' User create profile view. '''
-    template = 'users/create_profile.html'
-
-    profile, created = Profile.objects.get_or_create(user=request.user)
-
-    form = ProfileForm(instance=profile)
-
-    if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Profile updated successfully.')
-            return redirect('dashboard')
-        else:
-            messages.warning(request, 'Something went wrong. Please try again.')
-    else:
-        ProfileForm(instance=profile)
-
-    context = {
-        'form': form,
-    }
     return render(request, template, context)
 
 
@@ -188,10 +163,11 @@ def logOut(request):
 def profile(request, pk):
     ''' User profile view. '''
     template = 'users/profile.html'
-    user_object = User.objects.get(username=pk)
-    user_profile = Profile.objects.get(user=user_object)
 
-    user = pk
+    user_object = get_object_or_404(User, pk=pk)
+    user_profile = get_object_or_404(Profile, user=user_object)
+
+    
 
     context = {
         'user_object': user_object,
@@ -200,40 +176,32 @@ def profile(request, pk):
 
     return render(request, template, context)
 
+
 @login_required(login_url='signIn')
-def settings(request, profile_id):
+def settings(request):
     ''' User account settings view. '''
     template = 'users/settings.html'
-    instance = get_object_or_404(Profile, id=profile_id)
+    
     user = request.user
-    profile_form = ProfileEditForm(request.POST, request.FILES, instance=instance)
-    account_form = AccountEditForm(request.POST, instance=request.user)
+
+    profile, created = Profile.objects.get_or_create(user=request.user)
+
+    form = ProfileForm(instance=profile)
 
     if request.method == 'POST':
-        if 'account_form_submit' in request.POST:
-            account_form = AccountEditForm(request.POST, instance=request.user)
-            if account_form.is_valid():
-                account_form.save()
-                update_session_auth_hash(request, request.user)
-                messages.success(request, 'Your changes have been saved')
-                return redirect('settings', instance.id)
-            else:
-                messages.warning(request, 'Something went wrong.Please try again.')
-
-        elif 'profile_form_submit' in request.POST:
-            profile_form = ProfileEditForm(request.POST, request.FILES, instance=instance)
-            if profile_form.is_valid():
-                profile_form.save()
-                messages.success(request, 'Your changes have been saved')
-                return redirect('settings', instance.id)
-            else:
-                messages.warning(request, 'Something went wrong.Please try again.')
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully.')
+            return redirect('profile', pk=user.pk)
+        else:
+            messages.warning(request, 'Something went wrong. Please try again.')
+            return redirect('settings')
+    else:
+        ProfileForm(instance=profile)
  
     context = {
-        'instance': instance,
-        'profile_form': profile_form,
-        'account_form': account_form,
-        'user': user,
+        'form': form,
     }
 
     return render(request, template, context)

@@ -47,7 +47,7 @@
             {% with request.resolver_match.url_name as url_name %}
             <ul class="p-2 nav flex-column">
                 <li class="nav-item">
-                    <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' or url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">   
+                    <a href="{% url 'profile' pk=user.pk %}" class="nav-link {% if url_name == 'profile' or url_name == 'settings' %}text-secondary{% else %}text-white{% endif %}">   
                         <i class="bi bi-person-circle me-2"></i><span class="icon-desc">Profile</span>
                     </a>
                 </li>
