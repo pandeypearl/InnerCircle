@@ -137,7 +137,12 @@ def create_profile(request):
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
+            messages.success(request, 'Profile updated successfully.')
             return redirect('dashboard')
+        else:
+            messages.warning(request, 'Something went wrong. Please try again.')
+    else:
+        ProfileForm(instance=profile)
 
     context = {
         'form': form,

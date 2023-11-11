@@ -1,6 +1,6 @@
 <!-- Secondary Nav for Main Pages -->
 {% with request.resolver_match.url_name as url_name %}
-    {% if url_name == 'profile' or url_name == 'settings' %}
+    {% if url_name == 'profile' or url_name == 'settings' or url_name == 'create_profile' %}
         <ul class="nav">
             <li class="nav-item">
                 <a href="{% url 'profile' pk=user %}" class="nav-link {% if url_name == 'profile' %}text-secondary text-opacity-75{% else %}text-dark{% endif %}"><i class="bi bi-person-circle me-2"></i><small class="page-icon-desc">Profile Info</small></a>
