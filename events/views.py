@@ -84,16 +84,24 @@ def create_event(request):
         if form.is_valid():
             event = form.save(commit=False)
             event.user = request.user
-            event.event_name = request.POST['event_name']
-            event.description = request.POST['description']
-            event.date = request.POST['date']
-            event.location = request.POST['location']
-            event.dress_code = request.POST['dress_code']
-            event.note = request.POST['note']
-            event.event_status = request.POST['event_status']
+            event.event_name = form.cleaned_data['event_name']
+            event.description = form.cleaned_data['description']
+            event.date = form.cleaned_data['date']
+            event.location = form.cleaned_data['location']
+            event.dress_code = form.cleaned_data['dress_code']
+            event.note = form.cleaned_data['note']
+            event.event_status = form.cleaned_data['event_status']
             event.save()
-            guest_ids = request.POST.getlist('guests')
+
+            #Individual (Members)Recipients
+            guest_ids = form.cleaned_data('guests')
             event.guests.set(guest_ids)
+
+            #Group (Members)Recipients
+            group_objects = form.cleaned_data['groups']
+            for group in group_objects:
+                event.guests.add(*group.members.all())
+
             if 'save_draft' in request.POST:
                 event.is_draft = True
             else:
@@ -103,6 +111,11 @@ def create_event(request):
                     member = Member.objects.get(id=guest_id)
                     rsvp_url = generate_rsvp_url(event, member)
                     send_rsvp_email(request, event, member, rsvp_url)
+                for group in group_objects:
+                    for member in group.members.all():
+                        rsvp_url = generate_rsvp_url(event, member)
+                        send_rsvp_email(request, event, member, rsvp_url)
+
             event.save()
             messages.success(request, 'New event created.')
             return redirect('event_list')

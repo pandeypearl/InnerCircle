@@ -5,9 +5,16 @@ from django import forms
 from django.forms import DateTimeInput
 from .models import Event, RSVP
 from django.utils import timezone
+from circle.models import Group
 
 class EventForm(forms.ModelForm):
     ''' New event creation form. '''
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        required=False,
+    )
+
     class Meta:
         model = Event
         fields = (
@@ -16,6 +23,7 @@ class EventForm(forms.ModelForm):
             'date',
             'location',
             'guests',
+            'groups',
             'dress_code',
             'note',
             'event_status',
@@ -54,6 +62,12 @@ class EventForm(forms.ModelForm):
 class UpdateEventForm(forms.ModelForm):
     ''' Update existing event form. '''
     template_name = 'events/update_event.html'
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        required=False,
+    )
+
     class Meta:
         model = Event
         fields = [
@@ -62,6 +76,7 @@ class UpdateEventForm(forms.ModelForm):
             'date',
             'location',
             'guests',
+            'groups',
             'dress_code',
             'note',
             'event_status',
@@ -88,6 +103,7 @@ class UpdateEventForm(forms.ModelForm):
             self.fields['date'].initial = instance.date
             self.fields['location'].initial = instance.location
             self.fields['guests'].initial = instance.guests
+            self.fields['groups'].initial = instance.groups
             self.fields['dress_code'].initial = instance.dress_code
             self.fields['note'].initial = instance.note
             self.fields['event_status'].initial = instance.event_status
