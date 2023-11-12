@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import List, ListItem, CheckItem
-from circle.models import Member
+from circle.models import Member, Group
 from .forms import (
     ListForm,
     ListItemForm,
@@ -128,11 +128,19 @@ def create_list(request):
         if form.is_valid():
             list = form.save(commit=False)
             list.user = request.user
-            list.list_name = request.POST['list_name']
-            list.description = request.POST['description']
+            list.list_name = form.cleaned_data['list_name']
+            list.description = form.cleaned_data['description']
             list.save()
-            receiver_ids = request.POST.getlist('receivers')
+
+            #Individual (Members)Recipients
+            receiver_ids = form.cleaned_data('receivers')
             list.receivers.set(receiver_ids)
+
+            #Group (Members)Recipients
+            group_objects = form.cleaned_data['groups']
+            for group in group_objects:
+                list.receivers.add(*group.members.all())
+
             if 'save_draft' in request.POST:
                 list.is_draft = True
             else:
@@ -142,6 +150,11 @@ def create_list(request):
                     member = Member.objects.get(id=receiver_id)
                     list_check_url = generate_list_check_url(list, member)
                     send_list_email(request, list, member, list_check_url)
+                for group in group_objects:
+                    for member in group.members.all():
+                        list_check_url = generate_list_check_url(list, member)
+                        send_list_email(request, list, member, list_check_url)
+            
             list.save()
             messages.success(request, 'New list created.')
             return redirect('lists')

@@ -3,17 +3,24 @@
 '''
 from django import forms
 from .models import List, ListItem
-from circle.models import Member
+from circle.models import Member, Group
 
 
 class ListForm(forms.ModelForm):
     ''' New list creation form. '''
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        required=False,
+    )
+
     class Meta:
         model = List
         fields = [
             'list_name',
             'description',
             'receivers',
+            'groups',
             'is_draft',
         ]
         widgets = {
