@@ -15,8 +15,7 @@ class Member(models.Model):
     updated = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=255)
     email = models.EmailField()
-    #phone_number = models.CharField(max_length=20, blank=True, null=True)
-    image = models.ImageField(upload_to='member_images/', default='')
+    image = models.ImageField(upload_to='member_images/', default='img/defaults/default_profile_pic.png')
     relationship = models.CharField(max_length=255)
     date_of_birth = models.DateField(null=True, blank=True)
 
