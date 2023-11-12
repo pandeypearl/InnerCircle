@@ -3,16 +3,24 @@
 '''
 from django import forms
 from .models import Broadcast
+from circle.models import Group
 
 
 class BroadcastForm(forms.ModelForm):
     ''' Form for new broadcast creation. '''
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        required=False,
+    )
+
     class Meta:
         model = Broadcast
         fields = [
             'title',
             'content',
             'receivers',
+            'groups',
             'is_draft',
         ]
         widgets = {
@@ -23,7 +31,7 @@ class BroadcastForm(forms.ModelForm):
 
     def clean_title(self):
         ''' Field level validation ensuring title is not empty. '''
-        title = self.cleaned_data_get('title')
+        title = self.cleaned_data.get('title')
         if not title:
             raise forms.ValidationError("Title can not be empty.")
         return title
@@ -71,7 +79,7 @@ class EditBroadcastForm(forms.ModelForm):
 
     def clean_title(self):
         ''' Field level validation ensuring title is not empty. '''
-        title = self.cleaned_data_get('title')
+        title = self.cleaned_data.get('title')
         if not title:
             raise forms.ValidationError("Title can not be empty.")
         return title

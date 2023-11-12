@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Broadcast
-from circle.models import Member
+from circle.models import Member, Group
 from .forms import BroadcastForm, EditBroadcastForm
 from .utils import send_broadcast_email, generate_broadcast_url
 
@@ -72,11 +72,18 @@ def create_broadcast(request):
         if form.is_valid():
             broadcast = form.save(commit=False)
             broadcast.user = request.user
-            broadcast.title = request.POST['title']
-            broadcast.content = request.POST['content']
+            broadcast.title = form.cleaned_data['title']
+            broadcast.content = form.cleaned_data['content']
             broadcast.save()
-            receiver_ids = request.POST.getlist('receivers')
+            #Individual (Members)Recipients
+            receiver_ids = form.cleaned_data['receivers']
             broadcast.receivers.set(receiver_ids)
+
+            #Group (Members)Recipients
+            group_objects = form.cleaned_data['groups']
+            for group in group_objects:
+                broadcast.receivers.add(*group.members.all())
+            
             if 'save_draft' in request.POST:
                 broadcast.is_draft = True
             else:
@@ -86,6 +93,11 @@ def create_broadcast(request):
                     member = Member.objects.get(id=receiver_id)
                     broadcast_url = generate_broadcast_url(broadcast, member)
                     send_broadcast_email(request, broadcast, member, broadcast_url)
+                for group in group_objects:
+                    for member in group.members.all():
+                        broadcast_url = generate_broadcast_url(broadcast, member)
+                        send_broadcast_email(request, broadcast, member, broadcast_url)
+
             broadcast.save()
             messages.success(request, 'New broadcast created successfully')
             return redirect('broadcast_list')
