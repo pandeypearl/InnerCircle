@@ -35,7 +35,7 @@
             {% if url_name == 'signUp' or url_name == 'signIn' or url_name == 'password_reset' or url_name == 'password_reset_done' or url_name == 'password_reset_confirm' or url_name == 'password_reset_complete' or url_name == 'password_change' or url_name == 'password_change_done' or url_name == 'deactivate_account' or url_name == 'account_deactivated' %}
             <div class="auth-wrapper">
                 <nav class="auth-nav d-flex justify-content-between align-items-center p-4">
-                    <a class="text-dark" {% if url_name == 'password_change' or url_name == 'password_change_done' or url_name == 'deactivate_account' %}href="{% url 'settings' user.id %}"{% else %}href="{% url 'home' %}"{% endif %}><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
+                    <a class="text-dark" {% if url_name == 'password_change' or url_name == 'password_change_done' or url_name == 'deactivate_account' %}href="{% url 'settings' %}"{% else %}href="{% url 'home' %}"{% endif %}><i class="bi bi-arrow-left-circle-fill" style="font-size: 1.8rem;"></i></a>
                     <a class="navbar-brand text-dark" href="{% url 'home' %}">InnerCircle</a>
                 </nav>
                 {% if messages %}
