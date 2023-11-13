@@ -26,7 +26,9 @@
             <strong>Circle </strong>
             <span><i class="bi bi-person-fill me-2"></i>{{ member_count }}</span>
         </p>
+        
         <div class="list-group list-group-flush">
+        {% if members %}
             {% for member in members %}
             <a href="{% url 'member_detail' member.id %}" class="list-group-item list-group-item-action list-group-item-info d-flex justify-content-between align-items-center link-dark">
                 <span><i class="bi bi-person-fill me-4"></i>{{ member.name }}</span>
@@ -35,7 +37,14 @@
                 {% endwith %}
             </a>
             {% endfor %}
+        {% else %}
+            <a href="{% url 'create_member' %}" class="list-group-item list-group-item-action list-group-item-info d-flex justify-content-center align-items-center link-dark">
+                <i class="bi bi-plus-circle-fill me-2"></i>Add people to your circle
+            </a>
+        {% endif %}
         </div>
+        
+        
     </div>
 
     <div class="mt-3 mb-3 shadow" id="broadcasts">
@@ -44,6 +53,7 @@
             <span><i class="bi bi-megaphone-fill me-2"></i>{{ broadcast_count }}</span>
         </p>
         <div class="list-group list-group-flush">
+        {% if broadcasts %}
             {% for broadcast in broadcasts %}
             <a href="{% url 'broadcast_detail' broadcast.id %}" class="list-group-item list-group-item-action list-group-item-warning d-flex justify-content-between align-items-center link-dark">
                 <span><i class="bi bi-megaphone-fill me-4"></i>{{ broadcast.title }}</span>
@@ -54,6 +64,11 @@
                 {% endif %}
             </a>
             {% endfor %}
+        {% else %}
+            <a href="{% url 'create_broadcast' %}" class="list-group-item list-group-item-action list-group-item-warning d-flex justify-content-center align-items-center link-dark">
+                <i class="bi bi-plus-circle-fill me-2"></i>Create broadcast
+            </a>
+        {% endif %}
         </div>
     </div>
 
@@ -64,6 +79,7 @@
             <span><i class="bi bi-calendar-event-fill me-2"></i>{{ event_count }}</span> 
         </p>
         <div class="list-group list-group-flush">
+        {% if events %}
             {% for event in events %}
             <a href="{% url 'event_detail' event.id %}" class="list-group-item list-group-item-action list-group-item-success d-flex justify-content-between align-items-center link-dark">
                 <span><i class="bi bi-calendar-event-fill me-4"></i>{{ event.event_name }}</span>
@@ -74,6 +90,11 @@
                 {% endif %}
             </a>
             {% endfor %}
+        {% else %}
+            <a href="{% url 'create_event' %}" class="list-group-item list-group-item-action list-group-item-success d-flex justify-content-center align-items-center link-dark">
+                <i class="bi bi-plus-circle-fill me-2"></i>Create event
+            </a>
+        {% endif %}
         </div>
     </div>
 
@@ -84,6 +105,7 @@
             <span><i class="bi bi-ui-checks me-2"></i>{{ list_count }}</span> 
         </p>
         <div class="list-group list-group-flush">
+        {% if lists %}
             {% for list in lists %}
             <a href="{% url 'list_detail' list.id %}" class="list-group-item list-group-item-action list-group-item-danger d-flex justify-content-between align-items-center link-dark">
                 <span><i class="bi bi-ui-checks me-4"></i>{{ list.list_name }}</span>
@@ -94,6 +116,11 @@
                 {% endif %}
             </a>
             {% endfor %}
+        {% else %}
+            <a href="{% url 'create_list' %}" class="list-group-item list-group-item-action list-group-item-danger d-flex justify-content-center align-items-center link-dark">
+                <i class="bi bi-plus-circle-fill me-2"></i>Create list
+            </a>
+        {% endif %}
         </div>
     </div>
             
