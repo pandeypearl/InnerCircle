@@ -28,16 +28,14 @@
         Draft Events
         {% endif %}
     </h4>
-    <div class="d-flex justify-content-end">
-        <a href="{% url 'create_event' %}" class="btn btn-dark text-end"><i class="bi bi-plus-circle-fill me-2"></i> New Event</a>
-    </div>
+
 
     {% with request.resolver_match.url_name as url_name %}
         {% if url_name == 'event_list' %}
         <div>
+            <p class="p-3 mb-1 bg-success text-white rounded-1 mb-1"><strong>All Events</strong> &nbsp;&nbsp;{{ user_events.count }}</p>
             {% if user_events %}
             <div class="list-group list-group-flush">
-                <p class="p-3 mb-1 bg-success text-white rounded-1 mb-1"><strong>All Events</strong> &nbsp;&nbsp;{{ user_events.count }}</p>
                 {% for user_event in user_events %}
                 <a  href="{% url 'event_detail' user_event.id %}" 
                 class="list-group-item list-group-item-action d-flex justify-content-between align-items-center {% if user_event.is_draft == True %}list-group-item-light{% else %}list-group-item-success{% endif %} text-dark">
@@ -51,14 +49,14 @@
                 {% endfor %}
             </div>
             {% else %}
-            <p class="text-secondary text-center">You currently have no events.</p>
+            <p class="text-dark text-center m-5">You currently have no events.<br><a class="text-dark" href="{% url 'create_event' %}"><strong>Create an event</strong></a></p>
             {% endif %}
         </div>
         {% elif url_name == 'sent_event_list' %}
         <div>
+            <p class="p-3 mb-1 bg-success text-white rounded-1 mb-1"><strong>Sent Events</strong> &nbsp;&nbsp;{{ sent_events.count }}</p>
             {% if sent_events %}
             <div class="list-group list-group-flush">
-                <p class="p-3 mb-1 bg-success text-white rounded-1 mb-1"><strong>Sent Events</strong> &nbsp;&nbsp;{{ sent_events.count }}</p>
                 {% for sent_event in sent_events %}
                 <a  href="{% url 'event_detail' sent_event.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-success text-dark">
                     <div class="d-flex align-items-center">
@@ -71,14 +69,14 @@
                 {% endfor %}
             </div>
             {% else %}
-            <p class="text-secondary text-center">You currently have no sent events.</p>
+            <p class="text-dark text-center m-5">You currently have no sent events.<br><a class="text-dark" href="{% url 'create_event' %}"><strong>Create an event</strong></a></p>
             {% endif %}
         </div>
         {% elif url_name == 'draft_event_list' %}
         <div>    
+            <p class="p-3 mb-1 bg-success text-white rounded-1 mb-1"><strong>Draft Events</strong> &nbsp;&nbsp;{{ draft_events.count }}</p>
             {% if draft_events %}
             <div class="list-group list-group-flush">
-                <p class="p-3 mb-1 bg-success text-white rounded-1 mb-1"><strong>Draft Events</strong> &nbsp;&nbsp;{{ draft_events.count }}</p>
                 {% for draft_event in draft_events %}
                 <a  href="{% url 'event_detail' draft_event.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center list-group-item-light text-dark">
                     <div class="d-flex align-items-center">
@@ -90,7 +88,7 @@
                 {% endfor %}
             </div>
             {% else %}
-            <p class="text-secondary text-center">You currently have no draft events.</p>
+            <p class="text-dark text-center m-5">You currently have no draft events.<br><a class="text-dark" href="{% url 'create_event' %}"><strong>Create an event</strong></a></p>
             {% endif %}
         </div>
         {% endif %}

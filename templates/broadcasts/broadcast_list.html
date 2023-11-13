@@ -29,10 +29,6 @@
         Draft Broadcasts
         {% endif %}
     </h4>
-    <div class="d-flex justify-content-end">
-        <a href="{% url 'create_broadcast' %}" class="btn btn-dark text-end"><i class="bi bi-plus-circle-fill me-2"></i>New Broadcast</a>
-    </div>
-
    
         {% if url_name == 'broadcast_list' %}
         <div>
@@ -49,7 +45,7 @@
                 {% endfor %}
             </div>
             {% else %}
-            <p class="text-secondary text-center">You currently have no sent broadcasts.</p>
+            <p class="text-dark text-center m-5">You currently have no sent broadcasts.<br><a class="text-dark" href="{% url 'create_broadcast' %}"><strong>Create a broadcast</strong></a></p>
             {% endif %}
         </div>
         {% elif url_name == 'sent_broadcast_list' %}
@@ -66,7 +62,7 @@
                 {% endfor %}
             </div>
             {% else %}
-            <p class="text-secondary text-center">You currently have no sent broadcasts.</p>
+            <p class="text-dark text-center m-5">You currently have no sent broadcasts.<br><a class="text-dark" href="{% url 'create_broadcast' %}"><strong>Create a broadcast</strong></a></p>
             {% endif %}
         </div>
         {% elif url_name == 'draft_broadcast_list' %}
@@ -83,7 +79,7 @@
                 {% endfor %}
             </div>
             {% else %}
-            <p class="text-secondary text-center">You currently have no draft broadcasts.</p>
+            <p class="text-dark text-center m-5">You currently have no draft broadcasts.<br><a class="text-dark" href="{% url 'create_broadcast' %}"><strong>Create a broadcast</strong></a></p>
             {% endif %}
         </div>
         {% endif %}

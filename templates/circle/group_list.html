@@ -11,10 +11,6 @@
 <section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
     <h4 class="text-end text-secondary">Groups</h4>
 
-    <div class="d-flex justify-content-end">
-        <a href="{% url 'create_group' %}" class="btn btn-dark text-end"><i class="bi bi-plus-circle-fill me-2"></i>Add New Group</a>
-    </div>
-
     <div>
 
         <p class="p-3 mb-1 border-pill bg-info text-white rounded-1">Groups {{ users_groups.count }}</p>
@@ -33,7 +29,7 @@
         </div>
 
         {% else %}
-        <p class="text-secodary text-center">You currently have no groups. <a href="{% url 'create_group' %}">Add a new group</a>.</p>
+        <p class="text-dark text-center m-5">You currently have no groups.<br><a class="text-dark" href="{% url 'create_group' %}"><strong>Add a group</strong></a></p>
         {% endif %}
     </div>
 </section>
