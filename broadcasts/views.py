@@ -135,15 +135,23 @@ def edit_broadcast(request, broadcast_id):
     ''' Edit existing broadcast object view for user. '''
     template = 'broadcasts/edit_broadcast.html'
     instance = get_object_or_404(Broadcast, id=broadcast_id)
-    form = EditBroadcastForm(request.POST, instance=instance)
+    # Get the original group ids associated with the broadcast
+    original_group_ids = list(instance.receivers.all().values_list('groups__id', flat=True))
+    form = EditBroadcastForm(request.POST or None, instance=instance, original_group_ids=original_group_ids)
 
     if request.method == 'POST':
-        form = EditBroadcastForm(request.POST, instance=instance)
+        form = EditBroadcastForm(request.POST, instance=instance, original_group_ids=original_group_ids)
         if form.is_valid():
             form.save()
 
             receiver_ids = request.POST.getlist('receivers')
             instance.receivers.set(receiver_ids)
+
+            # # Handling groups
+            # group_objects = form.cleaned_data['groups']
+            # instance.receivers.clear()
+            # for group in group_objects:
+            #     instance.receivers.add(*group.members.all())
 
             messages.success(request, 'Your broadcast has been updated')
             return redirect('broadcast_list')

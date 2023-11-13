@@ -14,45 +14,42 @@
         <h4 class="text-secondary text-end"> Edit Broadcast</h4>
     </div>
 
-
     <form action="{% url 'edit_broadcast' broadcast_id=instance.id %}" class="form-floating" method="POST">
         {% csrf_token %}
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-5">
             {{ form.title }}
             <label for="title">Broadcast Title</label>
             {% if form.title.errors %}
                 {% for error in form.title.errors %}
-                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                <code><i class="bi bi-exclamation-circle-fill me-2"></i>{{error}}</code>
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="form-floating mb-3">
-            
+        
+        <div class="form-floating mb-5">
             {{ form.content }}
             <label for="content">Broadcast Content</label>
             {% if form.content.errors %}
                 {% for error in form.content.errors %}
-                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                <code><i class="bi bi-exclamation-circle-fill me-2"></i>{{error}}</code>
                 {% endfor %}
             {% endif %}
         </div>
-        <div class="mb-3">
-            <!-- <label for="{{ form.receivers.id_for_label }}">Recipients</label> -->
-            <!-- <select class="form-select" id="{{ form.receivers.id_for_label }}" name="{{ form.receivers.name }}" multiple>   
-                {% for choice in form.receivers %}
-                <option value="{{ choice.value }}" {% if choice.selected %}selected{% endif %}>{{ choice }}</option>
-                {% endfor %}
-            </select> -->
+
+        <div class="mb-5">
             {{ form.receivers }}
         </div>
 
         {% if form.not_field_errors %}
             {% for error in form.not_field_errors %}
-                <code><i class="bi bi-exclamation-circle-fill"></i>&nbsp;{{error}}</code>
+                <code><i class="bi bi-exclamation-circle-fill me-2"></i>{{error}}</code>
             {% endfor %}
         {% endif %}
 
-        <button class="btn btn-dark" type="submit">Save Changes</button>
+        <div>
+            <button class="btn btn-dark" type="submit">Save Changes</button>
+        </div>
+        
     </form>
 </section>
 {% endblock %}

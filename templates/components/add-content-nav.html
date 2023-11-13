@@ -1,0 +1,36 @@
+<div class="position-fixed d-flex add-content-btns">
+    <a href="{% url 'create_member' %}" class="btn btn-dark btn-sm position-relative shadow">
+        <i class="bi bi-plus-circle-fill text-info"></i>
+        <span class="position-absolute top-0 start-100 translate-middle bg-info border border-info rounded-circle">
+            <i class="bi bi-person-fill text-light" style="font-size: 0.6rem;"></i>
+        </span>
+    </a>
+
+    <a href="{% url 'create_group' %}" class="btn btn-dark btn-sm position-relative shadow">
+        <i class="bi bi-plus-circle-fill text-info"></i>
+        <span class="position-absolute top-0 start-100 translate-middle bg-info border border-info rounded-circle">
+            <i class="bi bi-people-fill text-light" style="font-size: 0.6rem;"></i>
+        </span>
+    </a>
+
+    <a href="{% url 'create_broadcast' %}" class="btn btn-dark btn-sm position-relative shadow">
+        <i class="bi bi-plus-circle-fill text-warning"></i>
+        <span class="position-absolute top-0 start-100 translate-middle bg-warning border border-warning rounded-circle">
+            <i class="bi bi-megaphone-fill text-light" style="font-size: 0.6rem;"></i>
+        </span>
+    </a>
+
+    <a href="{% url 'create_event' %}" class="btn btn-dark btn-sm position-relative shadow">
+        <i class="bi bi-plus-circle-fill text-success"></i>
+        <span class="position-absolute top-0 start-100 translate-middle bg-success border border-success rounded-circle">
+            <i class="bi bi-calendar-event-fill text-light" style="font-size: 0.6rem;"></i>
+        </span>
+    </a>
+
+    <a href="{% url 'create_list' %}" class="btn btn-dark btn-sm position-relative shadow">
+        <i class="bi bi-plus-circle-fill text-danger"></i>
+        <span class="position-absolute top-0 start-100 translate-middle bg-danger border border-danger rounded-circle">
+            <i class="bi bi-ui-checks text-light" style="font-size: 0.6rem;"></i>
+        </span>
+    </a>
+</div>

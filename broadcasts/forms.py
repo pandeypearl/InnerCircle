@@ -10,7 +10,7 @@ class BroadcastForm(forms.ModelForm):
     ''' Form for new broadcast creation. '''
     groups = forms.ModelMultipleChoiceField(
         queryset=Group.objects.all(),
-        widget=forms.CheckboxSelectMultiple(attrs={'class': 'form-check-input'}),
+        widget=forms.CheckboxSelectMultiple(),
         required=False,
     )
 
@@ -52,12 +52,19 @@ class BroadcastForm(forms.ModelForm):
 class EditBroadcastForm(forms.ModelForm):
     ''' Form to edit existing broadcast. '''
     template_name = 'broadcasts/edit_broadcast.html'
+    groups = forms.ModelMultipleChoiceField(
+        queryset=Group.objects.all(),
+        widget=forms.CheckboxSelectMultiple(),
+        required=False,
+    )
+
     class Meta:
         model = Broadcast
         fields = [
             'title',
             'content',
             'receivers',
+            'groups',
             'is_draft',
         ]
         widgets = {
@@ -73,10 +80,9 @@ class EditBroadcastForm(forms.ModelForm):
         if instance:
             self.fields['title'].initial = instance.title
             self.fields['content'].initial = instance.content
-            self.fields['receivers'].initial = instance.receivers
+            self.fields['receivers'].initial = instance.receivers.all()
             self.fields['is_draft'].initial = instance.is_draft
-
-
+    
     def clean_title(self):
         ''' Field level validation ensuring title is not empty. '''
         title = self.cleaned_data.get('title')
