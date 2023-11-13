@@ -20,7 +20,7 @@ from .forms import (
     SignInForm, 
     SignUpForm,
     ProfileForm,
-    ProfileEditForm, 
+    # ProfileEditForm, 
     AccountEditForm, 
     CustomPasswordChangeForm
 )
@@ -30,6 +30,8 @@ from rest_framework.generics import RetrieveAPIView
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import  IsAuthenticated
 from .serializers import UserSerializer, ProfileSerializer
+
+
 
 # Create your views here.
 def home(request):
@@ -195,10 +197,10 @@ def settings(request):
             messages.success(request, 'Profile updated successfully.')
             return redirect('profile', pk=user.pk)
         else:
+            logger.error(form.errors)
             messages.warning(request, 'Something went wrong. Please try again.')
-            return redirect('settings')
     else:
-        ProfileForm(instance=profile)
+        form = ProfileForm(instance=profile)
  
     context = {
         'form': form,

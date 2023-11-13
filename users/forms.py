@@ -136,41 +136,41 @@ class ProfileForm(forms.ModelForm):
 
 
 
-class ProfileEditForm(forms.ModelForm):
-    ''' User profile edit form '''
-    class Meta:
-        model = Profile
-        fields = (
-            'date_of_birth',
-            'profile_picture',
-        )
-        widgets = {
-            'date_of_birth': forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'placeholder': 'Date of Birth'}),
-            'profile_picture': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Profile Picture'}),
-        }
+# class ProfileEditForm(forms.ModelForm):
+#     ''' User profile edit form '''
+#     class Meta:
+#         model = Profile
+#         fields = (
+#             'date_of_birth',
+#             'profile_picture',
+#         )
+#         widgets = {
+#             'date_of_birth': forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'placeholder': 'Date of Birth'}),
+#             'profile_picture': forms.FileInput(attrs={'class': 'form-control', 'placeholder': 'Profile Picture'}),
+#         }
 
-    def __init__(self, *args, **kwargs):
-        instance = kwargs.get('instance')
-        super(ProfileEditForm, self).__init__(*args, **kwargs)
+#     def __init__(self, *args, **kwargs):
+#         instance = kwargs.get('instance')
+#         super(ProfileEditForm, self).__init__(*args, **kwargs)
 
-        if instance:
-            self.fields['date_of_birth'].initial = instance.date_of_birth
-            self.fields['profile_picture'].initial = instance.profile_picture
+#         if instance:
+#             self.fields['date_of_birth'].initial = instance.date_of_birth
+#             self.fields['profile_picture'].initial = instance.profile_picture
 
-    def clean_date_of_birth(self):
-        ''' Field level validation to ensure a valid date of birth is provided. '''
-        date_of_birth = self.cleaned_data.get('date_of_birth')
-        if date_of_birth and date_of_birth > timezone.now().date():
-            raise forms.ValidationError("Date of birth cannot be in the future.")
+#     def clean_date_of_birth(self):
+#         ''' Field level validation to ensure a valid date of birth is provided. '''
+#         date_of_birth = self.cleaned_data.get('date_of_birth')
+#         if date_of_birth and date_of_birth > timezone.now().date():
+#             raise forms.ValidationError("Date of birth cannot be in the future.")
         
-    def save(self, commit=True):
-        profile = super().save(commit=False)
-        profile.date_of_birth = self.cleaned_data['date_of_birth']
-        profile.profile_picture = self.cleaned_data['profile_picture']
+#     def save(self, commit=True):
+#         profile = super().save(commit=False)
+#         profile.date_of_birth = self.cleaned_data['date_of_birth']
+#         profile.profile_picture = self.cleaned_data['profile_picture']
 
-        if commit:
-            profile.save()
-        return profile
+#         if commit:
+#             profile.save()
+#         return profile
 
 
 class CustomPasswordChangeForm(PasswordChangeForm):
