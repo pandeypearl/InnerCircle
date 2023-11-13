@@ -13,6 +13,7 @@
 <section class="d-flex flex-column justify-content-between m-md-5 p-md-5" style="gap: 50px">
     <h4 class="text-secondary text-end">Reminders</h4>
 
+    {% if members %}
     <ul class="list-group list-group-flush">
         {% for member in members %}
             <li class="list-group-item list-group-item-light">
@@ -24,5 +25,8 @@
             </li>
         {% endfor %}
     </ul>
+    {% else %}
+    <p class="text-center bg-light m-5 p-3 shadow">You currently have no reminders</p>
+    {% endif %}
 </section>
 {% endblock%}
