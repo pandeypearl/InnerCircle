@@ -3,6 +3,8 @@
     and returning a HTTP response for the broadcast application.
 '''
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Broadcast
@@ -100,7 +102,7 @@ def create_broadcast(request):
 
             broadcast.save()
             messages.success(request, 'New broadcast created successfully')
-            return redirect('broadcast_list')
+            return render('broadcast_list')
         else:
             messages.warning(request, 'Something went wrong. Please try again')
             return render (request, template, {'form': BroadcastForm})
@@ -136,25 +138,19 @@ def edit_broadcast(request, broadcast_id):
     template = 'broadcasts/edit_broadcast.html'
     instance = get_object_or_404(Broadcast, id=broadcast_id)
     # Get the original group ids associated with the broadcast
-    original_group_ids = list(instance.receivers.all().values_list('groups__id', flat=True))
-    form = EditBroadcastForm(request.POST or None, instance=instance, original_group_ids=original_group_ids)
+    # original_group_ids = list(instance.receivers.all().values_list('groups__id', flat=True))
+    form = EditBroadcastForm(request.POST or None, instance=instance)
 
     if request.method == 'POST':
-        form = EditBroadcastForm(request.POST, instance=instance, original_group_ids=original_group_ids)
+        form = EditBroadcastForm(request.POST, instance=instance)
         if form.is_valid():
             form.save()
 
             receiver_ids = request.POST.getlist('receivers')
             instance.receivers.set(receiver_ids)
 
-            # # Handling groups
-            # group_objects = form.cleaned_data['groups']
-            # instance.receivers.clear()
-            # for group in group_objects:
-            #     instance.receivers.add(*group.members.all())
-
             messages.success(request, 'Your broadcast has been updated')
-            return redirect('broadcast_list')
+            return render('broadcast_list')  
         else:
             messages.warning(request, 'Something went wrong. Broadcast not updated due to an error')
             form = EditBroadcastForm(instance=instance)
