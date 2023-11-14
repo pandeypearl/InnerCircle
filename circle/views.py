@@ -70,12 +70,6 @@ def create_group(request):
             group.members.set(member_ids)
             group.save()
 
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='Group Created',
-                object_id=group.id,
-                content_type=ContentType.objects.get_for_model(Group)
-            )
             messages.info(request, 'New group created.')
             return redirect('group_list')
         else:
@@ -105,12 +99,6 @@ def edit_group(request, group_id):
             members_ids = request.POST.getlist('members')
             instance.members.set(members_ids)
 
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='Group Edited',
-                object_id=group_id,
-                content_type=ContentType.objects.get_for_model(Group)
-            )
             messages.success(request, 'Your changes to the group have been saved')
             return redirect('group_list')
         else:
@@ -134,12 +122,6 @@ def delete_group(request, pk):
     if request.method == 'POST':
         group.delete()
 
-        UserActivity.objects.create(
-            user=request.user,
-            activity_type='Group Deleted',
-            object_id=group.id,
-            content_type=ContentType.objects.get_for_model(Group)
-        )
         messages.success(request, 'Your event has been deleted.')
         return redirect('group_list')
 
@@ -214,12 +196,6 @@ def create_member(request):
             member.date_of_birth = request.POST['date_of_birth']
             member.save()
 
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='Member Created',
-                object_id=member.id,
-                content_type=ContentType.objects.get_for_model(Member)
-            )
             messages.info(request, 'New member added to your circle.')
             return redirect('member_list')
         else:
@@ -246,12 +222,6 @@ def edit_member(request, member_id):
         if form.is_valid():
             form.save()
 
-            UserActivity.objects.create(
-                user=request.user,
-                activity_type='Member Edited',
-                object_id=member_id,
-                content_type=ContentType.objects.get_for_model(Member)
-            )
             messages.success(request, 'Your changes have been saved')
             return redirect('member_list')
         else:
@@ -276,12 +246,6 @@ def delete_member(request, pk):
     if request.method == 'POST':
         member.delete()
 
-        UserActivity.objects.create(
-            user=request.user,
-            activity_type='Member deleted',
-            object_id=member.id,
-            content_type=ContentType.objects.get_for_model(Member)
-        )
         messages.success(request, 'Circle member has been deleted.')
         return redirect('member_list')
 
