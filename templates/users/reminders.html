@@ -14,17 +14,20 @@
     <h4 class="text-secondary text-end">Reminders</h4>
 
     {% if members %}
-    <ul class="list-group list-group-flush">
+    <div class="list-group list-group-flush shadow">
         {% for member in members %}
-            <li class="list-group-item list-group-item-light">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-dark{% endif %}"><i class="bi bi-balloon-fill"></i> {{ member.name }}'s Birthday</h5>
-                    <small class="{% if member.days_until_birthday < 30 %}text-danger{% else %}text-dark{% endif %}"><i class="bi bi-hourglass-split"></i> {{ member.days_until_birthday }} days</small>
+            <a {% if member.is_user %}href="{% url 'profile' pk=user.pk %}"{% else %} href="{% url 'member_detail' member.id %}"{% endif %} class="list-group-item list-group-item-action list-group-item-secondary">
+                <div class="d-flex w-100 justify-content-between align-items-center">
+                    <p class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-dark{% endif %}"><i class="bi bi-balloon-fill me-2"></i>
+                        {% if member.is_user %}<strong>{{ member.name }}'s (Your) Birthday</strong>{% else %}{{ member.name }}'s Birthday{% endif %}
+                        <small class="ms-2 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{{ member.date_of_birth }}</small>
+                    </p>
+                    <small class="{% if member.days_until_birthday < 30 %}text-danger{% else %}text-dark{% endif %}"><i class="bi bi-hourglass-split me-2 text-secondary"></i><strong>{{ member.days_until_birthday }} days</strong></small>
                 </div>
-                <p class="mb-1 {% if member.days_until_birthday < 30 %}text-danger{% else %}text-secondary{% endif %}">{{ member.date_of_birth }}</p>
-            </li>
+                
+            </a>
         {% endfor %}
-    </ul>
+        </div>
     {% else %}
     <p class="text-center bg-light m-5 p-3 shadow">You currently have no reminders</p>
     {% endif %}

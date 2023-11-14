@@ -197,7 +197,6 @@ def settings(request):
             messages.success(request, 'Profile updated successfully.')
             return redirect('profile', pk=user.pk)
         else:
-            logger.error(form.errors)
             messages.warning(request, 'Something went wrong. Please try again.')
     else:
         form = ProfileForm(instance=profile)
@@ -331,14 +330,36 @@ def reminders(request):
     user = request.user 
     members = Member.objects.filter(user=user).order_by('date_of_birth')
 
+    # Getting users own birthday
+    user_profile = Profile.objects.get(user=user)
+    user_birthday = user_profile.date_of_birth
+    today = date.today()
+    user_birthday = user_birthday.replace(year=today.year + 1)
+
+    user_days_until_birthday = (user_birthday - today).days
+
+    # Adding user's birthday to birthday list
+    user_data = {
+        'name': user_profile.full_name,
+        'days_until_birthday': user_days_until_birthday,
+        'date_of_birth': user_profile.date_of_birth,
+        'is_user': True,
+    }
+    members = list(members.values())
+    members.append(user_data)
+
+    # Calculating days until birthday for each member
     for member in members:
-        today = date.today()
-        birthday = member.date_of_birth.replace(year=today.year)
+        # today = date.today()
+        birthday = member['date_of_birth'].replace(year=today.year)
 
         if birthday < today:
             birthday = birthday.replace(year=today.year + 1)
 
-        member.days_until_birthday = (birthday - today).days
+        member['days_until_birthday'] = (birthday - today).days
+
+    # Calculating days until birthday for each member and sorting by days_until_birthday
+    members.sort(key=lambda x: x['days_until_birthday'])
 
     context = {
         'members': members,
