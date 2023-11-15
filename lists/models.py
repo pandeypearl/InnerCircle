@@ -25,7 +25,7 @@ class List(models.Model):
 class ListItem(models.Model):
     list = models.ForeignKey(List, on_delete=models.CASCADE)
     item_name = models.CharField(max_length=255)
-    item_image = models.ImageField(upload_to='list_items/', default='')
+    item_image = models.ImageField(upload_to='list_items/', null=True)
     item_url = models.URLField()
     checked = models.BooleanField(default=False)
 

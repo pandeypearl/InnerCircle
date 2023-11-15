@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.urls import reverse
 from django.contrib.auth.models import User
 from circle.models import Member
 from .models import List, ListItem, CheckItem, CheckItemNotification 
@@ -143,3 +144,80 @@ class CheckItemNotificationModelTest(TestCase):
     def test_notification_created_at(self):
         ''' Test checks if the created_at field of a CheckItemNotification object is not empty. '''
         self.assertIsNotNone(self.notification.created_at)
+
+
+class ListViewsTestCase(TestCase):
+    ''' Unit tests for the list application views '''
+    def setUp(self):
+        # Create a test user
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
+        # Create test data for List, ListItem, and CheckItem
+        self.list = List.objects.create(user=self.user, list_name='Test List', description='Test Description')
+        self.list_item = ListItem.objects.create(list=self.list, item_name='Test Item')
+        self.member = Member.objects.create(user=self.user, name='Test Member')
+        self.check_item = CheckItem.objects.create(item=self.list_item, recipient=self.member)
+
+    def test_lists_view(self):
+        '''
+        Checking that the response status code is 200 for lists view
+        '''
+        response = self.client.get(reverse('lists'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_sent_lists_view(self):
+        '''
+        Checking that the response status code is 200 for sent list view
+        '''
+        response = self.client.get(reverse('sent_lists'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_draft_lists_view(self):
+        '''
+        Checking that the response status code is 200 for draft list view
+        '''
+        response = self.client.get(reverse('draft_lists'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_list_detail_view(self):
+        '''
+        Checks that the response status code is 200 for list detail view
+        '''
+        response = self.client.get(reverse('list_detail', args=[self.list.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_list_view(self):
+        '''
+        Checking that the response status code is 200 for create list view
+        '''
+        response = self.client.get(reverse('create_list'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_send_list_draft_view(self):
+        '''
+        Checking that the response status code is 302, indicating a successful redirect after sending the list.
+        '''
+        response = self.client.get(reverse('send_list_draft', args=[self.list.id]))
+        self.assertEqual(response.status_code, 302)  # 302 is the expected redirect status
+
+    def test_edit_list_view(self):
+        '''
+        Checks that the response status code is 200 for edit list view
+        '''
+        response = self.client.get(reverse('edit_list', args=[self.list.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_delete_list_view(self):
+        '''
+        Checking that the response status code is 200 for delete list view
+        '''
+        response = self.client.get(reverse('delete_list', args=[self.list.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_check_list_item_view(self):
+        '''
+        Checking that the response status code is 200 for check list item view
+        '''
+        response = self.client.get(reverse('check_list', args=[self.list.id, self.member.id]))
+        self.assertEqual(response.status_code, 200)
