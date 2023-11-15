@@ -4,7 +4,7 @@ The Personal relationship management web application InnerCircle is a relationsh
 <br>
 <br>
 <br>
-<img src="static/img/readme/InnerCircle_Landing_Intro_AuthBtns.PNG" alt="Landing Page">
+<img src="static/img/readme/InnerCircle_Landing_Intro_AuthBtns.png" alt="Landing Page">
 <br>
 <br>
 <br>
