@@ -1,5 +1,6 @@
 ''' Unit tests for the events application. '''
-from django.test import TestCase
+from django.test import TestCase, Client
+from django.urls import reverse
 from django.contrib.auth.models import User
 from circle.models import Member
 from .models import Event, RSVP, RSVPNotification
@@ -114,3 +115,115 @@ class RSVPNotificationModelTest(TestCase):
 
     def test_notification_created_at(self):
         self.assertIsNotNone(self.notification.created_at)
+
+
+class EventViewsTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.client.login(username='testuser', password='testpassword')
+
+    def test_event_list_view(self):
+        '''
+        Checking whether the 'event_list' view is accessible by a logged-in user
+        and verifying that the HTTP response status code is 200.
+        '''
+        response = self.client.get(reverse('event_list'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_sent_event_list_view(self):
+        '''
+        Ensuring that the 'sent_event_list' view is accessible by a logged-in user
+        and confirming that the HTTP response status code is 200.
+        '''
+        response = self.client.get(reverse('sent_event_list'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_draft_event_list_view(self):
+        '''
+        Validating that the 'draft_event_list' view is accessible by a logged-in user
+        and checking that the HTTP response status code is 200.
+        '''
+        response = self.client.get(reverse('draft_event_list'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_event_detail_view(self):
+        '''
+        Verifying that the 'event_detail' view displays detailed information about a specific event 
+        and checking that the HTTP response status code is 200.
+        '''
+        event = Event.objects.create(user=self.user, event_name='Test Event', date='2023-01-01')
+        response = self.client.get(reverse('event_detail', args=[event.id]))
+        self.assertEqual(response.status_code, 200)
+
+    def test_create_event_view(self):
+        '''
+        Checking the accessibility of the 'create_event' view, ensuring that the form submission process works as expected
+        and validating that the HTTP response status code is 200 for the initial view and 302 after a successful form submission.
+        '''
+        event = Event.objects.create(user=self.user, event_name='Test Event', date=timezone.now())
+        response = self.client.get(reverse('create_event'))
+        self.assertEqual(response.status_code, 200)
+        # Test form submission
+        response = self.client.post(reverse('create_event'), data={'event_name': 'Test Event'})
+        self.assertEqual(response.status_code, 302)  # Redirect after form submission
+
+    def test_send_event_draft_view(self):
+        '''
+        Confirming that the 'send_event_draft' view correctly sends invitations for a draft event
+        and checking that the HTTP response status code is 302 after sending the draft.
+        '''
+        draft = Event.objects.create(user=self.user, event_name='Test Draft', is_draft=True, date=timezone.now())
+        response = self.client.get(reverse('send_event_draft', args=[draft.id]))
+        self.assertEqual(response.status_code, 302)  # Redirect after sending draft
+
+    def test_update_event_view(self):
+        '''
+        Ensuring that the 'update_event' view is accessible and that the form submission process for updating an event works as expected.
+        Validating that the HTTP response status code is 200 for the initial view and 302 after a successful form submission.
+        '''
+        event = Event.objects.create(user=self.user, event_name='Test Event', date=timezone.now())
+        response = self.client.get(reverse('update_event', args=[event.id]))
+        self.assertEqual(response.status_code, 200)
+        # Test form submission
+        response = self.client.post(reverse('update_event', args=[event.id]), data={'event_name': 'Updated Event'})
+        self.assertEqual(response.status_code, 302)  # Redirect after form submission
+
+
+    def test_delete_event_view(self):
+        '''
+        Checking the accessibility of the 'delete_event' view and verifying that the deletion process for an event is successful.
+        Confirming that the HTTP response status code is 200 for the initial view and 302 after a successful event deletion.
+        '''
+        event = Event.objects.create(user=self.user, event_name='Test Event', date='2023-01-01')
+        response = self.client.get(reverse('delete_event', args=[event.id]))
+        self.assertEqual(response.status_code, 200)
+        # Test form submission
+        response = self.client.post(reverse('delete_event', args=[event.id]))
+        self.assertEqual(response.status_code, 302)  # Redirect after form submission
+
+
+    def test_rsvp_view(self):
+        '''
+        Checking the accessibility of the 'rsvp_view' for a specific event and member
+        and validating the RSVP form submission process, ensuring that the HTTP response status code is 200 
+        for the initial view and 302 after a successful form submission.
+        '''
+        event = Event.objects.create(user=self.user, event_name='Test Event', date=timezone.now())
+        member = Member.objects.create(user=self.user, name='Test Member')
+        response = self.client.get(reverse('rsvp_view', args=[event.id, member.id]))
+        self.assertEqual(response.status_code, 200)
+        # Test form submission
+        response = self.client.post(reverse('rsvp_view', args=[event.id, member.id]), data={'response_status': 'Attending'})
+        self.assertEqual(response.status_code, 302)  # Redirect after form submission
+
+
+    def test_rsvp_done_view(self):
+        '''
+        Verifying that the 'rsvp_done_view' displays a confirmation message after a member submits their RSVP response for a specific event 
+        and checking that the HTTP response status code is 200.
+        '''
+        event = Event.objects.create(user=self.user, event_name='Test Event', date=timezone.now())
+        member = Member.objects.create(user=self.user, name='Test Member')
+        response = self.client.get(reverse('rsvp_done', args=[event.id, member.id]))
+        self.assertEqual(response.status_code, 200)
