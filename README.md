@@ -1,79 +1,36 @@
 # InnerCircle
-## Personal Relationship Management Web Application
-The Personal relationship management web application InnerCircle is a relationship manager built using Python and Django. It allows users to privately add members to their circle, send them broadcasts, invite them to events and send them lists, as well as have access to an AI assistant.
-<br>
-<br>
-<br>
+
 <img src="static/img/readme/InnerCircle_Landing_Intro_AuthBtns.png" alt="Landing Page">
-<br>
-<br>
-<br>
 
-## About
-This is my final Project for ALX/Holberton School Backend Specialization.
+## InnerCircle: Elevate Your Personal Network
+Welcome to InnerCircle, the culmination of my ALX/Holberton School Back End Specialization course—an innovative and secure relationship tracker and manager. Unlike typical social platforms, InnerCircle is your private sanctuary, designed to streamline and enhance your personal network like a sophisticated phonebook.
 
-<br>
-<br>
-<br>
+### Description:
+InnerCircle is where your connections flourish. Safeguard your relationships by adding individuals to your exclusive circle, organized seamlessly into custom groups. Unlock the power to share private broadcasts, effortlessly send out event invitations, and exchange curated lists with those who matter most. Navigate your social world with the added support of an intelligent AI assistant.
 
-## Features
-### Your Circle
-+ Add People to your private circle.
-+ Sort circle members into groups.
+### Features:
++ Secure Access: User authentication ensures a private and personalized experience.
++ Tailored Organization: Create and manage members and groups with intuitive ease.
++ Personalized Communication: Send private broadcasts, event invitations, and lists to stay connected.
++ AI Guidance: A smart assistant stands ready to assist you on your relational journey.
 
-    <img src="static/img/readme/InnerCircle_Feature_Circle_New.png" alt="User Member List Page" width="800">
-
----
-### Broadcasts
-+ Send members broadcasts.
-
-    <img src="static/img/readme/InnerCircle_Feature_Broadcast_New.png" alt="User Broadcast List Page" width="800">
-
----
-Events
-+ Invite members to events.
-+ Event RSVP for invited members.
-
-    <img src="static/img/readme/InnerCircle_Feature_Events_New.png" alt="User Event List Page" width="800">
-
----
-### Lists
-+ Send members lists.
-+ List Item Check for members.
-
-    <img src="static/img/readme/InnerCircle_Feature_List_New.png" alt="User Lists Page" width="800">
-
----
-### Assistant
-+ AI Assistant.
-
-    <img src="static/img/readme/InnerCircle_Feature_Assistant_New.png" alt="AI Assistant Chat Page" width="800">
+### Project Stack:
++ Backend:  Python, Django, Django Rest Framework, OpenAI
++ Frontend: JavaScript, HTML5, CSS3, SASS, Bootstrap
 
 <br>
-<br>
-<br>
 
-## Technology
-+ SqLite
-+ Python 
-+ Django
-+ Django Rest Framework
-+ OpenAI
-+ JavaScript/HTML/CSS/SASS/Bootstrap
-
-<br>
-<br>
-<br>
+Elevate your personal network with InnerCircle: an all-encompassing solution for managing and nurturing the connections that make a difference in your life.
 
 ## License
 MIT License
 
-<br>
-<br>
-<br>
-
 ## Contact
 Please feel free to contact me if you have questions or feedback
 
-### Pretty Pandey
-email: prettypandeypearl@gmail.com
+Pretty Pandey <br>
+Full Stack Programmer<br>
+prettypandeypearl@gmail.com
+<a href="https://www.linkedin.com/in/prettypandey"><br>LinkedIn</a>
+<a href="https://www.prettypandey.tech"><br>Portfolio</a>
+
